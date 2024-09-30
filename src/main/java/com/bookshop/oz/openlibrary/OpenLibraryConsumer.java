@@ -3,6 +3,7 @@ package com.bookshop.oz.openlibrary;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -31,7 +32,7 @@ public class OpenLibraryConsumer {
 	
 	public List<Document> getBooks(String line) throws IOException, InterruptedException, URISyntaxException
 	{
-		line = new String(line.getBytes(), StandardCharsets.UTF_8);
+		line = URLEncoder.encode(line, "UTF-8");
 		String URL = String.format(basicURL+searchedByTitle+"&"+fields+"&"+limit, line, PAGE_LIMIT);
         
 		HttpRequest getRequest = HttpRequest.
