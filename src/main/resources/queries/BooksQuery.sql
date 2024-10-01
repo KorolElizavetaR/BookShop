@@ -4,5 +4,7 @@ CREATE TABLE book
 	title text NOT NULL,
 	author text NOT NULL,
 	publisher text NOT NULL,
-	
+	language varchar(3) NOT NULL,
+	description text,
+	cover text NOT NULL,
 )

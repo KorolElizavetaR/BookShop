@@ -50,8 +50,6 @@ public class OpenLibraryConsumer {
             Document document = gson.fromJson(docElement, Document.class);
             documents.add(document);
         }
-        
-        documents.stream().forEach(System.out::println);
         return documents;
 	}
 }
