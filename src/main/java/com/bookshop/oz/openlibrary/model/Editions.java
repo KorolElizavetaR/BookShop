@@ -6,5 +6,9 @@ import lombok.Data;
 
 @Data
 public class Editions {
-    private List<Edition> docs;
+	private List<Edition> docs;
+
+	public Edition getDocs() {
+		return docs.stream().findFirst().orElseThrow();
+	}
 }

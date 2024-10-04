@@ -23,21 +23,18 @@ import com.google.gson.JsonParser;
 
 @Component
 public class OpenLibraryConsumer {
-	private final String basicURL = "https://openlibrary.org/search.json?";
-	private final String searchedByTitle = "q=%s";
-	private final String fields = "fields=cover_i,key,title,author_name,editions,editions.publisher,editions.language,editions.isbn";
-	private final String limit = "limit=%d";
+	private final String URL = "https://openlibrary.org/search.json?q=%s&fields=%s&limit=%d";
+	private final String FIELDS = "cover_i,key,title,author_name,subject,editions,editions.publisher,editions.language,editions.isbn";
 	
-	private final Integer PAGE_LIMIT = 10;
+	private final Integer PAGE_LIMIT = 15;
 	
 	public List<Document> getBooks(String line) throws IOException, InterruptedException, URISyntaxException
 	{
-		line = URLEncoder.encode(line, "UTF-8");
-		String URL = String.format(basicURL+searchedByTitle+"&"+fields+"&"+limit, line, PAGE_LIMIT);
+		String buildURL = String.format(URL, URLEncoder.encode(line, "UTF-8"), FIELDS, PAGE_LIMIT);
         
 		HttpRequest getRequest = HttpRequest.
 			newBuilder().
-			uri(new URI(URL)).GET().header("Accept", "application/json").build();
+			uri(new URI(buildURL)).GET().header("Accept", "application/json").build();
 		HttpResponse<String> response = HttpClient.newHttpClient().send(getRequest, BodyHandlers.ofString());
 		
 		JsonElement jsonElement = JsonParser.parseString(response.body());

@@ -23,4 +23,6 @@ public class CatalogController {
 	public List<Document> getExternalBooks() throws IOException, InterruptedException, URISyntaxException {
 		return openLibraryConsumer.getBooks("harry potter");
 	}
+	
+	
 }

@@ -6,5 +6,5 @@ CREATE TABLE book
 	publisher text NOT NULL,
 	language varchar(3) NOT NULL,
 	description text,
-	cover text NOT NULL,
+	cover_i int NOT NULL,
 )
