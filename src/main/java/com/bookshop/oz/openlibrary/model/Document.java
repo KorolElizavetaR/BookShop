@@ -32,6 +32,7 @@ public class Document {
     
     public String getSubject()
     {
+    	if (Optional.ofNullable(subject).isEmpty()) return null;
     	return subject.stream().reduce((res, subj) -> res+=subj + ", ").get();
     }
 }

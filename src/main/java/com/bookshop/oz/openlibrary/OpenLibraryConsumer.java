@@ -26,8 +26,9 @@ public class OpenLibraryConsumer {
 	private final String URL = "https://openlibrary.org/search.json?q=%s&fields=%s&limit=%d";
 	private final String FIELDS = "cover_i,key,title,author_name,subject,editions,editions.publisher,editions.language,editions.isbn";
 	
-	private final Integer PAGE_LIMIT = 15;
+	private final Integer PAGE_LIMIT = 10;
 	
+	// пока что грустит если не отдать строку
 	public List<Document> getBooks(String line) throws IOException, InterruptedException, URISyntaxException
 	{
 		String buildURL = String.format(URL, URLEncoder.encode(line, "UTF-8"), FIELDS, PAGE_LIMIT);
@@ -49,4 +50,6 @@ public class OpenLibraryConsumer {
         }
         return documents;
 	}
+	
+	
 }

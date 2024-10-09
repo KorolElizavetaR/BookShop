@@ -1,8 +1,10 @@
 package com.bookshop.oz.openlibrary.model;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +21,7 @@ public class Edition {
     
     public String getIsbn13()
     {
+    	if (Optional.ofNullable(isbn).isEmpty()) throw new NoSuchElementException();
     	return isbn.stream().filter(isbn -> isbn.length() == 13).findFirst().orElseThrow();
     }
     
@@ -29,6 +32,9 @@ public class Edition {
     
     public String getLanguage()
     {
-    	return language.stream().findFirst().orElseThrow();
+    	return Optional.ofNullable(language)
+    	        .map(List::stream)
+    	        .flatMap(Stream::findFirst) 
+    	        .orElseThrow(); 
     }
 }

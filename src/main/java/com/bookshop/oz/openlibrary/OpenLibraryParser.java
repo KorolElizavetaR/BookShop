@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import com.bookshop.oz.model.Book;
 import com.bookshop.oz.openlibrary.model.Document;
@@ -14,6 +15,7 @@ import com.bookshop.oz.openlibrary.model.Document;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component
 public class OpenLibraryParser {
 	private final OpenLibraryConsumer openLibraryConsumer;
 	private ApplicationContext context;
@@ -41,4 +43,5 @@ public class OpenLibraryParser {
 		return books;
 	}
 
+	
 }
