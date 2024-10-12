@@ -1,6 +1,3 @@
-DROP TABLE person;
-TRUNCATE TABLE person;
-
 CREATE TABLE person
 (
 	person_id int REFERENCES users(user_id) ON DELETE CASCADE PRIMARY KEY,
@@ -9,8 +6,10 @@ CREATE TABLE person
 	dob date NOT NULL,
 	email varchar (70) UNIQUE,
 	phone varchar (20) UNIQUE,
-	created_at timestamp NOT NULL default now()
+	created_at timestamp NOT NULL default now(),
+	
 )
+DROP TABLE person;
 SELECT * FROM person;
 
 INSERT INTO person(person_id, first_name, last_name, dob) VALUES

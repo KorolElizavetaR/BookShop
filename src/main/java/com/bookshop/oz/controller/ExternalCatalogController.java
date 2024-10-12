@@ -19,16 +19,19 @@ import com.bookshop.oz.openlibrary.model.Document;
 
 import lombok.RequiredArgsConstructor;
 
-//@RestController
-@Controller
+/*
+ * 	На данный момент OpenLibrary API по какой-то причине не работает :(
+*/
+
+//@Controller
 @RequestMapping ("/catalog/external")
 @RequiredArgsConstructor
 public class ExternalCatalogController {
-	//public final OpenLibraryConsumer openLibraryConsumer;
 	public final OpenLibraryParser openLibrary;
   
 	@GetMapping ()
 	public String getExternalBooks(Model model, @RequestParam (value = "q", required = false) String line) throws IOException, InterruptedException, URISyntaxException {
+		//is q absent or not
 		model.addAttribute("books", openLibrary.getBooks(line));
 		return "catalog/external/book_list_external";
 	}

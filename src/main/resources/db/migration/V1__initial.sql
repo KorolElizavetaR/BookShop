@@ -1,10 +1,17 @@
-Select * from users;
-
 CREATE TABLE users
 (
 	user_id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	username varchar (40) NOT NULL UNIQUE,
 	bpassword text NOT NULL
+)
+
+CREATE TYPE role AS ENUM ('ROLE_CUSTOMER', 'ROLE_SHOP_ASSISTANT', 'ROLE_ADMIN', 'ROLE_SUPPLIER');
+
+CREATE TABLE authorities
+(
+	user_id int REFERENCES users(user_id) ON DELETE CASCADE,
+	authority role NOT NULL,
+	PRIMARY KEY (user_id, authority)
 )
 
 INSERT INTO users(username, bpassword) VALUES

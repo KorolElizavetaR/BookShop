@@ -28,7 +28,6 @@ public class OpenLibraryConsumer {
 	
 	private final Integer PAGE_LIMIT = 10;
 	
-	// пока что грустит если не отдать строку
 	public List<Document> getBooks(String line) throws IOException, InterruptedException, URISyntaxException
 	{
 		String buildURL = String.format(URL, URLEncoder.encode(line, "UTF-8"), FIELDS, PAGE_LIMIT);
