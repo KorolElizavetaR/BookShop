@@ -9,6 +9,8 @@ CREATE TABLE location_points
   is_storage bool NOT NULL DEFAULT false
 );
 
+ALTER TABLE location_points ADD CONSTRAINT city_format_check CHECK (city ~ '[А-ЯЁ][-А-яЁё]+');
+
 INSERT INTO location_points VALUES ('00000','Минск', 'ул. проспект Независимости, 25', true);
 INSERT INTO location_points(location_id, city, address) VALUES 
 	('10000','Минск', 'Игуменский тракт, 14'), 
@@ -32,6 +34,7 @@ CREATE TABLE person
 	bpassword text NOT NULL,  
 	current_location char(5) REFERENCES location_points(location_id)
 );
+ALTER TABLE person ALTER COLUMN last_name DROP NOT NULL;
  
 CREATE TABLE user_authorities
 (
@@ -123,6 +126,9 @@ CREATE TABLE stock (
     quantity SMALLINT NOT NULL,
     PRIMARY KEY (location_id, isbn)
 );
+
+ALTER TABLE stock DROP CONSTRAINT stock_isbn_fkey,   -- Assuming the original foreign key constraint is named stock_isbn_fkey
+    ADD CONSTRAINT stock_isbn_fkey FOREIGN KEY (isbn) REFERENCES book_product(isbn);
 
 INSERT INTO stock (location_id, isbn, quantity) VALUES 
 	-- Location 00000 - stock

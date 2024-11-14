@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/catalog}">
+		<input type="text" name = "like" th:value="${like}"/>
+		<input type="submit" value = "Искать книгу"/>
+	</form>
+	<br/>
+	<hr/>
+<div th:each = "item : ${stock}">
+	<p th:text = "${item.getBook().getTitle()}"></p>
+	</div>
+	<hr/>
+</body>
+</html>
