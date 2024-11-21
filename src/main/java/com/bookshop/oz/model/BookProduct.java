@@ -53,5 +53,5 @@ public class BookProduct {
 	private BigDecimal discount = BigDecimal.ZERO;
 
 	@OneToMany(mappedBy = "bookProduct")
-	private List<Stock> locations;
+	private List<Stock> stock;
 }

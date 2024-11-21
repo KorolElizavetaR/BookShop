@@ -23,8 +23,8 @@ import com.bookshop.oz.model.Book;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookProductDTO {
-	private Book book;
+	private BookDTO book;
 	private BigDecimal price;
 	private BigDecimal discount;
-	private List<StockDTO> locations;
+	private List<StockDTO> stock;
 }

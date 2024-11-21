@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bookshop.oz.dto.BookProductDTO;
-import com.bookshop.oz.dto.BookProductDTO__BookFetcher;
+import com.bookshop.oz.dto.BookProductDTO_BookFetcher;
 import com.bookshop.oz.model.Book;
 import com.bookshop.oz.model.BookProduct;
 
@@ -19,20 +19,38 @@ public class BookProductMapper {
 	private ModelMapper modelMapper;
 	@Autowired
 	private final BookMapper bookMapper;
+	@Autowired
+	private final StockMapper stockMapper;
 
 	@PostConstruct
 	public void setupModelMapper() {
-		modelMapper.createTypeMap(BookProduct.class, BookProductDTO__BookFetcher.class).setPostConverter(context -> {
+		modelMapper.createTypeMap(BookProduct.class, BookProductDTO_BookFetcher.class).setPostConverter(context -> {
 			BookProduct source = context.getSource();
-			BookProductDTO__BookFetcher destination = context.getDestination();
+			BookProductDTO_BookFetcher bookProduct_bookFetcherDestination = context.getDestination();
 			if (source.getBook() != null) {
-				destination.setBook(bookMapper.getBookDTO(source.getBook()));
+				bookProduct_bookFetcherDestination.setBook(bookMapper.getBookDTO(source.getBook()));
 			}
-			return destination;
+			return bookProduct_bookFetcherDestination;
+		});
+
+		modelMapper.createTypeMap(BookProduct.class, BookProductDTO.class).setPostConverter(context -> {
+			BookProduct source = context.getSource();
+			BookProductDTO bookProductDestination = context.getDestination();
+			if (source.getBook() != null) {
+				bookProductDestination.setBook(bookMapper.getBookDTO(source.getBook()));
+			}
+			if (source.getStock() != null) {
+				bookProductDestination.setStock(stockMapper.getStockListDTO(source.getStock()));
+			}
+			return bookProductDestination;
 		});
 	}
 
-	public BookProductDTO__BookFetcher getBookProductDTO__BookFetcher(BookProduct bookProduct) {
-		return modelMapper.map(bookProduct, BookProductDTO__BookFetcher.class);
+	public BookProductDTO_BookFetcher getBookProductDTO__BookFetcher(BookProduct bookProduct) {
+		return modelMapper.map(bookProduct, BookProductDTO_BookFetcher.class);
+	}
+
+	public BookProductDTO getBookProductDTO(BookProduct bookProduct) {
+		return modelMapper.map(bookProduct, BookProductDTO.class);
 	}
 }

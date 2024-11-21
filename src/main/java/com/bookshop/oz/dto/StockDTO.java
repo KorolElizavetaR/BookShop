@@ -19,6 +19,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StockDTO {
 	private LocationPointDTO location;
-	private BookProductDTO bookProduct;
 	private Short quantity;
 }

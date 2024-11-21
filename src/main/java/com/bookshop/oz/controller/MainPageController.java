@@ -31,8 +31,9 @@ public class MainPageController {
 	}
 	
 	@GetMapping("/{id}")
-	public String bookPage(@PathVariable("id") Integer id, Model model) {
-		
+	public String bookPage(@PathVariable("id") String id, Model model) {
+		model.addAttribute("bookProduct", bookProductService.getBookProductForProductPageById(id));
+		return "pages/catalog/product";
 	}
 
 }
