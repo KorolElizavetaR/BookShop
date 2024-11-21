@@ -13,10 +13,4 @@ public class BookshopApplication {
 		System.out.println("http://localhost:8080/catalog");
 	}
 
-	/* refactor later */
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-
 }

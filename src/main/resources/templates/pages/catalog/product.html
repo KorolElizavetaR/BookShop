@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <style>
+      /*ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ ФАЙЛ*/
+      .book-details {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* Adjust spacing as needed */
+        margin-bottom: 20px;
+      }
+
+      .book-image {
+        width: 150px; /* Adjust image size as needed */
+      }
+
+      .book-info {
+        flex-grow: 1; /* Takes up remaining space */
+      }
+
+      .locations ul {
+        list-style-type: disc;
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <h1>Book Details</h1>
+
+      <div class="book-details" th:each="book : ${books}">
+        <!-- Assuming a list of books -->
+        <img
+          th:src="${book.bookProduct.book.coverUrl}"
+          alt="Book Cover"
+          class="book-image"
+        />
+        <div class="book-info">
+          <h2><span th:text="${book.title}"></span></h2>
+          <p>By <span th:text="${book.author}"></span></p>
+          <p>Price: <span th:text="${book.bookProduct.price}"></span></p>
+          <button>Положить в корзину (#)</button>
+          <!--  Add your cart logic here -->
+
+          <div class="locations">
+            <h3>Available Locations:</h3>
+            <ul>
+              <li
+                th:each="location : ${book.bookProduct.locations}"
+                th:if="${location.quantity > 0}"
+              >
+                <span th:text="${location.location.locationId}"></span> -
+                <span th:text="${location.location.city}"></span>,
+                <span th:text="${location.location.address}"></span> (Quantity:
+                <span th:text="${location.quantity}"></span>)
+              </li>
+              <li
+                th:if="${book.bookProduct.locations == null or book.bookProduct.locations.isEmpty()}"
+              >
+                No locations found.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

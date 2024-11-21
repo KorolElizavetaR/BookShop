@@ -3,6 +3,7 @@ package com.bookshop.oz.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bookshop.oz.service.BookProductService;
@@ -27,6 +28,11 @@ public class MainPageController {
 	public String catalogPage(Model model) {
 		model.addAttribute("stock", bookProductService.getAllItemsForMainPage());
 		return "pages/catalog/main";
+	}
+	
+	@GetMapping("/{id}")
+	public String bookPage(@PathVariable("id") Integer id, Model model) {
+		
 	}
 
 }

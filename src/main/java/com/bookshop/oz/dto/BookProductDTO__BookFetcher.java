@@ -23,7 +23,7 @@ import com.bookshop.oz.model.Book;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookProductDTO__BookFetcher {
-	private Book book;
+	private BookDTO book;
 	private BigDecimal price;
 	private BigDecimal discount;
 }

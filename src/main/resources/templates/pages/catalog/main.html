@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<form th:action="@{/catalog}">
-		<input type="text" name = "like" th:value="${like}"/>
-		<input type="submit" value = "Искать книгу"/>
-	</form>
-	<br/>
-	<hr/>
-<div th:each = "item : ${stock}">
-	<p th:text = "${item.getBook().getTitle()}"></p>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Каталог книг</title>
+  </head>
+
+  <body>
+    <form th:action="@{/catalog}">
+      <input type="text" name="like" th:value="${like}" />
+      <input type="submit" value="Искать книгу" />
+    </form>
+    <br />
+    <hr />
+	<!--  -->
+    <div th:each="item : ${stock}">
+		<!-- Вынеси в отдельный styles css -->
+		<a th:href = "@{/catalog/{id}(id=${item.book.isbn})}">
+		<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+			<!-- Book Cover -->
+			<div>
+				<img th:src="${item.book.coverUrl}" alt="Book Cover" style="width: 100px; height: auto;" />
+			</div>
+			<!-- Book Details -->
+			<div>
+				<h2 th:text="${item.book.title}">Book Title</h2>
+				<p><strong>Author:</strong> <span th:text="${item.book.author}">Author Name</span></p>
+				<p><strong>Price:</strong> <span th:text="${#numbers.formatCurrency(item.price)}">Price</span></p>
+				<p th:if="${item.discount > 0}">
+					<strong>Discount:</strong> <span th:text="${#numbers.formatPercent(item.discount)}">Discount</span>
+				</p>
+			</div>
+		</div>
+		</a>
 	</div>
-	<hr/>
-</body>
+    <hr />
+  </body>
 </html>
