@@ -1,0 +1,58 @@
+:root {
+    --left-padding: 15%;
+    --right-padding: 15%;
+    --font-size-title: 24px;
+    --font-size-text: 18px;
+    --white-color-const: #ffffff;
+    --orange-color-const: rgb(221, 140, 33);
+    --orange-hover-color-const: rgb(191, 106, 31);
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: var(--font-size-text);
+}
+
+.paddings {
+    padding-left: var(--left-padding);
+    padding-right: var(--right-padding);
+}
+
+.navbar {
+    display: flex;
+    background-color: var(--orange-color-const);
+    height: 7vh;
+    align-items: center;
+}
+
+.navbar__button {
+    display: flex;
+    justify-content: left;
+    text-align: center;
+    color: var(--white-color-const);
+    height: 100%;
+    padding: 0 1.3vh;
+    text-decoration: none;
+    align-items: center;
+}
+
+.navbar__button:hover {
+    background-color: var(--orange-hover-color-const);
+}
+
+.button-text {
+    color: var(--white-color-const);
+    font-size: var(--font-size-button);
+}
+
+.navbar__button_login {
+    margin-left: auto;
+    padding: 0 2vh;
+}
+
+.navbar__button_login img {
+    padding-right: 1vb;
+}

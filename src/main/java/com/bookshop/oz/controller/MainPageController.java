@@ -27,13 +27,13 @@ public class MainPageController {
 	@GetMapping()
 	public String catalogPage(Model model) {
 		model.addAttribute("stock", bookProductService.getAllItemsForMainPage());
-		return "pages/catalog/main";
+		return "main";
 	}
 	
 	@GetMapping("/{id}")
 	public String bookPage(@PathVariable("id") String id, Model model) {
 		model.addAttribute("bookProduct", bookProductService.getBookProductForProductPageById(id));
-		return "pages/catalog/product";
+		return "product";
 	}
 
 }
