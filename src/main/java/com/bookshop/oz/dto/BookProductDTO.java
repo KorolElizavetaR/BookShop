@@ -2,6 +2,7 @@ package com.bookshop.oz.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import lombok.AllArgsConstructor;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMax;
@@ -22,6 +23,7 @@ import com.bookshop.oz.model.Book;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class BookProductDTO {
 	private BookDTO book;
 	private BigDecimal price;

@@ -38,22 +38,17 @@
         <img th:src="${bookProduct.book.coverUrl}" alt="Book Cover" class="book-image" />
         <div class="book-info">
             <h2><span th:text="${bookProduct.book.title}"></span></h2>
-            <p>By <span th:text="${book.author}"></span></p>
-            <p>Price: <span th:text="${book.bookProduct.price}"></span></p>
+            <p>By <span th:text="${bookProduct.book.author}"></span></p>
+            <p>Price: <span th:text="${bookProduct.price}"></span></p>
             <button>Положить в корзину (#)</button>
             <!--  Add your cart logic here -->
 
             <div class="locations">
                 <h3>Available Locations:</h3>
                 <ul>
-                    <li th:each="location : ${book.bookProduct.locations}" th:if="${location.quantity > 0}">
-                        <span th:text="${location.location.locationId}"></span> -
-                        <span th:text="${location.location.city}"></span>,
-                        <span th:text="${location.location.address}"></span> (Quantity:
-                        <span th:text="${location.quantity}"></span>)
-                    </li>
-                    <li th:if="${book.bookProduct.locations == null or book.bookProduct.locations.isEmpty()}">
-                        No locations found.
+                    <li th:each="stock : ${bookProduct.stock}" th:if="${bookProduct.stock.size() > 0}">
+                        <span th:text="${stock.location.city}"></span>
+                        <span th:text="${stock.location.address}"></span> 
                     </li>
                 </ul>
             </div>

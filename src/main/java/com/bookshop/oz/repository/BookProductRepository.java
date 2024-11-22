@@ -11,7 +11,7 @@ import com.bookshop.oz.model.Book;
 import com.bookshop.oz.model.BookProduct;
 
 @Repository
-public interface BookProductRepository extends JpaRepository<BookProduct, Book> {
+public interface BookProductRepository extends JpaRepository<BookProduct, String> {
 	@Query("FROM BookProduct JOIN FETCH book")
 	List<BookProduct> findAllJoin();
 }

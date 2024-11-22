@@ -1,11 +1,15 @@
 package com.bookshop.oz.mapper;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.bookshop.oz.dto.BookDTO;
 import com.bookshop.oz.dto.BookProductDTO;
 import com.bookshop.oz.dto.BookProductDTO_BookFetcher;
+import com.bookshop.oz.dto.StockDTO;
 import com.bookshop.oz.model.Book;
 import com.bookshop.oz.model.BookProduct;
 
@@ -33,17 +37,17 @@ public class BookProductMapper {
 			return bookProduct_bookFetcherDestination;
 		});
 
-		modelMapper.createTypeMap(BookProduct.class, BookProductDTO.class).setPostConverter(context -> {
-			BookProduct source = context.getSource();
-			BookProductDTO bookProductDestination = context.getDestination();
-			if (source.getBook() != null) {
-				bookProductDestination.setBook(bookMapper.getBookDTO(source.getBook()));
-			}
-			if (source.getStock() != null) {
-				bookProductDestination.setStock(stockMapper.getStockListDTO(source.getStock()));
-			}
-			return bookProductDestination;
-		});
+//		modelMapper.createTypeMap(BookProduct.class, BookProductDTO.class).setPostConverter(context -> {
+//			BookProduct source = context.getSource();
+//			BookProductDTO bookProductDestination = context.getDestination();
+//			if (source.getBook() != null) {
+//				bookProductDestination.setBook(bookMapper.getBookDTO(source.getBook()));
+//			}
+//			if (source.getStock() != null) {
+//				bookProductDestination.setStock(stockMapper.getStockListDTO(source.getStock()));
+//			}
+//			return bookProductDestination;
+//		});
 	}
 
 	public BookProductDTO_BookFetcher getBookProductDTO__BookFetcher(BookProduct bookProduct) {
@@ -51,6 +55,12 @@ public class BookProductMapper {
 	}
 
 	public BookProductDTO getBookProductDTO(BookProduct bookProduct) {
-		return modelMapper.map(bookProduct, BookProductDTO.class);
+		BookDTO bookDTO = bookMapper.getBookDTO(bookProduct.getBook());
+		// Maybe causes stackOverflow ??
+		List<StockDTO> stockListDTO = stockMapper.getStockListDTO(bookProduct.getStock());
+		BookProductDTO bookProductDTO = new BookProductDTO();
+		bookProductDTO.setDiscount(bookProduct.getDiscount()).setPrice(bookProduct.getPrice()).setBook(bookDTO)
+				.setStock(stockListDTO);
+		return bookProductDTO;
 	}
 }

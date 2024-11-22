@@ -23,8 +23,6 @@ public class BookProductService {
 	private final BookProductRepository bookProductRepository;
 	@Autowired
 	private BookProductMapper bookProductMapper;
-	@Autowired
-	private final BookService bookService;
 
 	public List<BookProductDTO_BookFetcher> getAllItemsForMainPage() {
 		List<BookProduct> books = bookProductRepository.findAllJoin();
@@ -34,8 +32,8 @@ public class BookProductService {
 	}
 	
 	public BookProductDTO getBookProductForProductPageById(String isbn) {
-		Book book = bookService.getBookByIsbn(isbn);
-		BookProduct bookProduct = bookProductRepository.findById(book).orElse(null);
+		// exception instead of null //
+		BookProduct bookProduct = bookProductRepository.findById(isbn).orElse(null);
 		return bookProductMapper.getBookProductDTO(bookProduct);
 	}
 }

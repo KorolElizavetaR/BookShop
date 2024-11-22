@@ -20,5 +20,4 @@ public class BookDTO {
 	private String publisher;
 	private String description;
 	private String coverUrl;
-	private BookProduct bookProduct;
 }
