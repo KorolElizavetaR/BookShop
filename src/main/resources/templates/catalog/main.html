@@ -10,14 +10,15 @@
 </head>
 
 <body>
-	<header class="navbar paddings">
+	<!-- <header class="navbar paddings">
 		<a href="#" class="button-text navbar__button">КАТАЛОГ</a>
 		<a href="#" class="button-text navbar__button">МАГАЗИНЫ</a>
 		<a href="#" class="button-text navbar__button">КОРЗИНА</a>
 		<a href="#" class="button-text navbar__button">МОИ ЗАКАЗЫ</a>
 		<a href="#" class="button-text navbar__button navbar__button_login"><img src="../static/images/login.svg"
-				th:src="@{/img_src/styles.css}" alt="login__icon">ВХОД</a>
-	</header>
+				th:src="@{/images/login.svg}" alt="login__icon">ВХОД</a>
+	</header> -->
+	<script type="text/javascript" th:src="@{/js/navbar.js}"></script>
 	<main>
 		<form th:action="@{/catalog}">
 			<input type="text" name="like" th:value="${like}" />
