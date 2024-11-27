@@ -5,8 +5,8 @@ function loadNavbar() {
 		<a href="#" class="button-text navbar__button">МАГАЗИНЫ</a>
 		<a href="#" class="button-text navbar__button">КОРЗИНА</a>
 		<a href="#" class="button-text navbar__button">МОИ ЗАКАЗЫ</a>
-		<a href="#" class="button-text navbar__button navbar__button_login"><img src="../images/login.svg"
-				th:src="@{/images/login.svg}" alt="login__icon">ВХОД</a>
+		<a href="#" class="button-text navbar__button navbar__button_login"><img src="../images/login_icon.png"
+				th:src="@{/images/login_icon.png}" alt="login__icon">ЛИЧНЫЙ КАБИНЕТ</a>
 	</header>`;
     document.body.insertAdjacentHTML('afterbegin', navbarHTML);
 }   

@@ -33,7 +33,14 @@
 </head>
 
 <body>
-    <script type="text/javascript" th:src="@{/js/navbar_unreg.js}" id="header"></script>
+    <header class="navbar paddings">
+		<a href="/catalog" class="button-text navbar__button">КАТАЛОГ</a>
+		<a href="#" class="button-text navbar__button">МАГАЗИНЫ</a>
+		<a href="#" class="button-text navbar__button">КОРЗИНА</a>
+		<a href="#" class="button-text navbar__button">МОИ ЗАКАЗЫ</a>
+		<a href="#" class="button-text navbar__button navbar__button_login"><img src="../images/login_icon.png"
+				th:src="@{/images/login_icon.png}" alt="login__icon">ЛИЧНЫЙ КАБИНЕТ</a>
+	</header>
     <main>
         <h1>Book Details</h1>
         <img th:src="${bookProduct.book.coverUrl}" alt="Book Cover" class="book-image" />

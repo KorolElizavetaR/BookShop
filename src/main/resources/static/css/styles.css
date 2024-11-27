@@ -49,10 +49,15 @@ body {
 }
 
 .navbar__button_login {
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
     margin-left: auto;
-    padding: 0 2vh;
+    padding: 0 1vh;
 }
 
 .navbar__button_login img {
     padding-right: 1vb;
+    width: 10%; /* Scale the image width */
+    height: auto; /* Maintain aspect ratio */
 }
