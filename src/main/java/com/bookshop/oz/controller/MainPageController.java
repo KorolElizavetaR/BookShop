@@ -40,12 +40,6 @@ public class MainPageController {
 		model.addAttribute("bookProduct", bookProductService.getBookProductForProductPageById(id));
 		return "catalog/product";
 	}
-
-	@GetMapping("/shopping_bin")
-	public String shoppingBin() {
-		
-		return "catalog/shoppingBin";
-	}
 	
 	@PostMapping("/{id}/shop")
 	public String toShoppingBin(@PathVariable("id") String id, Model model) {

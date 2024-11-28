@@ -13,7 +13,6 @@
     <header>
         <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
     </header>
-
     <body>
         <h1>ORDERS</h1>
     </body>

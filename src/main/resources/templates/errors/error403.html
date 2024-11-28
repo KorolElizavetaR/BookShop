@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Access Denied</title>
+</head>
+
+<body>
+    <h1>Forbidden</h1>
+    <p th:text="${errorMessage}">You are not allowed to access this page.</p>
+    <a href="/catalog">Go Back to Home</a>
+</body>
+
+</html>
