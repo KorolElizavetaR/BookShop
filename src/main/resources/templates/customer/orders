@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет</title>
+    <title>Мои заказы</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 
@@ -12,9 +13,11 @@
     <header>
         <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
     </header>
-    <main>
-        <h2><span th:text="${person}"></span></h2>
-    </main>
+
+    <body>
+        <h1>ORDERS</h1>
+    </body>
+    <footer></footer>
 </body>
 
 </html>

@@ -14,6 +14,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -25,6 +26,7 @@ public class UserAuthority {
 	@ManyToOne
 	@JoinColumn(name = "person_id", referencedColumnName = "person_id", nullable = false)
 	@NotNull(message = "Person ID cannot be null")
+	@ToString.Exclude
 	private Person person;
 
 	@Id

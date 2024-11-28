@@ -12,7 +12,7 @@
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
-        <form th:action="@{/auth/login}" method="post">
+        <form th:action="@{/personal/login}" method="post">
         	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <div><label> User Name : <input type="text" name="username"/> </label></div>
             <div><label> Password: <input type="password" name="password"/> </label></div>

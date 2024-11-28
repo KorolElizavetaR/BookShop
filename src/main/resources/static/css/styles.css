@@ -49,11 +49,20 @@ body {
 }
 
 .navbar__button_login {
-    display: flex; /* Enable flexbox */
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
+    /* display: flex;
+    align-items: center;
+    justify-content: center; 
     margin-left: auto;
     padding: 0 1vh;
+    white-space: nowrap;
+    width: auto; */
+    display: inline-flex; /* Use inline-flex for natural sizing based on content */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center content horizontally */
+    margin-left: auto; /* Push the button to the right */
+    padding: 0 1vh; /* Add padding for spacing */
+    white-space: nowrap; /* Prevent content wrapping */
+    width: 20%; /* Button width fits its content */
 }
 
 .navbar__button_login img {

@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${bookProduct.book.title}">Insert title here</title>
     <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
     <style>
         /*ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ ФАЙЛ*/
@@ -33,14 +34,7 @@
 </head>
 
 <body>
-    <header class="navbar paddings">
-		<a href="/catalog" class="button-text navbar__button">КАТАЛОГ</a>
-		<a href="#" class="button-text navbar__button">МАГАЗИНЫ</a>
-		<a href="#" class="button-text navbar__button">КОРЗИНА</a>
-		<a href="#" class="button-text navbar__button">МОИ ЗАКАЗЫ</a>
-		<a href="#" class="button-text navbar__button navbar__button_login"><img src="../images/login_icon.png"
-				th:src="@{/images/login_icon.png}" alt="login__icon">ЛИЧНЫЙ КАБИНЕТ</a>
-	</header>
+    <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
     <main>
         <h1>Book Details</h1>
         <img th:src="${bookProduct.book.coverUrl}" alt="Book Cover" class="book-image" />

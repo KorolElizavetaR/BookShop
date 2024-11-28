@@ -19,11 +19,9 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	private final PersonDetailsService persService;
 
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception
-	{
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(persService).passwordEncoder(getPasswordEncoder());
 	}
-	
 
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
@@ -33,15 +31,14 @@ public class SecurityConfig {
 	/* CHECK PersonDetails in case nothing will work */
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		http.authorizeHttpRequests((requests) -> requests.
-//				requestMatchers("/personal").hasAnyRole("ADMIN", "SHOP_ASSISTANT", "CUSTOMER", "ECONOMIST").
-//				requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/..").permitAll().anyRequest().authenticated())
-//				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
-//						.failureUrl("/personal/login?error").permitAll())
-//				.logout((logout) -> logout.permitAll());
-//		return http.build();
-		http.authorizeHttpRequests((requests) -> requests.
-				requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/..").permitAll().anyRequest().authenticated());
+		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/personal")
+				.hasAnyRole("ADMIN", "SHOP_ASSISTANT", "CUSTOMER", "ECONOMIST").requestMatchers("/catalog")
+				.requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/**", "/js/**", "/images/**")
+				.permitAll().anyRequest().authenticated())
+				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
+						.failureUrl("/personal/login?error").permitAll())
+				.logout((logout) -> logout.permitAll());
 		return http.build();
+
 	}
 }
