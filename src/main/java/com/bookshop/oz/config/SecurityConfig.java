@@ -18,23 +18,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final PersonService persService;
+	private final PasswordEncoder passwordEncoder;
 
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(persService).passwordEncoder(getPasswordEncoder());
+		auth.userDetailsService(persService).passwordEncoder(passwordEncoder);
 	}
 
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	/* CHECK PersonDetails in case nothing will work */
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/personal")
 				.hasAnyRole("ADMIN", "SHOP_ASSISTANT", "CUSTOMER", "ECONOMIST")
 				.requestMatchers("/orders", "/shopping_bin").hasRole("CUSTOMER")
-				.requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/**", "/js/**", "/images/**", "/personal/reg")
+				.requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/**", "/js/**", "/images/**",
+						"/personal/reg", "/api/pagesCounter")
 				.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
 						.failureUrl("/personal/login?error").permitAll())

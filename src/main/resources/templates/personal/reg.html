@@ -6,7 +6,7 @@
     <title>Registration Page</title>
 </head>
 <body>
-    <form th:method="POST" th:action="@{/auth/reg}" th:object="${person}">
+    <form th:method="POST" th:action="@{/personal/reg}" th:object="${person}">
         <!-- First Name -->
         <label for="firstName">First Name:</label>
         <input type="text" th:field="*{firstName}" id="firstName" required />
@@ -32,15 +32,15 @@
         <br/>
 
         <!-- Password -->
-        <label for="bpassword">Password:</label>
-        <input type="password" th:field="*{bpassword}" id="bpassword" required />
-        <div th:if="${#fields.hasErrors('bpassword')}" th:errors="*{bpassword}">Password error</div>
+        <label for="password">Password:</label>
+        <input type="password" th:field="*{password}" id="password" required />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
         <br/>
 
         <!-- Confirm Password -->
-        <label for="bpasswordConfirm">Confirm Password:</label>
-        <input type="password" th:field="*{bpasswordConfirm}" id="bpasswordConfirm" required />
-        <div th:if="${#fields.hasErrors('bpasswordConfirm')}" th:errors="*{bpasswordConfirm}">Password confirmation error</div>
+        <label for="confurmPassword">Confirm Password:</label>
+        <input type="password" th:field="*{confurmPassword}" id="confurmPassword" required />
+        <div th:if="${#fields.hasErrors('confurmPassword')}" th:errors="*{confurmPassword}">Password confirmation error</div>
         <br/>
 
         <input type="submit" value="Register" />

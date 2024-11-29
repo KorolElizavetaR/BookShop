@@ -2,6 +2,9 @@ package com.bookshop.oz.model;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
+
 import com.bookshop.oz.model.enumeration.Authority;
 import com.bookshop.oz.model.pk.UserAuthorityId;
 
@@ -37,7 +40,8 @@ public class UserAuthority {
 	private Person person;
 
 	@Id
-	@Enumerated(EnumType.STRING)
+//	@Enumerated(EnumType.STRING)
+	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "user_authority", nullable = false)
 	@NotNull(message = "User authority cannot be null")
 	private Authority userAuthority;

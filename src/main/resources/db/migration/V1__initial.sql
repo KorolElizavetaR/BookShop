@@ -30,7 +30,7 @@ CREATE TABLE person
 	first_name varchar (50) NOT NULL,
 	last_name varchar (50) NOT NULL,
 	email varchar (100) UNIQUE NOT NULL,
-	phone varchar (20) UNIQUE CHECK (phone ~ '\+375\(\d{2}\)\d{3}-\d{2}-\d{2}'),
+	phone varchar (20) UNIQUE,
 	bpassword text NOT NULL,  
 	current_location char(5) REFERENCES location_points(location_id)
 );

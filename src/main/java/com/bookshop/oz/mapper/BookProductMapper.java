@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.bookshop.oz.dto.BookDTO;
 import com.bookshop.oz.dto.BookProductDTO;
-import com.bookshop.oz.dto.BookProductDTO_BookFetcher;
+import com.bookshop.oz.dto.BookProductDTOBooksForMainPage;
 import com.bookshop.oz.dto.StockDTO;
 import com.bookshop.oz.model.Book;
 import com.bookshop.oz.model.BookProduct;
@@ -28,9 +28,9 @@ public class BookProductMapper {
 
 	@PostConstruct
 	public void setupModelMapper() {
-		modelMapper.createTypeMap(BookProduct.class, BookProductDTO_BookFetcher.class).setPostConverter(context -> {
+		modelMapper.createTypeMap(BookProduct.class, BookProductDTOBooksForMainPage.class).setPostConverter(context -> {
 			BookProduct source = context.getSource();
-			BookProductDTO_BookFetcher bookProduct_bookFetcherDestination = context.getDestination();
+			BookProductDTOBooksForMainPage bookProduct_bookFetcherDestination = context.getDestination();
 			if (source.getBook() != null) {
 				bookProduct_bookFetcherDestination.setBook(bookMapper.getBookDTO(source.getBook()));
 			}
@@ -50,8 +50,8 @@ public class BookProductMapper {
 //		});
 	}
 
-	public BookProductDTO_BookFetcher getBookProductDTO__BookFetcher(BookProduct bookProduct) {
-		return modelMapper.map(bookProduct, BookProductDTO_BookFetcher.class);
+	public BookProductDTOBooksForMainPage getBookProductDTO__BookFetcher(BookProduct bookProduct) {
+		return modelMapper.map(bookProduct, BookProductDTOBooksForMainPage.class);
 	}
 
 	public BookProductDTO getBookProductDTO(BookProduct bookProduct) {

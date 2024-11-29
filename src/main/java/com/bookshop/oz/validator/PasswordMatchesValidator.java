@@ -8,13 +8,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
 
-//	@Override
-//	public void initialize(PasswordMatches constraintAnnotation) {
-//	}
-
 	@Override
 	public boolean isValid(Object obj, ConstraintValidatorContext context) {
 		PersonDTORegister user = (PersonDTORegister) obj;
-		return user.getBpassword().equals(user.getConfirmBpassword());
+		return user.getPassword().equals(user.getConfurmPassword());
 	}
 }

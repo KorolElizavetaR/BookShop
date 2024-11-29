@@ -1,12 +1,12 @@
 package com.bookshop.oz.service;
 
-import java.util.Collections;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +23,11 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@Transactional (readOnly = true)
+@Transactional(readOnly = true)
 public class PersonService implements UserDetailsService {
 	private final PersonRepository peopleRepository;
 	private final UserAuthorityRepository userAuthorityRepository;
-	
+	private final PasswordEncoder passwordEncoder;
 	private final PersonMapper personMapper;
 
 	@Override
@@ -37,14 +37,15 @@ public class PersonService implements UserDetailsService {
 			throw new UsernameNotFoundException("User with email " + username + " is not found");
 		return new PersonDetails(person.get());
 	}
-	
-	public Optional<Person> findUserByUsername(String username){
+
+	public Optional<Person> findUserByUsername(String username) {
 		return peopleRepository.findByEmail(username);
 	}
 
 	@Transactional
 	public void register(PersonDTORegister personDTO) {
 		Person person = personMapper.PersonDTORegisterToPerson(personDTO);
+		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()));
 		peopleRepository.save(person);
 		UserAuthority userAuthority = new UserAuthority();
 		userAuthority.setPerson(person);

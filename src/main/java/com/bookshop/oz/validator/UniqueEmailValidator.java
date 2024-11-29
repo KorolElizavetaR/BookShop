@@ -19,11 +19,11 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, PersonDTORegister> {
+public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 	private final PersonService peopleService;
 
 	@Override
-	public boolean isValid(PersonDTORegister value, ConstraintValidatorContext context) {
-		return peopleService.findUserByUsername(value.getEmail()).isEmpty();
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		return peopleService.findUserByUsername(value).isEmpty();
 	}
 }

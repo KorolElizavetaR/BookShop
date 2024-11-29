@@ -33,12 +33,12 @@ public class PersonDTORegister {
 	@UniqueEmail
 	private String email;
 
-	@Pattern(regexp = "\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}", message = "Номер телефона должен быть в формате +375(XX)XXX-XX-XX.")
+	@Pattern(regexp = "^$|\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}$", message = "Номер телефона должен быть в формате +375(XX)XXX-XX-XX.")
 	private String phone;
 
 	@NotNull(message = "Пароль не может быть пустым")
 	@NotEmpty
-	private String bpassword;
+	private String password;
 
-	private String confirmBpassword;
+	private String confurmPassword;
 }

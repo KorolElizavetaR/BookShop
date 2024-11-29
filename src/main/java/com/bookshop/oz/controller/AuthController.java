@@ -46,7 +46,7 @@ public class AuthController {
 	public String regPage(Model model)
 	{
 		PersonDTORegister person = new PersonDTORegister();
-		model.addAttribute(person);
+		model.addAttribute("person", person);
 		return "/personal/reg";
 	}
 	

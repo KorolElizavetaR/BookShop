@@ -52,7 +52,7 @@ public class Person {
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
 
-    @Pattern(regexp = "\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}", message = "Номер телефона должен быть в формате +375(XX)XXX-XX-XX.")
+    @Pattern(regexp = "^$|\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}$", message = "Номер телефона должен быть в формате +375(XX)XXX-XX-XX.")
     @Column(name = "phone", length = 20, unique = true)
     private String phone;
 
