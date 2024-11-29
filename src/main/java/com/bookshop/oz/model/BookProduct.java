@@ -38,7 +38,7 @@ public class BookProduct {
 	@MapsId
 	@OneToOne
 	@JoinColumn(name = "isbn", referencedColumnName = "isbn", nullable = false)
-	@Fetch(FetchMode.JOIN)
+//	@Fetch(FetchMode.JOIN)
 	private Book book;
 
 	@NotNull(message = "Price cannot be null")

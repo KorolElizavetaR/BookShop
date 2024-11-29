@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/personal")
 @RequiredArgsConstructor
 public class AuthController {
-	private final UniqueEmailValidator uniqueEmailValidator;
 	private final PersonService personDetailsService;
 	
 	@GetMapping("/login")

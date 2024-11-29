@@ -208,15 +208,7 @@ CREATE TABLE orders (
     createdAt TIMESTAMP DEFAULT NOW(),
     status order_status NOT NULL,
     closedAt TIMESTAMP,
-    shop_assistant_id INT REFERENCES person(person_id)
-);
-
-CREATE TABLE order_items (
-    order_id BIGINT REFERENCES orders(order_id),
-   	location_id CHAR(5) NOT NULL,
-    isbn CHAR(13) NOT NULL,
-    quantity INT NOT NULL,
-    status order_status NOT NULL,
-    PRIMARY KEY (order_id, isbn),
-	FOREIGN KEY (location_id, isbn) REFERENCES stock(location_id, isbn)
+    shop_assistant_id INT REFERENCES person(person_id),
+	 quantity INT NOT NULL CHECK (quantity > 0),
+	isbn char(13) REFERENCES book_product(isbn)
 );

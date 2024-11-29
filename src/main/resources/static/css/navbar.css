@@ -1,0 +1,42 @@
+.navbar {
+    display: flex;
+    background-color: var(--orange-color-const);
+    height: 7vh;
+    align-items: center;
+}
+
+.navbar__button {
+    display: flex;
+    justify-content: left;
+    text-align: center;
+    color: var(--white-color-const);
+    height: 100%;
+    padding: 0 1.3vh;
+    text-decoration: none;
+    align-items: center;
+}
+
+.navbar__button:hover {
+    background-color: var(--orange-hover-color-const);
+}
+
+.button-text {
+    color: var(--white-color-const);
+    font-size: var(--font-size-button);
+}
+
+.navbar__button_login {
+    display: inline-flex; /* Use inline-flex for natural sizing based on content */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center content horizontally */
+    margin-left: auto; /* Push the button to the right */
+    padding: 0 1vh; /* Add padding for spacing */
+    white-space: nowrap; /* Prevent content wrapping */
+    width: 20%; /* Button width fits its content */
+}
+
+.navbar__button_login img {
+    padding-right: 1vb;
+    width: 10%; /* Scale the image width */
+    height: auto; /* Maintain aspect ratio */
+}
