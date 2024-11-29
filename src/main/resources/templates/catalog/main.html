@@ -6,7 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Каталог книг</title>
 	<link th:href="@{/css/styles.css}" rel="stylesheet" />
-	<link href="../../static/css/searchbar.css" th:href="@{/css/searchbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/searchbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/bookitems.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -21,30 +22,33 @@
 			<button type="submit" value="Искать книгу"></button>
 		</form>
 
-		<div th:each="item : ${stock}">
-			<a th:href="@{/catalog/{id}(id=${item.book.isbn})}">
-				<div class="books">
-					<div>
-						<img th:src="${item.book.coverUrl}" alt="Book Cover" class="book-image"/>
+		<div class="book-grid">
+			<div th:each="item : ${stock}" class="book-item">
+				<a th:href="@{/catalog/{id}(id=${item.book.isbn})}">
+					<div class="books">
+						<div>
+							<img th:src="${item.book.coverUrl}" alt="Book Cover" class="book-image" />
+						</div>
+						<div>
+							<h2 th:text="${item.book.title}">Book Title</h2>
+							<p>
+								<strong>Author:</strong>
+								<span th:text="${item.book.author}">Author Name</span>
+							</p>
+							<p>
+								<strong>Price:</strong>
+								<span th:text="${#numbers.formatCurrency(item.price)}">Price</span>
+							</p>
+							<p th:if="${item.discount > 0}">
+								<strong>Discount:</strong>
+								<span th:text="${#numbers.formatPercent(item.discount)}">Discount</span>
+							</p>
+						</div>
 					</div>
-					<div>
-						<h2 th:text="${item.book.title}">Book Title</h2>
-						<p>
-							<strong>Author:</strong>
-							<span th:text="${item.book.author}">Author Name</span>
-						</p>
-						<p>
-							<strong>Price:</strong>
-							<span th:text="${#numbers.formatCurrency(item.price)}">Price</span>
-						</p>
-						<p th:if="${item.discount > 0}">
-							<strong>Discount:</strong>
-							<span th:text="${#numbers.formatPercent(item.discount)}">Discount</span>
-						</p>
-					</div>
-				</div>
-			</a>
+				</a>
+			</div>
 		</div>
+		
 	</main>
 </body>
 

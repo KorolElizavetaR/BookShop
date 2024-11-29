@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.bookshop.oz.service.PersonDetailsService;
+import com.bookshop.oz.service.PersonService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-	private final PersonDetailsService persService;
+	private final PersonService persService;
 
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(persService).passwordEncoder(getPasswordEncoder());
@@ -34,7 +34,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/personal")
 				.hasAnyRole("ADMIN", "SHOP_ASSISTANT", "CUSTOMER", "ECONOMIST")
 				.requestMatchers("/orders", "/shopping_bin").hasRole("CUSTOMER")
-				.requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/**", "/js/**", "/images/**")
+				.requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/**", "/js/**", "/images/**", "/personal/reg")
 				.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
 						.failureUrl("/personal/login?error").permitAll())

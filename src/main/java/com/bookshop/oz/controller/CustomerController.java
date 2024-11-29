@@ -12,7 +12,6 @@ public class CustomerController {
 	
 	@GetMapping("/shopping_bin")
 	public String shoppingBin() {
-		
 		return "customer/shopping_bin";
 	}
 	

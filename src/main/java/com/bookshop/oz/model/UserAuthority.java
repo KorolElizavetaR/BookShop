@@ -1,12 +1,17 @@
 package com.bookshop.oz.model;
 
+import java.io.Serializable;
+
 import com.bookshop.oz.model.enumeration.Authority;
+import com.bookshop.oz.model.pk.UserAuthorityId;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -16,11 +21,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Embeddable
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user_authorities")
+@IdClass(UserAuthorityId.class)
 public class UserAuthority {
 	@Id
 	@ManyToOne

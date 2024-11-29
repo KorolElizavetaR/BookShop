@@ -25,7 +25,6 @@ public class PersonDetails implements UserDetails {
 		for (UserAuthority role : this.person.getAutorities()) {
 			authorities.add(new SimpleGrantedAuthority(role.getUserAuthority().getRole()));
 		}
-
 		return authorities;
 	}
 

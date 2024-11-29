@@ -13,6 +13,8 @@ import jakarta.persistence.IdClass;
 
 import java.io.Serializable;
 
+import com.bookshop.oz.model.pk.StockId;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -41,11 +43,4 @@ public class Stock {
     @Positive
     @Column(name = "quantity", nullable = false)
     private Short quantity;
-}
-
-
-@Data
-class StockId implements Serializable {
-    private LocationPoint location;  // Match the name and type in Stock
-    private BookProduct bookProduct; // Match the name and type in Stock
 }

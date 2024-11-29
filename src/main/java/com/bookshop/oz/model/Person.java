@@ -2,9 +2,11 @@ package com.bookshop.oz.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
+import jakarta.persistence.Access;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,6 +29,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "person")
+@Accessors (chain = true)
 public class Person {
 
     @Id
@@ -63,4 +66,8 @@ public class Person {
     
     @OneToMany (mappedBy = "person", fetch = FetchType.EAGER)
     private List <UserAuthority> autorities;
+    
+//    public Person(String firstName, String email, String bpassword) {
+//    	
+//    }
 }
