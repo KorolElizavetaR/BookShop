@@ -14,6 +14,6 @@ import com.bookshop.oz.model.BookProduct;
 public interface BookProductRepository extends JpaRepository<BookProduct, String> {
 	@Query("FROM BookProduct JOIN FETCH book")
 	List<BookProduct> findAllJoin();
-	List <BookProduct> findByBookNameContainingIgnoreCase(String str);
+//	List <BookProduct> findByBookNameContainingIgnoreCase(String str);
 	long count();
 }

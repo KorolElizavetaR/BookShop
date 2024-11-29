@@ -54,11 +54,11 @@ public class BookProductService {
 		return pageCounter;
 	}
 
-	public List<BookProductDTOBooksForMainPage> findBookLike(String str) {
+//	public List<BookProductDTOBooksForMainPage> findBookLike(String str) {
 //		List<BookProduct> books = bookProductRepository.findAll(PageRequest.of(page, BOOKS_PER_PAGE)).getContent();
 //		List<BookProductDTOBooksForMainPage> booksDTO = books.stream()
 //				.map(bookProductMapper::getBookProductDTO__BookFetcher).collect(Collectors.toList());
 //		return booksDTO;
 //		return bookProductRepository.findByBookNameContainingIgnoreCase(str);
-	}
+//	}
 }
