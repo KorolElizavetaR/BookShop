@@ -6,29 +6,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Каталог книг</title>
 	<link th:href="@{/css/styles.css}" rel="stylesheet" />
+	<link href="../../static/css/searchbar.css" th:href="@{/css/searchbar.css}" rel="stylesheet" />
 </head>
 
 <body>
 	<header>
 		<script type="text/javascript" th:src="@{/js/navbar.js}"></script>
 	</header>
-	<main>
-		<form th:action="@{/catalog}">
+
+	<main class="paddings">
+
+		<form th:action="@{/catalog}" class="search-form">
 			<input type="text" name="like" th:value="${like}" />
-			<input type="submit" value="Искать книгу" />
+			<button type="submit" value="Искать книгу"></button>
 		</form>
-		<br />
-		<hr />
-		<!--  -->
+
 		<div th:each="item : ${stock}">
-			<!-- Вынеси в отдельный styles css -->
 			<a th:href="@{/catalog/{id}(id=${item.book.isbn})}">
-				<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px">
-					<!-- Book Cover -->
+				<div class="books">
 					<div>
-						<img th:src="${item.book.coverUrl}" alt="Book Cover" style="width: 100px; height: auto" />
+						<img th:src="${item.book.coverUrl}" alt="Book Cover" class="book-image"/>
 					</div>
-					<!-- Book Details -->
 					<div>
 						<h2 th:text="${item.book.title}">Book Title</h2>
 						<p>
@@ -47,7 +45,6 @@
 				</div>
 			</a>
 		</div>
-		<hr />
 	</main>
 </body>
 

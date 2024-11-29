@@ -9,9 +9,10 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
+	
 	@GetMapping("/shopping_bin")
 	public String shoppingBin() {
-
+		
 		return "customer/shopping_bin";
 	}
 	
@@ -19,4 +20,5 @@ public class CustomerController {
 	public String orders(){
 		return "customer/orders";
 	}
+	
 }

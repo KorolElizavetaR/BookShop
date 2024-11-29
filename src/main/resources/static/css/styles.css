@@ -1,12 +1,24 @@
 :root {
-    --left-padding: 15%;
-    --right-padding: 15%;
+    --left-padding: 10%;
+    --right-padding: 10%;
     --font-size-title: 24px;
     --font-size-text: 18px;
     --white-color-const: #ffffff;
     --orange-color-const: rgb(221, 140, 33);
     --orange-hover-color-const: rgb(191, 106, 31);
 }
+
+/* Styling for the content box */
+.container {
+    background: #F6F3F0;
+}
+
+.paddings{
+    padding-left: var(--left-padding);
+    padding-right: var(--right-padding);
+}
+
+
 
 body {
     width: 100%;

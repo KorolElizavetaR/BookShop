@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bookshop.oz.model.BookProduct;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.security.PersonDetails;
 import com.bookshop.oz.service.BookProductService;
@@ -46,9 +47,10 @@ public class MainPageController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PersonDetails personDetails = (PersonDetails)auth.getPrincipal();
 		Person person = personDetails.getPerson();
+		
 		//model.addAttribute("person", person);
 		
 		
-		return "catalog/shoppingBin";
+		return "redirect:/catalog";
 	}
 }
