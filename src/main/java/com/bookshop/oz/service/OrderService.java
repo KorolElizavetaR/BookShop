@@ -23,11 +23,12 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 	private final BookProductRepository bookProductRepository;
 
-	@Transactional (readOnly = false)
-	public Order addOrder(Person person, String bookId) {
+	@Transactional(readOnly = false)
+	public Order addOrderToShoppingBin(Person person, String bookId) {
 		BookProduct bookProduct = bookProductRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException());
 		Order order = new Order().setCustomer(person).setLocation(person.getLocationPoint())
 				.setStatus(OrderStatus.SHOPPING_BIN).setBookProduct(bookProduct).setQuantity(1);
 		return orderRepository.save(order);
 	}
+
 }

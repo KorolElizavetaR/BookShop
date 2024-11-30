@@ -43,7 +43,9 @@
             <h2><span th:text="${bookProduct.book.title}"></span></h2>
             <p>By <span th:text="${bookProduct.book.author}"></span></p>
             <p>Price: <span th:text="${bookProduct.price}"></span></p>
-            <button>Положить в корзину (#)</button>
+            <form th:action="@{'/' + ${id} + '/shoppingBin'}" method="post">
+                <button type="submit">Положить в корзину</button>
+            </form>
             <!--  Add your cart logic here -->
 
             <div class="locations">
