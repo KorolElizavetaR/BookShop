@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bookshop.oz.dto.LocationPointDTOShops;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.service.LocationPointService;
+import com.bookshop.oz.service.PersonService;
 import com.bookshop.oz.util.AuthUtil;
 import com.bookshop.oz.util.PersonDetailsSecurity;
 
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class ShopsController {
 	private final AuthUtil authUtil;
 	private final LocationPointService locationPointService;
+	private final PersonService personService;
 
 	/**
 	 * На этой странице отображены адреса всех магазинов (isStorage = false) Сверху
@@ -51,8 +54,10 @@ public class ShopsController {
 	/**
 	 * Исправляет текущую локацию человека на другую
 	 */
-	@PatchMapping ("/shops/{id}")
-	public String changeLocationPoint() {
+	@PatchMapping ("/{id}")
+	public String changeLocationPoint(@PathVariable("id") String id) {
 		Person person = authUtil.getPersonFromAuth();
+		personService.changeLocationPoint(id, person);
+		return "redirect:/shops";
 	}
 }

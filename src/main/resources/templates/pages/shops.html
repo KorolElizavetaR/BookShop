@@ -66,11 +66,13 @@
                         <td th:text="${shop.city}">Город</td>
                         <td th:text="${shop.address}">Адрес</td>
                         <td class="location-list__cell--action">
-                            <form th:action="@{'/shop/' + ${shop.locationId}}" method="post">
-                                <button type="submit" class="location-list__button" th:disabled="${!isAuthorized}">
+                            <form th:action="@{'/shops/' + ${shop.locationId}}" th:method="PATCH" th:if="${isAuthorized}">
+                                <button type="submit" class="location-list__button">
                                     Выбрать магазин
                                 </button>
                             </form>
+                            <button type="button" class="location-list__button-disabled" disabled
+                                th:unless="${isAuthorized}">Выбрать магазин</button>
                         </td>
                     </tr>
                 </tbody>

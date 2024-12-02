@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bookshop.oz.dto.PersonDTORegister;
+import com.bookshop.oz.exception.LocationNotFoundException;
 import com.bookshop.oz.mapper.PersonMapper;
+import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.model.enumeration.Authority;
+import com.bookshop.oz.repository.LocationPointRepository;
 import com.bookshop.oz.repository.PersonRepository;
 import com.bookshop.oz.util.PersonDetailsSecurity;
 
@@ -24,8 +27,10 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class PersonService implements UserDetailsService {
 	private final PersonRepository peopleRepository;
-	// private final UserAuthorityRepository userAuthorityRepository;
+	private final LocationPointRepository locationPointRepository;
+
 	private final PasswordEncoder passwordEncoder;
+
 	private final PersonMapper personMapper;
 
 	@Override
@@ -46,5 +51,12 @@ public class PersonService implements UserDetailsService {
 		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()))
 				.setAutorities(Collections.singletonList(Authority.ROLE_CUSTOMER));
 		peopleRepository.save(person);
+	}
+
+	@Transactional(readOnly = false)
+	public void changeLocationPoint(String locationPointID, Person person) {
+		LocationPoint locationPoint = locationPointRepository.findById(locationPointID)
+				.orElseThrow(() -> new LocationNotFoundException());
+		person.setLocationPoint(locationPoint);
 	}
 }

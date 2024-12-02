@@ -28,4 +28,5 @@ public class LocationPointService {
 				.map(locationMapper::getLocationPointDTOShops).collect(Collectors.toList());
 		return locationPointDTOList;
 	}
+	
 }
