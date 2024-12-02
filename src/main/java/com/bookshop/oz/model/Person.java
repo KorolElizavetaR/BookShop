@@ -70,7 +70,7 @@ public class Person {
 	private String bpassword;
 
 	@ManyToOne
-	@JoinColumn(name = "current_location", referencedColumnName = "location_id", insertable = false, updatable = false)
+	@JoinColumn(name = "current_location", referencedColumnName = "location_id")
 	private LocationPoint locationPoint;
 
 	@ElementCollection(fetch = FetchType.EAGER)

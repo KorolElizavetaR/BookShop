@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bookshop.oz.dto.PersonDTORegister;
 import com.bookshop.oz.exception.LocationNotFoundException;
+import com.bookshop.oz.exception.PersonNotFoundException;
 import com.bookshop.oz.mapper.PersonMapper;
 import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.model.Person;
@@ -45,7 +46,6 @@ public class PersonService implements UserDetailsService {
 		return peopleRepository.findByEmail(username);
 	}
 
-	@Transactional
 	public void register(PersonDTORegister personDTO) {
 		Person person = personMapper.getPersonFromPersonDTORegister(personDTO);
 		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()))
@@ -58,5 +58,6 @@ public class PersonService implements UserDetailsService {
 		LocationPoint locationPoint = locationPointRepository.findById(locationPointID)
 				.orElseThrow(() -> new LocationNotFoundException());
 		person.setLocationPoint(locationPoint);
+		peopleRepository.save(person);
 	}
 }
