@@ -7,6 +7,7 @@
     <title th:text="${bookProduct.book.title}">Insert title here</title>
     <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/buttons__to-shopping-bin.css}" rel="stylesheet" />
     <style>
         /*ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ ФАЙЛ*/
         .book-details {
@@ -43,9 +44,19 @@
             <h2><span th:text="${bookProduct.book.title}"></span></h2>
             <p>By <span th:text="${bookProduct.book.author}"></span></p>
             <p>Price: <span th:text="${bookProduct.price}"></span></p>
-            <form th:action="@{'/' + ${id} + '/shoppingBin'}" method="post">
-                <button type="submit">Положить в корзину</button>
-            </form>
+
+            <div class="form-container">
+                <!-- Form for available state -->
+                <form th:action="@{'/catalog/' + ${id} + '/shoppingBin'}" method="post" th:if="${isAvailableForBuying}">
+                    <button type="submit" class="button-enabled">Положить в корзину</button>
+                </form>
+            
+                <!-- Disabled button and message for unavailable state -->
+                <div th:unless="${isAvailableForBuying}">
+                    <button type="button" class="button-disabled" disabled>Положить в корзину</button>
+                    <p class="availability-message" th:text="${availabilityMessage}"></p>
+                </div>
+            </div>
             <!--  Add your cart logic here -->
 
             <div class="locations">

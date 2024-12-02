@@ -1,0 +1,44 @@
+:root {
+    --orange-color-const: rgb(221, 140, 33);
+    --orange-hover-color-const: rgb(191, 106, 31);
+}
+ 
+ .button-enabled {
+     background-color: var(--orange-color-const);
+     /* Orange */
+     color: white;
+     border: none;
+     padding: 10px 20px;
+     font-size: 16px;
+     cursor: pointer;
+     border-radius: 5px;
+     transition: background-color 0.3s ease;
+ }
+
+ .button-enabled:hover {
+     background-color:var(--orange-hover-color-const);
+     /* Darker orange */
+ }
+
+ .button-disabled {
+     background-color: #ccc;
+     /* Light gray */
+     color: #666;
+     /* Dark gray for text */
+     border: none;
+     padding: 10px 20px;
+     font-size: 16px;
+     cursor: not-allowed;
+     border-radius: 5px;
+ }
+
+ .availability-message {
+     color: #666;
+     /* Dark gray for emphasis */
+     font-size: 14px;
+     margin-top: 10px;
+ }
+
+ .form-container {
+     margin: 20px 0;
+ }

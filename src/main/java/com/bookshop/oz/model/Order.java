@@ -20,6 +20,8 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import com.bookshop.oz.model.enumeration.OrderStatus;
 
@@ -27,7 +29,7 @@ import com.bookshop.oz.model.enumeration.OrderStatus;
 @Table(name = "orders")
 @Data
 @NoArgsConstructor
-@Accessors (chain = true)
+@Accessors(chain = true)
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +37,9 @@ public class Order {
 	private Long orderId;
 
 	@NotNull(message = "Customer is required")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Person customer;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer_id", nullable = false)
+	private Person customer;
 
 	@NotNull(message = "Location ID is required")
 	@ManyToOne(fetch = FetchType.LAZY) // Establish a ManyToOne relationship
@@ -45,24 +47,27 @@ public class Order {
 	private LocationPoint location;
 
 	@PastOrPresent(message = "Created date cannot be in the future")
-	@Column(name = "createdAt", nullable = false)
+	@Column(name = "created_at", nullable = false)
 	@CreationTimestamp
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	@Enumerated(EnumType.STRING)
+	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@NotNull(message = "Order status is required")
 	private OrderStatus status;
 
-	@Column(name = "closedAt")
+	@Column(name = "closed_at")
 	@PastOrPresent(message = "Closed date cannot be in the future")
 	private LocalDateTime closedAt;
 
+	/**
+	 * Назначается в момент закрытия заказа
+	 */
 	@Column(name = "shop_assistant_id")
 	private Integer shopAssistantId;
 
 	@NotNull(message = "Book product is required")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "isbn", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "isbn", nullable = false)
 	private BookProduct bookProduct;
 
 	@Positive(message = "Quantity must be greater than 0")

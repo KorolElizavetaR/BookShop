@@ -1,11 +1,11 @@
 package com.bookshop.oz.service;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bookshop.oz.dto.PersonDTORegister;
 import com.bookshop.oz.mapper.PersonMapper;
 import com.bookshop.oz.model.Person;
-import com.bookshop.oz.model.UserAuthority;
 import com.bookshop.oz.model.enumeration.Authority;
 import com.bookshop.oz.repository.PersonRepository;
-import com.bookshop.oz.repository.UserAuthorityRepository;
-import com.bookshop.oz.security.PersonDetails;
+import com.bookshop.oz.util.PersonDetailsSecurity;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class PersonService implements UserDetailsService {
 	private final PersonRepository peopleRepository;
-	private final UserAuthorityRepository userAuthorityRepository;
+	// private final UserAuthorityRepository userAuthorityRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final PersonMapper personMapper;
 
@@ -35,7 +33,7 @@ public class PersonService implements UserDetailsService {
 		Optional<Person> person = peopleRepository.findByEmail(username);
 		if (person.isEmpty())
 			throw new UsernameNotFoundException("User with email " + username + " is not found");
-		return new PersonDetails(person.get());
+		return new PersonDetailsSecurity(person.get());
 	}
 
 	public Optional<Person> findUserByUsername(String username) {
@@ -44,12 +42,9 @@ public class PersonService implements UserDetailsService {
 
 	@Transactional
 	public void register(PersonDTORegister personDTO) {
-		Person person = personMapper.PersonDTORegisterToPerson(personDTO);
-		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()));
+		Person person = personMapper.getPersonFromPersonDTORegister(personDTO);
+		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()))
+				.setAutorities(Collections.singletonList(Authority.ROLE_CUSTOMER));
 		peopleRepository.save(person);
-		UserAuthority userAuthority = new UserAuthority();
-		userAuthority.setPerson(person);
-		userAuthority.setUserAuthority(Authority.ROLE_CUSTOMER);
-		userAuthorityRepository.save(userAuthority);
 	}
 }

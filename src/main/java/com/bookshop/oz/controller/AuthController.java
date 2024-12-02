@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bookshop.oz.dto.PersonDTORegister;
 import com.bookshop.oz.model.Person;
-import com.bookshop.oz.security.PersonDetails;
 import com.bookshop.oz.service.PersonService;
+import com.bookshop.oz.util.PersonDetailsSecurity;
 import com.bookshop.oz.validator.UniqueEmailValidator;
 
 import jakarta.validation.Valid;
@@ -35,7 +35,7 @@ public class AuthController {
 	@GetMapping()
 	public String personalPage(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PersonDetails personDetails = (PersonDetails)auth.getPrincipal();
+		PersonDetailsSecurity personDetails = (PersonDetailsSecurity)auth.getPrincipal();
 		Person person = personDetails.getPerson();
 		model.addAttribute("person", person);
 		return "/personal/page";

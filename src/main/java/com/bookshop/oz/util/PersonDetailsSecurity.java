@@ -1,4 +1,4 @@
-package com.bookshop.oz.security;
+package com.bookshop.oz.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,21 +9,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.bookshop.oz.model.Person;
-import com.bookshop.oz.model.UserAuthority;
+import com.bookshop.oz.model.enumeration.Authority;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class PersonDetails implements UserDetails {
+public class PersonDetailsSecurity implements UserDetails {
 	@Getter
 	private final Person person;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		for (UserAuthority role : this.person.getAutorities()) {
-			authorities.add(new SimpleGrantedAuthority(role.getUserAuthority().getRole()));
+		for (Authority role : this.person.getAutorities()) {
+			authorities.add(new SimpleGrantedAuthority(role.getRole()));
 		}
 		return authorities;
 	}

@@ -6,9 +6,18 @@ import lombok.experimental.Accessors;
 
 import java.util.List;
 
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
+
+import com.bookshop.oz.model.enumeration.Authority;
+
 import jakarta.persistence.Access;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,45 +38,44 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "person")
-@Accessors (chain = true)
+@Accessors(chain = true)
 public class Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "person_id")
-    private Integer personId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "person_id")
+	private Integer personId;
 
-    @NotNull(message = "Имя не должно быть пустым.")
-    @Size(max = 50, message = "Имя не должно быть не больше 50 символов.")
-    @Column(name = "first_name", length = 50, nullable = false)
-    private String firstName;
+	@NotNull(message = "Имя не должно быть пустым.")
+	@Size(max = 50, message = "Имя не должно быть не больше 50 символов.")
+	@Column(name = "first_name", length = 50, nullable = false)
+	private String firstName;
 
-    @Size(max = 50, message = "Фамилия должна быть не больше 50 символов.")
-    @Column(name = "last_name", length = 50)
-    private String lastName;
+	@Size(max = 50, message = "Фамилия должна быть не больше 50 символов.")
+	@Column(name = "last_name", length = 50)
+	private String lastName;
 
-    @Email(message = "Некорректный email.")
-    @NotNull(message = "Email не может быть пустым.")
-    @Size(max = 100, message = "Email не может быть больше 100 символов.")
-    @Column(name = "email", length = 100, nullable = false, unique = true)
-    private String email;
+	@Email(message = "Некорректный email.")
+	@NotNull(message = "Email не может быть пустым.")
+	@Size(max = 100, message = "Email не может быть больше 100 символов.")
+	@Column(name = "email", length = 100, nullable = false, unique = true)
+	private String email;
 
-    @Pattern(regexp = "^$|\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}$", message = "Номер телефона должен быть в формате +375(XX)XXX-XX-XX.")
-    @Column(name = "phone", length = 20, unique = true)
-    private String phone;
+	@Pattern(regexp = "^$|\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}$", message = "Номер телефона должен быть в формате +375(XX)XXX-XX-XX.")
+	@Column(name = "phone", length = 20, unique = true)
+	private String phone;
 
-    @NotNull(message = "Пароль не может быть пустым")
-    @Column(name = "bpassword", nullable = false)
-    private String bpassword;
+	@NotNull(message = "Пароль не может быть пустым")
+	@Column(name = "bpassword", nullable = false)
+	private String bpassword;
 
-    @ManyToOne
-    @JoinColumn(name = "current_location", referencedColumnName = "location_id", insertable = false, updatable = false)
-    private LocationPoint locationPoint;
-    
-    @OneToMany (mappedBy = "person", fetch = FetchType.EAGER)
-    private List <UserAuthority> autorities;
-    
-//    public Person(String firstName, String email, String bpassword) {
-//    	
-//    }
+	@ManyToOne
+	@JoinColumn(name = "current_location", referencedColumnName = "location_id", insertable = false, updatable = false)
+	private LocationPoint locationPoint;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "person_id"))
+	@JdbcType(PostgreSQLEnumJdbcType.class)
+	@Column(name = "user_authority")
+	private List<Authority> autorities;
 }

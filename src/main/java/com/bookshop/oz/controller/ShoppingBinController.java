@@ -8,16 +8,10 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class CustomerController {
-	
-	@GetMapping("/shopping_bin")
+@RequestMapping("/shopping_bin")
+public class ShoppingBinController {
+	@GetMapping
 	public String shoppingBin() {
-		return "customer/shopping_bin";
+		return "pages/shopping_bin";
 	}
-	
-	@GetMapping("/orders")
-	public String orders(){
-		return "customer/orders";
-	}
-	
 }

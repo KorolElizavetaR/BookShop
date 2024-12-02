@@ -23,6 +23,9 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 	private final BookProductRepository bookProductRepository;
 
+	/*
+	 * На данном этапе мы НЕ сделали заказ
+	 */
 	@Transactional(readOnly = false)
 	public Order addOrderToShoppingBin(Person person, String bookId) {
 		BookProduct bookProduct = bookProductRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException());
@@ -31,4 +34,13 @@ public class OrderService {
 		return orderRepository.save(order);
 	}
 
+	/**
+	 * CUSTOMER подтверждает заказ
+	 * 
+	 * @implNote PENDING_ARRIVAL - был на складе
+	 * @implNote ARRIVED - был в магазине
+	 */
+	public Order submitOrderCustomer() {
+		
+	}
 }
