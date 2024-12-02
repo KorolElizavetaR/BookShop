@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bookshop.oz.dto.BookProductDTOBooksForMainPage;
+import com.bookshop.oz.dto.BookProductDTOItem;
 import com.bookshop.oz.dto.LocationPointDTO;
 import com.bookshop.oz.dto.LocationPointDTOShops;
 import com.bookshop.oz.model.BookProduct;

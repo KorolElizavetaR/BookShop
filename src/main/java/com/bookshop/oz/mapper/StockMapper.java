@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bookshop.oz.dto.BookProductDTOBooksForMainPage;
+import com.bookshop.oz.dto.BookProductDTOItem;
 import com.bookshop.oz.dto.StockDTO;
 import com.bookshop.oz.model.BookProduct;
 import com.bookshop.oz.model.Stock;

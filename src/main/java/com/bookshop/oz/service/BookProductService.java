@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookshop.oz.dto.BookProductDTO;
-import com.bookshop.oz.dto.BookProductDTOBooksForMainPage;
+import com.bookshop.oz.dto.BookProductDTOItem;
 import com.bookshop.oz.mapper.BookProductMapper;
 import com.bookshop.oz.model.BookProduct;
 import com.bookshop.oz.repository.BookProductRepository;
@@ -25,10 +25,10 @@ public class BookProductService {
 	@Autowired
 	private BookProductMapper bookProductMapper;
 
-	public List<BookProductDTOBooksForMainPage> getAllItemsForMainPage() {
+	public List<BookProductDTOItem> getAllItemsForMainPage() {
 		List<BookProduct> books = bookProductRepository.findAllJoin();
-		List<BookProductDTOBooksForMainPage> booksDTO = books.stream()
-				.map(bookProductMapper::getBookProductDTO__BookFetcher).collect(Collectors.toList());
+		List<BookProductDTOItem> booksDTO = books.stream()
+				.map(bookProductMapper::getBookProductDTOItem).collect(Collectors.toList());
 		return booksDTO;
 	}
 
@@ -37,10 +37,10 @@ public class BookProductService {
 		return bookProductMapper.getBookProductDTO(bookProduct);
 	}
 
-	public List<BookProductDTOBooksForMainPage> findBookLike(String str) {
+	public List<BookProductDTOItem> findBookLike(String str) {
 		List<BookProduct> books = bookProductRepository.findByBookNameContainingIgnoreCase(str);
-		List<BookProductDTOBooksForMainPage> booksDTO = books.stream()
-				.map(bookProductMapper::getBookProductDTO__BookFetcher).collect(Collectors.toList());
+		List<BookProductDTOItem> booksDTO = books.stream()
+				.map(bookProductMapper::getBookProductDTOItem).collect(Collectors.toList());
 		return booksDTO;
 	}
 }

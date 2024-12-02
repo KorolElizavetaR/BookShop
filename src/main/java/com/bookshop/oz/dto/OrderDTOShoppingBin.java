@@ -24,6 +24,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * DTO модель для /shopping_bin
@@ -31,10 +32,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors (chain = true)
 public class OrderDTOShoppingBin {
 	private Long orderId;
-	private LocationPoint location;
+	private LocationPointDTO location;
 	private LocalDateTime createdAt;
-	private BookProduct bookProduct;
+	private BookProductDTOItem bookProduct;
 	private Integer quantity;
 }

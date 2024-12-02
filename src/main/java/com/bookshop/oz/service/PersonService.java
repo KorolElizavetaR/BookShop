@@ -19,6 +19,7 @@ import com.bookshop.oz.model.Person;
 import com.bookshop.oz.model.enumeration.Authority;
 import com.bookshop.oz.repository.LocationPointRepository;
 import com.bookshop.oz.repository.PersonRepository;
+import com.bookshop.oz.util.AuthUtil;
 import com.bookshop.oz.util.PersonDetailsSecurity;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,8 @@ public class PersonService implements UserDetailsService {
 	private final PasswordEncoder passwordEncoder;
 
 	private final PersonMapper personMapper;
+
+	private final AuthUtil authUtil;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -54,7 +57,8 @@ public class PersonService implements UserDetailsService {
 	}
 
 	@Transactional(readOnly = false)
-	public void changeLocationPoint(String locationPointID, Person person) {
+	public void changeLocationPoint(String locationPointID) {
+		Person person = authUtil.getPersonFromAuth();
 		LocationPoint locationPoint = locationPointRepository.findById(locationPointID)
 				.orElseThrow(() -> new LocationNotFoundException());
 		person.setLocationPoint(locationPoint);

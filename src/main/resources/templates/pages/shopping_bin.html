@@ -8,6 +8,7 @@
     <title>Корзина товаров</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <script src="/js/quantityModifier.js" th:href="@{/js/quantityModifier.js}" defer></script>
 </head>
 
 <body>
@@ -16,7 +17,51 @@
     </header>
 
     <main>
-       
+        <div>
+            <div th:if="${!isLoggedIntoSystem}">
+                <p>Авторизируйтесь для просмотра заказов</p>
+            </div>
+
+            <div th:if="${isLoggedIntoSystem}">
+                <div th:if="${shoppingBin == null || shoppingBin.isEmpty()}">
+                    <p>В корзине нет товаров</p>
+                </div>
+
+                <div th:if="${shoppingBin != null && !shoppingBin.isEmpty()}">
+                    <table>
+                        <tbody>
+                            <tr th:each="item : ${shoppingBin}">
+                                <td th:text="'Заказ № ' + ${item.orderId}"></td>
+                                <td><img th:src="${item.bookProduct.book.coverUrl}" alt="Book Image" width="100" />
+                                </td>
+                                <td th:text="${item.bookProduct.book.title}"></td>
+                                <td th:text="${item.bookProduct.book.author}"></td>
+                                <td th:text="${item.bookProduct.price * item.quantity} + ' $'"></td>
+                                <td>
+                                    <div>
+                                        <button type="button" th:onclick="|updateQuantity(${item.orderId}, -1)|"
+                                            th:disabled="${item.quantity <= 1}">-</button>
+                                        <span th:id="'quantity-' + ${item.orderId}" th:text="${item.quantity}"></span>
+                                        <button type="button"
+                                            th:onclick="|updateQuantity(${item.orderId}, 1)|">+</button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <form th:action="@{/shopping_bin/{id}/change_quantity(id=${item.orderId})}"
+                                        method="patch">
+                                        <button type="submit" th:id="'save-' + ${item.orderId}"
+                                            disabled>Сохранить</button>
+                                    </form>
+                                    <form th:action="@{/shopping_bin/{id}(id=${item.orderId})}" method="delete">
+                                        <button type="submit">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </main>
 
 </body>

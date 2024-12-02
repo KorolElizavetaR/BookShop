@@ -11,11 +11,11 @@ import org.springframework.http.HttpStatus;
 
 @ControllerAdvice
 public class SecurityExceptionHandlerController {
-	
+
 	@ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public String handleAccessDeniedException(AccessDeniedException ex, Model model) {
-        model.addAttribute("errorMessage", "You don't have permission to access this page.");
-        return "redirect:/forbidden";
-    }
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public String handleAccessDeniedException(AccessDeniedException ex, Model model) {
+		model.addAttribute("errorMessage", "You don't have permission to access this page.");
+		return "redirect:/forbidden";
+	}
 }

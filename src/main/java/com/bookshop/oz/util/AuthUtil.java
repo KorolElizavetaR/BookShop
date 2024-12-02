@@ -22,4 +22,10 @@ public class AuthUtil {
 		PersonDetailsSecurity personDetails = (PersonDetailsSecurity) auth.getPrincipal();
 		return personDetails.getPerson();
 	}
+	
+	public boolean isCustomer() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return !(auth.getAuthorities().stream()
+				.anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER")));
+	}
 }

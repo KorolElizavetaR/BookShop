@@ -46,18 +46,17 @@ public class ShopsController {
 			person = authUtil.getPersonFromAuth();
 			model.addAttribute("personLocation", person.getLocationPoint());
 		}
-		List <LocationPointDTOShops> shops = locationPointService.getShops();
+		List<LocationPointDTOShops> shops = locationPointService.getShops();
 		model.addAttribute("shops", shops);
 		return "pages/shops";
 	}
-	
+
 	/**
 	 * Исправляет текущую локацию человека на другую
 	 */
-	@PatchMapping ("/{id}")
+	@PatchMapping("/{id}")
 	public String changeLocationPoint(@PathVariable("id") String id) {
-		Person person = authUtil.getPersonFromAuth();
-		personService.changeLocationPoint(id, person);
+		personService.changeLocationPoint(id);
 		return "redirect:/shops";
 	}
 }
