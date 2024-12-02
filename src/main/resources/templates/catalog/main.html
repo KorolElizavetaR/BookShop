@@ -34,11 +34,11 @@
 						<div>
 							<h2 th:text="${item.book.title}">Book Title</h2>
 							<p>
-								<strong>Author:</strong>
+								<strong>Автор:</strong>
 								<span th:text="${item.book.author}">Author Name</span>
 							</p>
 							<p>
-								<strong>Price:</strong>
+								<strong>Цена:</strong>
 								<span th:text="${#numbers.formatCurrency(item.price)}">Price</span>
 							</p>
 							<p th:if="${item.discount > 0}">

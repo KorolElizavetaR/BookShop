@@ -30,7 +30,7 @@ public class SecurityConfig {
 				.hasAnyRole("ADMIN", "SHOP_ASSISTANT", "CUSTOMER", "ECONOMIST")
 				.requestMatchers("/orders", "/shopping_bin").hasRole("CUSTOMER")
 				.requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/**", "/js/**", "/images/**",
-						"/personal/reg", "/api/pagesCounter")
+						"/personal/reg", "/shops")
 				.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
 						.failureUrl("/personal/login?error").permitAll())

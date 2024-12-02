@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bookshop.oz.dto.BookProductDTO;
 import com.bookshop.oz.dto.LocationPointDTO;
@@ -13,8 +14,13 @@ import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.model.enumeration.Authority;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class BookAvailabibltyChecker {
+	private final AuthUtil authChecker;
+
 	private final int CODE_AVAILABLE_IN_SHOP = 1;
 	private final int CODE_AVAILABLE_IN_STOCK = 2;
 	private final int CODE_NOT_AUTHORIZED = -1;
@@ -39,12 +45,10 @@ public class BookAvailabibltyChecker {
 	 */
 
 	public byte getAvailabilityCode(BookProductDTO bookProductDTO) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ANONYMOUS"))) {
+		if (!authChecker.isLoggedIntoSystem()) {
 			return CODE_NOT_AUTHORIZED;
 		}
-		PersonDetailsSecurity personDetails = (PersonDetailsSecurity) auth.getPrincipal();
-		Person person = personDetails.getPerson();
+		Person person = authChecker.getPersonFromAuth();
 		if (!person.getAutorities().stream().anyMatch(authority -> authority == Authority.ROLE_CUSTOMER)) {
 			return CODE_NO_AUTHORITY_CUSTOMER;
 		}

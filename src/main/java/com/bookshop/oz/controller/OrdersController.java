@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class NavBarController {
+public class OrdersController {
 
 	@GetMapping("/orders")
 	public String orders() {
-		return "customer/orders";
+		return "pages/orders";
 	}
 }

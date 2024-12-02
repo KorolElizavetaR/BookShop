@@ -43,7 +43,7 @@ public class StockMapper {
 
 	public List<StockDTO> getStockListDTO(List<Stock> stockList) {
 		List<StockDTO> stockListDTO = new ArrayList<>();
-		for (Stock element: stockList) {
+		for (Stock element : stockList) {
 			stockListDTO.add(getStockDTO(element));
 		}
 		return stockListDTO;

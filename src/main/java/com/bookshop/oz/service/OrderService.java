@@ -40,7 +40,7 @@ public class OrderService {
 	 * @implNote PENDING_ARRIVAL - был на складе
 	 * @implNote ARRIVED - был в магазине
 	 */
-	public Order submitOrderCustomer() {
-		
-	}
+//	public Order submitOrderCustomer() {
+//		
+//	}
 }

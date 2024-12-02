@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступные магазины</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/shops-loc-list.css}" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+    </header>
+
+    <main class="paddings">
+        <!-- <div th:if="${isAuthorized}">
+            <h2>Текущая локация</h2>
+            <p th:if="${personLocation == null}">Текущая локация не установлена</p>
+            <p th:if="${personLocation != null}" th:text="'Текущая локация: ' + ${personLocation.city} + ', ' + ${personLocation.address}"></p>
+        </div>
+        <div th:if="${!isAuthorized}">
+            <p>Войдите в систему чтобы отобразить свою текущую локацию</p>
+        </div> -->
+
+        <!-- Current Location Section -->
+        <!-- <div class="location-display">
+            <h2 class="location-display__header">Текущая локация</h2>
+            <p class="location-display__message location-display__message--authorized"
+                th:if="${personLocation == null}">Текущая локация не установлена</p>
+            <p class="location-display__message location-display__message--authorized" th:if="${personLocation != null}"
+                th:text="'Текущая локация: ' + ${personLocation.city} + ', ' + ${personLocation.address}"></p>
+        </div> -->
+
+
+
+        <!-- <div class="location-display" th:if="${!isAuthorized}">
+            <p class="location-display__message location-display__message--unauthorized">
+                Войдите в систему чтобы отобразить свою текущую локацию
+            </p>
+        </div> -->
+
+        <h2 class="location-display__header">Текущая локация</h2>
+        <div th:if="${isAuthorized}">
+            <p class="location-display__message location-display__message--authorized"
+                th:if="${personLocation == null}">Текущая локация не установлена</p>
+            <p class="location-display__message location-display__message--authorized" th:if="${personLocation != null}"
+                th:text="'Текущая локация: ' + ${personLocation.city} + ', ' + ${personLocation.address}"></p>
+        </div>
+        <div class="location-display" th:if="${!isAuthorized}">
+            <p class="location-display__message location-display__message--unauthorized">
+                Войдите в систему чтобы отобразить свою текущую локацию
+            </p>
+        </div>
+
+
+        <!-- List of Locations -->
+        <section class="location-list">
+            <h2 class="location-list__header">Наши магазины</h2>
+            <table class="location-list__table">
+                <tbody>
+                    <tr th:each="shop : ${shops}">
+                        <td th:text="${shop.city}">Город</td>
+                        <td th:text="${shop.address}">Адрес</td>
+                        <td class="location-list__cell--action">
+                            <form th:action="@{'/shop/' + ${shop.locationId}}" method="post">
+                                <button type="submit" class="location-list__button" th:disabled="${!isAuthorized}">
+                                    Выбрать магазин
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+
+</body>
+
+</html>

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.bookshop.oz.dto.BookProductDTOBooksForMainPage;
 import com.bookshop.oz.dto.LocationPointDTO;
+import com.bookshop.oz.dto.LocationPointDTOShops;
 import com.bookshop.oz.model.BookProduct;
 import com.bookshop.oz.model.LocationPoint;
 
@@ -16,5 +17,9 @@ public class LocationMapper {
 	
 	public LocationPointDTO getLocationPointDTO(LocationPoint locationPoint) {
 		return modelMapper.map(locationPoint, LocationPointDTO.class);
+	}
+	
+	public LocationPointDTOShops getLocationPointDTOShops(LocationPoint locationPoint) {
+		return modelMapper.map(locationPoint, LocationPointDTOShops.class);
 	}
 }
