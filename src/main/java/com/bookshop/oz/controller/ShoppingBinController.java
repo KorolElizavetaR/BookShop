@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bookshop.oz.dto.OrderDTOShoppingBin;
+import com.bookshop.oz.dto.OrderDTO;
 import com.bookshop.oz.model.Person;
+import com.bookshop.oz.model.enumeration.OrderStatus;
 import com.bookshop.oz.service.OrderService;
 import com.bookshop.oz.util.AuthUtil;
 
@@ -37,7 +38,8 @@ public class ShoppingBinController {
 		model.addAttribute("isLoggedIntoSystem", isLoggedIntoSystem);
 		if (authUtil.isLoggedIntoSystem()) {
 			Person person = authUtil.getPersonFromAuth();
-			List<OrderDTOShoppingBin> shoppingBin = orderService.getOrdersFromShoppingBin(person);
+			List<OrderDTO> shoppingBin = orderService.getOrders(person,
+					OrderStatus.SHOPPING_BIN);
 			model.addAttribute("shoppingBin", shoppingBin);
 		}
 		return "pages/shopping_bin";
@@ -57,16 +59,16 @@ public class ShoppingBinController {
 	 * Переносит товар из корзины в заказы. Логика перемещения указана в сервисном
 	 * слое
 	 * 
-	 * @param id - ISBN книги
+	 * @param id - orderId
 	 */
 	@PatchMapping("/{id}")
-	public String submitOrderItem(@PathVariable("id") Integer id) {
-
+	public String submitOrderItem(@PathVariable("id") Long id) {
+		orderService.submitCustomerOrder(id);
 		return "redirect:/shopping_bin";
 	}
 
 	@PatchMapping("/{id}/change_quantity")
-	public String submitChangeQuantity(@PathVariable("id") Long id, Integer quantity) {
+	public String submitChangeQuantity(@PathVariable("id") Long id, Short quantity) {
 		orderService.updateQuantity(quantity, id);
 		return "redirect:/shopping_bin";
 	}

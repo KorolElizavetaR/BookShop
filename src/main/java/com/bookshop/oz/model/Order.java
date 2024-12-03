@@ -47,9 +47,14 @@ public class Order {
 	private LocationPoint location;
 
 	@PastOrPresent(message = "Created date cannot be in the future")
-	@Column(name = "created_at", nullable = false)
+	@Column(name = "ordered_at", nullable = false)
 	@CreationTimestamp
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private LocalDateTime orderedAt;
+	
+	@PastOrPresent(message = "Created date cannot be in the future")
+	@Column(name = "arrived_at", nullable = false)
+	@CreationTimestamp
+	private LocalDateTime arrivedAt;
 
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@NotNull(message = "Order status is required")
@@ -72,5 +77,5 @@ public class Order {
 
 	@Positive(message = "Quantity must be greater than 0")
 	@Column(name = "quantity", nullable = false)
-	private Integer quantity;
+	private Short quantity;
 }

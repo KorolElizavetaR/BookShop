@@ -33,10 +33,12 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors (chain = true)
-public class OrderDTOShoppingBin {
+public class OrderDTO {
 	private Long orderId;
 	private LocationPointDTO location;
-	private LocalDateTime createdAt;
+	private LocalDateTime orderedAt;
+	private LocalDateTime arrivedAt;
+	private LocalDateTime closedAt;
 	private BookProductDTOItem bookProduct;
-	private Integer quantity;
+	private Short quantity;
 }

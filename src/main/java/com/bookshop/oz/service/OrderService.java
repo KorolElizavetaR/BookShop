@@ -1,17 +1,20 @@
 package com.bookshop.oz.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bookshop.oz.dto.OrderDTOShoppingBin;
+import com.bookshop.oz.dto.OrderDTO;
 import com.bookshop.oz.exception.BookNotFoundException;
 import com.bookshop.oz.exception.OrderNotFoundException;
 import com.bookshop.oz.exception.StockNotFoundException;
 import com.bookshop.oz.mapper.OrderMapper;
 import com.bookshop.oz.model.BookProduct;
+import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.model.Order;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.model.Stock;
@@ -42,29 +45,32 @@ public class OrderService {
 	public Order addOrderToShoppingBin(Person person, String bookId) {
 		BookProduct bookProduct = bookProductRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException());
 		Order order = new Order().setCustomer(person).setLocation(person.getLocationPoint())
-				.setStatus(OrderStatus.SHOPPING_BIN).setBookProduct(bookProduct).setQuantity(1);
+				.setStatus(OrderStatus.SHOPPING_BIN).setBookProduct(bookProduct).setQuantity((short) 1);
 		return orderRepository.save(order);
 	}
 
 	/**
-	 * CUSTOMER подтверждает заказ
+	 * CUSTOMER подтверждает заказ. Изменяем статус заказа. Изменяем кол-во товара.
 	 * 
 	 * @implNote PENDING_ARRIVAL - был на складе
-	 * @implNote ARRIVED - был в магазине 
-	 * ------------------------------ 
-	 * Реализовать логику проверки количества товара.
+	 * @implNote ARRIVED - был в магазине ------------------------------ Реализовать
+	 *           логику проверки количества товара.
 	 * 
 	 */
 	@Transactional(readOnly = false)
-	public Order submitOrderCustomer(Person person, String isbn) {
-		Order order = orderRepository.findOrderByPersonStatusAndIsbn(person, OrderStatus.SHOPPING_BIN, isbn);
-		Stock stockItem = stockRepository.findByLocationIdAndIsbn(order.getLocation().getLocationId(), isbn).orElse(
-				stockRepository.findByIsbnAndIsStorageTrue(isbn).orElseThrow(() -> new StockNotFoundException()));
+	public Order submitCustomerOrder(Long orderId) {
+		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
+		Stock stockItem = stockRepository
+				.findByLocationIdAndIsbn(order.getLocation().getLocationId(), order.getBookProduct().getIsbn())
+				.orElse(stockRepository.findByIsbnAndIsStorageTrue(order.getBookProduct().getIsbn())
+						.orElseThrow(() -> new StockNotFoundException()));
+		order.setOrderedAt(LocalDateTime.now());
 		if (stockItem.getLocation().getIsStorage()) {
 			order.setStatus(OrderStatus.PENDING_ARRIVAL);
 		} else {
-			order.setStatus(OrderStatus.ARRIVED);
+			order.setStatus(OrderStatus.ARRIVED).setArrivedAt(order.getOrderedAt());
 		}
+		stockItem.setQuantity((short) (stockItem.getQuantity() - order.getQuantity()));
 		return order;
 	}
 
@@ -87,15 +93,45 @@ public class OrderService {
 	 * @param orderId
 	 */
 	@Transactional(readOnly = false)
-	public void updateQuantity(Integer quantity, Long orderId) {
+	public void updateQuantity(Short quantity, Long orderId) {
 		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
 		order.setQuantity(quantity);
 	}
 
-	public List<OrderDTOShoppingBin> getOrdersFromShoppingBin(Person person) {
-		List<Order> orders = orderRepository.findOrdersByPersonAndStatus(person, OrderStatus.SHOPPING_BIN);
-		List<OrderDTOShoppingBin> ordersDTO = orders.stream().map(orderMapper::getOrderDTOShoppingBin)
-				.collect(Collectors.toList());
+	public List<OrderDTO> getOrders(Person person, OrderStatus status) {
+		List<Order> orders = orderRepository.findOrdersByPersonAndStatus(person, status);
+		List<OrderDTO> ordersDTO = orders.stream().map(orderMapper::getOrderDTO).collect(Collectors.toList());
 		return ordersDTO;
+	}
+
+	public List<OrderDTO> getOrdersForShopAssistant(LocationPoint location, OrderStatus status) {
+		List<Order> orders = orderRepository.findOrdersByLocationAndStatus(location, status);
+		List<OrderDTO> ordersDTO = orders.stream().map(orderMapper::getOrderDTO).collect(Collectors.toList());
+		return ordersDTO;
+	}
+
+	@Transactional(readOnly = false)
+	public void approveArrival(Long orderId) {
+		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
+		order.setStatus(OrderStatus.ARRIVED).setArrivedAt(LocalDateTime.now());
+	}
+	
+	@Transactional(readOnly = false)
+	public void closeOrder(Long orderId) {
+		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
+		order.setStatus(OrderStatus.CLOSED).setClosedAt(LocalDateTime.now());
+	}
+	
+	@Transactional(readOnly = false)
+	public void cancelOrder(LocationPoint location, Long orderId) {
+		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
+		order.setStatus(OrderStatus.CANCELED).setClosedAt(LocalDateTime.now());
+		Optional<Stock> stock = stockRepository.findByLocationIdAndIsbn(location.getLocationId(), order.getBookProduct().getIsbn());
+		if (stock.isPresent()) {
+			stock.get().setQuantity((short) (stock.get().getQuantity()+order.getQuantity()));
+		} else {
+			Stock newStock = new Stock (location, order.getBookProduct(), order.getQuantity());
+			stockRepository.save(newStock);
+		}
 	}
 }

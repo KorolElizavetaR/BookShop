@@ -8,15 +8,96 @@
     <title>Мои заказы</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/order.css}" rel="stylesheet" />
 </head>
 
 <body>
     <header>
         <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
     </header>
-    <body>
-        <h1>ORDERS</h1>
-    </body>
+
+    <main class="paddings">
+        <section class="orders-section">
+            <h2 class="orders-section__title">Готовы к выдаче</h2>
+            <table class="orders-table">
+                <tbody class="orders-table__body">
+                    <tr class="orders-table__row" th:each="item : ${arrivedOrders}">
+                        <td class="orders-table__cell" th:text="'Заказ № ' + ${item.orderId}"></td>
+                        <td class="orders-table__cell">
+                            <img th:src="${item.bookProduct.book.coverUrl}" alt="Book Image"
+                                class="orders-table__image" />
+                        </td>
+                        <td class="orders-table__cell">
+                            <div class="orders-table__book-details">
+                                <span class="orders-table__book-title"
+                                    th:text="${item.bookProduct.book.title}"></span><br />
+                                <span class="orders-table__book-author"
+                                    th:text="${item.bookProduct.book.author}"></span>
+                            </div>
+                        </td>
+                        <td class="orders-table__cell"
+                            th:text="'Дата заказа: ' + ${#temporals.format(item.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td class="orders-table__cell"
+                            th:text="'Прибыл на пункт: ' + ${item.location.city} + ', ' + ${item.location.address}">
+                        </td>
+                        <td class="orders-table__cell"
+                            th:text="'Общая стоимость: ' + ${item.bookProduct.price * item.quantity} + ' $'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="orders-section">
+            <h2 class="orders-section__title">Ожидают прибытия</h2>
+            <table class="orders-table">
+                <tbody class="orders-table__body">
+                    <tr class="orders-table__row" th:each="item : ${pendingArrivalOrders}">
+                        <td class="orders-table__cell" th:text="'Заказ № ' + ${item.orderId}"></td>
+                        <td class="orders-table__cell">
+                            <img th:src="${item.bookProduct.book.coverUrl}" alt="Book Image"
+                                class="orders-table__image" />
+                        </td>
+                        <td class="orders-table__cell">
+                            <div class="orders-table__book-details">
+                                <span class="orders-table__book-title"
+                                    th:text="${item.bookProduct.book.title}"></span><br />
+                                <span class="orders-table__book-author"
+                                    th:text="${item.bookProduct.book.author}"></span>
+                            </div>
+                        </td>
+                        <td class="orders-table__cell"
+                            th:text="'Дата заказа: ' + ${#temporals.format(item.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td class="orders-table__cell"
+                            th:text="'Доставка: ' + ${item.location.city} + ', ' + ${item.location.address}">
+                        </td>
+                        <td class="orders-table__cell"
+                            th:text="'Общая стоимость: ' + ${item.bookProduct.price * item.quantity} + ' $'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="orders-section">
+            <h2 class="orders-section__title">Закрытые заказы</h2>
+            <table class="orders-table">
+                <tbody class="orders-table__body">
+                    <tr class="orders-table__row" th:each="item : ${closedOrders}">
+                        <td class="orders-table__cell" th:text="'Заказ № ' + ${item.orderId}"></td>
+                        <td class="orders-table__cell">
+                            <img th:src="${item.bookProduct.book.coverUrl}" alt="Book Image"
+                                class="orders-table__image" />
+                        </td>
+                        <td class="orders-table__cell" th:text="${item.bookProduct.book.title}"></td>
+                        <td class="orders-table__cell" th:text="${item.bookProduct.book.author}"></td>
+
+                        <td class="orders-table__cell"
+                            th:text="'Заказ закрыт ' + ${#dates.format(item.closedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
     <footer></footer>
 </body>
 

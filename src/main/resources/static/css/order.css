@@ -1,0 +1,98 @@
+.page {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
+}
+
+.page__header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.page__title {
+    color: #333;
+}
+
+.page__main {
+    padding: 20px;
+}
+
+.orders-section {
+    padding: 20px 0;
+}
+
+.orders-section__title {
+    margin-top: 40px;
+    color: #555;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.orders-table__header {
+    background-color: #f4f4f4;
+}
+
+.orders-table__row:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.orders-table__row:hover {
+    background-color: #e6e6e6;
+}
+
+.orders-table__cell {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.orders-table__cell--header {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    color: #333;
+}
+
+.orders-table__image {
+    display: block;
+    margin: 0 auto;
+    max-width: 100px;
+    height: auto;
+}
+
+.orders-table__button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.orders-table__button:hover {
+    background-color: #0056b3;
+}
+
+.orders-table__book-details {
+    display: inline-block;
+    text-align: left;
+}
+
+.orders-table__book-title {
+    font-weight: bold;
+    display: block; /* Ensures the title takes its own line */
+    color: #333;
+}
+
+.orders-table__book-author {
+    font-style: italic;
+    color: #666;
+    margin-top: 2px; /* Adds spacing between title and author */
+    display: block;
+}
