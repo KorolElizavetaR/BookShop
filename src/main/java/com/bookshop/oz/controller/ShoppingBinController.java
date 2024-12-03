@@ -18,7 +18,7 @@ import com.bookshop.oz.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @implNote - изменение кол-ва товаров в корзине 
+ * @implNote - изменение кол-ва товаров в корзине
  * @implNote - кнопка заказать
  * @implNote - кнопка отменить
  * @implNote - указать итоговую цену (цена товара * кол-во товаров)
@@ -46,23 +46,28 @@ public class ShoppingBinController {
 	/**
 	 * Отвечает за удаление товара из корзины.
 	 */
-	@DeleteMapping()
+	@DeleteMapping("/{id}")
 	public String removeFromShoppingBin() {
+		System.out.println("removeFromShoppingBin");
 
+		return "redirect:/shopping_bin";
 	}
 
 	/**
-	 * Переносит товар из корзины в заказы.
-	 * Логика перемещения указана в сервисном слое
+	 * Переносит товар из корзины в заказы. Логика перемещения указана в сервисном
+	 * слое
+	 * 
+	 * @param id - ISBN книги
 	 */
 	@PatchMapping("/{id}")
 	public String submitOrderItem(@PathVariable("id") Integer id) {
-		
+
+		return "redirect:/shopping_bin";
 	}
-	
+
 	@PatchMapping("/{id}/change_quantity")
-	public String submitChangeQuantity(@PathVariable("id") Integer id, Integer quantity) {
-		System.out.println(quantity);
+	public String submitChangeQuantity(@PathVariable("id") Long id, Integer quantity) {
+		orderService.updateQuantity(quantity, id);
 		return "redirect:/shopping_bin";
 	}
 }

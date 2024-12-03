@@ -59,12 +59,20 @@ public class CatalogController {
 		return "catalog/product";
 	}
 
+	/**
+	 * Отвечает за перекладывание книги в Shopping Bin
+	 * @param id - isbn книги
+	 * 
+	 * ---------------------------------
+	 * РЕАЛИЗОВАТЬ:
+	 * - Если книга уже обнаружена у человека в корзине, ничего не делать
+	 */
 	@PostMapping("/{id}/shoppingBin")
 	public String toShoppingBin(@PathVariable("id") String id, Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PersonDetailsSecurity personDetails = (PersonDetailsSecurity) auth.getPrincipal();
 		Person person = personDetails.getPerson();
 		orderService.addOrderToShoppingBin(person, id);
-		return "redirect:/catalog";
+		return "redirect:/shopping_bin";
 	}
 }

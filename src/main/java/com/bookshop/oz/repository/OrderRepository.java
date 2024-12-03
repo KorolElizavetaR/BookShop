@@ -13,4 +13,8 @@ import com.bookshop.oz.model.enumeration.OrderStatus;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 	@Query("SELECT o FROM Order o WHERE o.customer = :person AND o.status = :status")
 	List<Order> findOrdersByPersonAndStatus(@Param("person") Person person, @Param("status") OrderStatus status);
+
+	@Query("SELECT o FROM Order o WHERE o.customer = :person AND o.status = :status AND o.bookProduct.isbn = :isbn")
+	Order findOrderByPersonStatusAndIsbn(@Param("person") Person person, @Param("status") OrderStatus status,
+			@Param("isbn") String isbn);
 }

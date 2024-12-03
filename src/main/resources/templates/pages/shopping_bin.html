@@ -36,11 +36,14 @@
                                 </td>
                                 <td th:text="${item.bookProduct.book.title}"></td>
                                 <td th:text="${item.bookProduct.book.author}"></td>
+                                <td th:text="'Доставка в ' + ${item.location.city} + ',' + ${item.location.address} "></td>
                                 <td th:text="${item.bookProduct.price * item.quantity} + ' $'"></td>
                                 <td>
                                     <div>
-                                        <button type="button" th:onclick="|updateQuantity(${item.orderId}, -1)|"
+                                        <button type="button" th:id="'decrement-' + ${item.orderId}"
+                                            th:onclick="|updateQuantity(${item.orderId}, -1)|"
                                             th:disabled="${item.quantity <= 1}">-</button>
+
                                         <span th:id="'quantity-' + ${item.orderId}" th:text="${item.quantity}"></span>
                                         <button type="button"
                                             th:onclick="|updateQuantity(${item.orderId}, 1)|">+</button>
@@ -48,13 +51,21 @@
                                 </td>
                                 <td>
                                     <form th:action="@{/shopping_bin/{id}/change_quantity(id=${item.orderId})}"
-                                        method="patch">
+                                        th:method="patch">
+                                        <input type="hidden" th:id="'quantity-input-' + ${item.orderId}" name="quantity"
+                                            th:value="${item.quantity}" />
                                         <button type="submit" th:id="'save-' + ${item.orderId}"
                                             disabled>Сохранить</button>
                                     </form>
-                                    <form th:action="@{/shopping_bin/{id}(id=${item.orderId})}" method="delete">
+
+                                    <form th:action="@{/shopping_bin/{id}(id=${item.orderId})}" th:method="delete">
                                         <button type="submit">Удалить</button>
                                     </form>
+
+                                    <form th:action="@{/shopping_bin/{id}(id=${item.orderId})}" th:method="PATCH">
+                                        <button type="submit">Заказать</button>
+                                    </form>
+
                                 </td>
                             </tr>
                         </tbody>
