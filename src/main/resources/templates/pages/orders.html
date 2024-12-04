@@ -66,7 +66,7 @@
                             </div>
                         </td>
                         <td class="orders-table__cell"
-                            th:text="'Дата заказа: ' + ${#temporals.format(item.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                            th:text="'Дата прибытия: ' + ${#temporals.format(item.arrivedAt, 'dd-MM-yyyy HH:mm')}"></td>
                         <td class="orders-table__cell"
                             th:text="'Доставка: ' + ${item.location.city} + ', ' + ${item.location.address}">
                         </td>
@@ -91,7 +91,7 @@
                         <td class="orders-table__cell" th:text="${item.bookProduct.book.author}"></td>
 
                         <td class="orders-table__cell"
-                            th:text="'Заказ закрыт ' + ${#dates.format(item.closedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                            th:text="'Заказ закрыт ' + ${#temporals.format(item.closedAt, 'dd-MM-yyyy HH:mm')}"></td>
                     </tr>
                 </tbody>
             </table>

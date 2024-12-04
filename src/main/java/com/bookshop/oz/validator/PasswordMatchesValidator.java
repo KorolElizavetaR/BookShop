@@ -1,5 +1,6 @@
 package com.bookshop.oz.validator;
 
+import com.bookshop.oz.dto.PersonDTOPasswords;
 import com.bookshop.oz.dto.PersonDTORegister;
 import com.bookshop.oz.validator.annotation.PasswordMatches;
 
@@ -10,7 +11,13 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
 	@Override
 	public boolean isValid(Object obj, ConstraintValidatorContext context) {
-		PersonDTORegister user = (PersonDTORegister) obj;
-		return user.getPassword().equals(user.getConfurmPassword());
+		try {
+			PersonDTORegister user = (PersonDTORegister) obj;
+			return user.getPassword().equals(user.getConfirmPassword());
+		} catch (ClassCastException ex) {
+			PersonDTOPasswords user = (PersonDTOPasswords) obj;
+			return user.getPassword().equals(user.getConfirmPassword());
+		}
 	}
+
 }

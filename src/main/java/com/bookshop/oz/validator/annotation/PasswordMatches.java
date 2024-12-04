@@ -16,7 +16,7 @@ import jakarta.validation.Payload;
 @Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
 public @interface PasswordMatches {
-    String message() default "Passwords don't match";
+    String message() default "Пароли не совпадают.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

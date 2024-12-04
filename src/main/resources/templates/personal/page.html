@@ -7,14 +7,36 @@
     <title>Личный кабинет</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/personal.css}" rel="stylesheet" />
 </head>
 
 <body>
     <header>
         <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
     </header>
-    <main>
-        <h2><span th:text="${person}"></span></h2>
+    <main class="paddings">
+        <div class="personal-info">
+            <div class="personal-info__header">
+                <h2 class="personal-info__title">Личная информация</h2>
+                <a href="/personal/edit" class="personal-info__edit-button">Редактировать</a>
+            </div>
+            <div class="personal-info__content">
+                <p class="personal-info__field"><strong>Имя:</strong> 
+                    <span th:text="${person.firstName}"></span>
+                    <span th:if="${person.lastName != null}" th:text="' ' + ${person.lastName}"></span>
+                </p>
+                <p class="personal-info__field"><strong>Email:</strong> <span th:text="${person.email}"></span></p>
+                <p class="personal-info__field" th:if="${person.phone != null and !person.phone.isBlank()}">
+                    <strong>Телефон:</strong> <span th:text="${person.phone}"></span>
+                </p>
+                
+            </div>
+            <div class="personal-info__logout">
+                <form th:action="@{/logout}" th:method="post">
+                    <input type="submit" value="Выйти" class="personal-info__logout-button" />
+                </form>
+            </div>
+        </div>
     </main>
 </body>
 

@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bookshop.oz.dto.PersonDTOInfo;
+import com.bookshop.oz.dto.PersonDTOPasswords;
 import com.bookshop.oz.dto.PersonDTORegister;
 import com.bookshop.oz.exception.LocationNotFoundException;
 import com.bookshop.oz.exception.PersonNotFoundException;
@@ -48,11 +50,19 @@ public class PersonService implements UserDetailsService {
 	public Optional<Person> findUserByUsername(String username) {
 		return peopleRepository.findByEmail(username);
 	}
+	
+	public Optional<Person> findUserByPhone(String username) {
+		return peopleRepository.findByPhone(username);
+	}
 
+	@Transactional(readOnly = false)
 	public void register(PersonDTORegister personDTO) {
 		Person person = personMapper.getPersonFromPersonDTORegister(personDTO);
 		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()))
 				.setAutorities(Collections.singletonList(Authority.ROLE_CUSTOMER));
+		if (person.getPhone().isBlank()) {
+			person.setPhone(null);
+		}
 		peopleRepository.save(person);
 	}
 
@@ -62,6 +72,21 @@ public class PersonService implements UserDetailsService {
 		LocationPoint locationPoint = locationPointRepository.findById(locationPointID)
 				.orElseThrow(() -> new LocationNotFoundException());
 		person.setLocationPoint(locationPoint);
+		peopleRepository.save(person);
+	}
+
+	@Transactional(readOnly = false)
+	public void changePassword(PersonDTOPasswords personDTO) {
+		Person person = authUtil.getPersonFromAuth();
+		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()));
+		peopleRepository.save(person);
+	}
+
+	@Transactional(readOnly = false)
+	public void changeInfo(PersonDTOInfo personDTO) {
+		Person person = authUtil.getPersonFromAuth();
+		person.setFirstName(personDTO.getFirstName()).setLastName(personDTO.getLastName())
+				.setPhone(personDTO.getPhone());
 		peopleRepository.save(person);
 	}
 }

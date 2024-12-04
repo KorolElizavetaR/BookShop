@@ -1,0 +1,138 @@
+.personal-info {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Element: personal-info__header */
+.personal-info__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Element: personal-info__title */
+.personal-info__title {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+/* Element: personal-info__edit-button */
+.personal-info__edit-button {
+    font-size: 0.9em;
+    color: #fff;
+    background-color: var(--orange-color-const);
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.personal-info__edit-button:hover {
+    background-color: var(--orange-hover-color-const);
+}
+
+/* Element: personal-info__content */
+.personal-info__content {
+    font-size: 1em;
+    color: #333;
+}
+
+/* Element: personal-info__field */
+.personal-info__field {
+    margin-bottom: 10px;
+}
+
+.personal-info__logout {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Element: personal-info__logout-button */
+.personal-info__logout-button {
+    font-size: 1em;
+    color: #fff;
+    background-color: #dc3545;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.personal-info__logout-button:hover {
+    background-color: #c82333;
+}
+
+
+/* Main Container */
+.edit-page {
+    max-width: 800px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Edit Section Styling */
+.edit-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.edit-section__title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Field Styling */
+.edit-field {
+    margin-bottom: 15px;
+}
+
+.edit-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.edit-field input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Error Message */
+.error-message {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Action Button */
+.edit-action {
+    text-align: center;
+}
+
+.edit-button {
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}

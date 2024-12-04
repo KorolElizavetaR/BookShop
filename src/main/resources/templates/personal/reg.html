@@ -15,7 +15,7 @@
 
         <!-- Last Name -->
         <label for="lastName">Last Name:</label>
-        <input type="text" th:field="*{lastName}" id="lastName" required />
+        <input type="text" th:field="*{lastName}" id="lastName"/>
         <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</div>
         <br/>
 
@@ -39,8 +39,8 @@
 
         <!-- Confirm Password -->
         <label for="confurmPassword">Confirm Password:</label>
-        <input type="password" th:field="*{confurmPassword}" id="confurmPassword" required />
-        <div th:if="${#fields.hasErrors('confurmPassword')}" th:errors="*{confurmPassword}">Password confirmation error</div>
+        <input type="password" th:field="*{confirmPassword}" id="confurmPassword" required />
+        <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confurmPassword}">Password confirmation error</div>
         <br/>
 
         <input type="submit" value="Register" />

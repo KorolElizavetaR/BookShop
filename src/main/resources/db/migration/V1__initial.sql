@@ -78,8 +78,8 @@ INSERT INTO person (first_name, last_name, email, bpassword, current_location) V
 	('Роман', 'Науменко', 'romannaumenko1990@gmail.com', '$2a$12$DFKiD/M.NDdpTyBFM9hiye23ysLYPaj0QI4jVdZElxuQ8NGuUjhfO', 10003); -- userpassword economist 
 
 INSERT INTO user_authorities (person_id, user_authority) VALUES 
-	(21, 'ROLE_CUSTOMER'), (21, 'ROLE_SHOP_ASSISTANT'),
-	(22, 'ROLE_CUSTOMER'), (22, 'ROLE_ADMIN'),
+	(21, 'ROLE_SHOP_ASSISTANT'),
+	(22, 'ROLE_ADMIN'),
 	(23, 'ROLE_CUSTOMER'), (23, 'ROLE_ECONOMIST');
 	
 CREATE TABLE book
@@ -209,6 +209,6 @@ CREATE TABLE orders (
     status order_status NOT NULL,
     closedAt TIMESTAMP,
     shop_assistant_id INT REFERENCES person(person_id),
-	 quantity INT NOT NULL CHECK (quantity > 0),
+	quantity INT NOT NULL CHECK (quantity > 0),
 	isbn char(13) REFERENCES book_product(isbn)
 );

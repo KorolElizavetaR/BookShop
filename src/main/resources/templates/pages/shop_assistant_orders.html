@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои заказы</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/order.css}" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+    </header>
+
+    <main class="paddings">
+        <section class="orders-section">
+            <h1 class="orders-section__title">Заказы</h1>
+    
+            <!-- Search Bar -->
+            <form class="orders-search" th:action="@{/orders}" method="get">
+                <input class="orders-search__input" type="text" name="id" placeholder="Найти заказ по номеру" />
+                <button class="orders-search__button" type="submit">Поиск</button>
+            </form>
+    
+            <!-- Orders Ready for Pickup -->
+            <section class="orders-section__category">
+                <h2 class="orders-section__subtitle">Заказы на пункте выдачи</h2>
+                <table class="orders-table">
+                    <thead class="orders-table__header">
+                        <tr>
+                            <th class="orders-table__cell">Номер заказа</th>
+                            <th class="orders-table__cell">Дата заказа</th>
+                            <th class="orders-table__cell">Общая стоимость</th>
+                            <th class="orders-table__cell">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody class="orders-table__body" th:each="order : ${arrivedOrders}">
+                        <tr class="orders-table__row">
+                            <td class="orders-table__cell" th:text="'Заказ № ' + ${order.orderId}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${#temporals.format(order.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${order.bookProduct.price * order.quantity} + ' $'"></td>
+                            <td class="orders-table__cell">
+                                <form th:action="@{/orders/{id}-closed(id=${order.orderId})}" th:method="PATCH">
+                                    <button type="submit" class="orders-table__button">Подтвердить</button>
+                                </form>
+                                <form th:action="@{/orders/{id}-cancel(id=${order.orderId})}" th:method="PATCH">
+                                    <button type="submit" class="orders-table__button orders-table__button--danger">Отменить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+    
+            <!-- Confirm Arrival Orders -->
+            <section class="orders-section__category">
+                <h2 class="orders-section__subtitle">Подтвердить прибытие на пункт выдачи</h2>
+                <table class="orders-table">
+                    <tbody class="orders-table__body" th:each="order : ${pendingArrivalOrders}">
+                        <tr class="orders-table__row">
+                            <td class="orders-table__cell" th:text="'Заказ № ' + ${order.orderId}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${#temporals.format(order.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${order.bookProduct.price * order.quantity} + ' $'"></td>
+                            <td class="orders-table__cell">
+                                <form th:action="@{/orders/{id}-arrived(id=${order.orderId})}" th:method="PATCH">
+                                    <button type="submit" class="orders-table__button">На пункте выдачи</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+    </main>
+
+    <footer></footer>
+</body>
+
+</html>

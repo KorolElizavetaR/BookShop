@@ -33,18 +33,33 @@ public class ShopAssistantController {
 	@GetMapping()
 	public String orders(Model model) {
 		LocationPoint location = authUtil.getPersonFromAuth().getLocationPoint();
-		List<OrderDTO> pendingArrivalOrders = orderService.getOrdersForShopAssistant(location, OrderStatus.PENDING_ARRIVAL);
-		List<OrderDTO> arrivedOrders = orderService.getOrdersForShopAssistant(location, OrderStatus.PENDING_ARRIVAL);
+		List<OrderDTO> pendingArrivalOrders = orderService.getOrdersForShopAssistant(location,
+				OrderStatus.PENDING_ARRIVAL);
+		List<OrderDTO> arrivedOrders = orderService.getOrdersForShopAssistant(location, OrderStatus.ARRIVED);
 		model.addAttribute("pendingArrivalOrders", pendingArrivalOrders);
 		model.addAttribute("arrivedOrders", arrivedOrders);
 		return "/pages/shop_assistant_orders";
 	}
-	
+
 	/**
 	 * @param id - id заказа
 	 */
-	@PatchMapping("/{id}/arrived")
-	public String approveArrival(@PathVariable ("id") Long id) {
-		
+	@PatchMapping("/{id}-arrived")
+	public String approveArrival(@PathVariable("id") Long id) {
+		orderService.approveArrival(id);
+		return "redirect:/orders";
+	}
+
+	@PatchMapping("/{id}-closed")
+	public String closeOrder(@PathVariable("id") Long id) {
+		orderService.closeOrder(id);
+		return "redirect:/orders";
+	}
+
+	@PatchMapping("/{id}-cancel")
+	public String cancelOrder(@PathVariable("id") Long id) {
+		LocationPoint location = authUtil.getPersonFromAuth().getLocationPoint();
+		orderService.cancelOrder(location, id);
+		return "redirect:/orders";
 	}
 }
