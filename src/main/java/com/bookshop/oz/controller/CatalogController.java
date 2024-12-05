@@ -1,5 +1,7 @@
 package com.bookshop.oz.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookshop.oz.dto.BookProductDTO;
+import com.bookshop.oz.dto.BookProductDTOItem;
 import com.bookshop.oz.dto.LocationPointDTO;
 import com.bookshop.oz.dto.StockDTO;
 import com.bookshop.oz.model.BookProduct;
@@ -36,13 +39,25 @@ public class CatalogController {
 
 	private final BookAvailabibltyChecker bookAvailabibltyChecker;
 
+//	@GetMapping()
+//	public String catalogPage(Model model, @RequestParam(value = "like", required = false) String like, ) {
+//		if (like == null || like.isBlank()) {
+//			model.addAttribute("stock", bookProductService.getAllItemsForMainPage());
+//		} else {
+//			model.addAttribute("stock", bookProductService.findBookLike(like));
+//		}
+//		return "catalog/main";
+//	}
+
 	@GetMapping()
-	public String catalogPage(Model model, @RequestParam(value = "like", required = false) String like) {
-		if (like == null || like.isBlank()) {
-			model.addAttribute("stock", bookProductService.getAllItemsForMainPage());
-		} else {
-			model.addAttribute("stock", bookProductService.findBookLike(like));
-		}
+	public String catalogPage(Model model, @RequestParam(value = "like", required = false) String like,
+			@RequestParam(value = "sort", required = false) String sort) {
+		List<BookProductDTOItem> books = bookProductService.getItems(sort, like);
+		model.addAttribute("stock", books);
+		
+		model.addAttribute("like", like);
+		model.addAttribute("sort", sort);
+		
 		return "catalog/main";
 	}
 
@@ -61,11 +76,11 @@ public class CatalogController {
 
 	/**
 	 * Отвечает за перекладывание книги в Shopping Bin
+	 * 
 	 * @param id - isbn книги
 	 * 
-	 * ---------------------------------
-	 * РЕАЛИЗОВАТЬ:
-	 * - Если книга уже обнаружена у человека в корзине, ничего не делать
+	 *           --------------------------------- РЕАЛИЗОВАТЬ: - Если книга уже
+	 *           обнаружена у человека в корзине, ничего не делать
 	 */
 	@PostMapping("/{id}/shoppingBin")
 	public String toShoppingBin(@PathVariable("id") String id, Model model) {

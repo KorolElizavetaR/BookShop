@@ -22,7 +22,18 @@
 		<form th:action="@{/catalog}" class="search-form">
 			<input type="text" name="like" th:value="${like}" />
 			<button type="submit" value="Искать книгу"></button>
+			<a th:href="@{/catalog(sort=${sort})}" class="clear-button">Очистить</a>
 		</form>
+
+		<form th:action="@{/catalog}" method="get" class="sort-form">
+			<input type="hidden" name="like" th:value="${like}" />
+			<select name="sort" onchange="this.form.submit()">
+				<option value="" th:selected="${#strings.isEmpty(sort)}">По умолчанию</option>
+				<option value="asc" th:selected="${sort == 'asc'}">По возрастанию (цена)</option>
+				<option value="desc" th:selected="${sort == 'desc'}">По убыванию (цена)</option>
+			</select>
+		</form>
+		
 
 		<div class="book-grid">
 			<div th:each="item : ${stock}" class="book-item">

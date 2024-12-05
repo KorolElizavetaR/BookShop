@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookshop.oz.dao.BookProductDao;
 import com.bookshop.oz.dto.BookProductDTO;
 import com.bookshop.oz.dto.BookProductDTOItem;
 import com.bookshop.oz.mapper.BookProductMapper;
@@ -20,13 +21,21 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class BookProductService {
-	@Autowired
 	private final BookProductRepository bookProductRepository;
-	@Autowired
-	private BookProductMapper bookProductMapper;
+	
+	private final BookProductMapper bookProductMapper;
+	
+	private final BookProductDao bookProductDao;
 
-	public List<BookProductDTOItem> getAllItemsForMainPage() {
-		List<BookProduct> books = bookProductRepository.findAllJoin();
+//	public List<BookProductDTOItem> getAllItemsForMainPage() {
+//		List<BookProduct> books = bookProductRepository.findAllJoin();
+//		List<BookProductDTOItem> booksDTO = books.stream()
+//				.map(bookProductMapper::getBookProductDTOItem).collect(Collectors.toList());
+//		return booksDTO;
+//	}
+	
+	public List<BookProductDTOItem> getItems(String order, String like) {
+		List<BookProduct> books = bookProductDao.getItems(order, like);
 		List<BookProductDTOItem> booksDTO = books.stream()
 				.map(bookProductMapper::getBookProductDTOItem).collect(Collectors.toList());
 		return booksDTO;

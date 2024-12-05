@@ -9,23 +9,29 @@
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
     <link th:href="@{/css/order.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar-vertical.css}" rel="stylesheet" />
 </head>
 
 <body>
     <header>
-        <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+        <div class="side-bar">
+            <ul class="nav-links">
+                <li><a href="/catalog" class="">В КАТАЛОГ</a></li>
+                <li><a href="/personal" class="">ЛИЧНЫЙ КАБИНЕТ</a></li>
+            </ul>
+        </div>
     </header>
 
-    <main class="paddings">
+    <main class="paddings left-space">
         <section class="orders-section">
             <h1 class="orders-section__title">Заказы</h1>
-    
+
             <!-- Search Bar -->
             <form class="orders-search" th:action="@{/orders}" method="get">
                 <input class="orders-search__input" type="text" name="id" placeholder="Найти заказ по номеру" />
                 <button class="orders-search__button" type="submit">Поиск</button>
             </form>
-    
+
             <!-- Orders Ready for Pickup -->
             <section class="orders-section__category">
                 <h2 class="orders-section__subtitle">Заказы на пункте выдачи</h2>
@@ -43,21 +49,22 @@
                             <td class="orders-table__cell" th:text="'Заказ № ' + ${order.orderId}"></td>
                             <td class="orders-table__cell"
                                 th:text="${#temporals.format(order.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
-                            <td class="orders-table__cell"
-                                th:text="${order.bookProduct.price * order.quantity} + ' $'"></td>
+                            <td class="orders-table__cell" th:text="${order.bookProduct.price * order.quantity} + ' $'">
+                            </td>
                             <td class="orders-table__cell">
                                 <form th:action="@{/orders/{id}-closed(id=${order.orderId})}" th:method="PATCH">
                                     <button type="submit" class="orders-table__button">Подтвердить</button>
                                 </form>
                                 <form th:action="@{/orders/{id}-cancel(id=${order.orderId})}" th:method="PATCH">
-                                    <button type="submit" class="orders-table__button orders-table__button--danger">Отменить</button>
+                                    <button type="submit"
+                                        class="orders-table__button orders-table__button--danger">Отменить</button>
                                 </form>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-    
+
             <!-- Confirm Arrival Orders -->
             <section class="orders-section__category">
                 <h2 class="orders-section__subtitle">Подтвердить прибытие на пункт выдачи</h2>
@@ -67,8 +74,8 @@
                             <td class="orders-table__cell" th:text="'Заказ № ' + ${order.orderId}"></td>
                             <td class="orders-table__cell"
                                 th:text="${#temporals.format(order.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
-                            <td class="orders-table__cell"
-                                th:text="${order.bookProduct.price * order.quantity} + ' $'"></td>
+                            <td class="orders-table__cell" th:text="${order.bookProduct.price * order.quantity} + ' $'">
+                            </td>
                             <td class="orders-table__cell">
                                 <form th:action="@{/orders/{id}-arrived(id=${order.orderId})}" th:method="PATCH">
                                     <button type="submit" class="orders-table__button">На пункте выдачи</button>
