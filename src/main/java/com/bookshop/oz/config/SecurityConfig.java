@@ -30,9 +30,10 @@ public class SecurityConfig {
 				.hasAnyRole("ADMIN", "SHOP_ASSISTANT", "CUSTOMER", "ECONOMIST")
 				.requestMatchers("/my-orders", "/shopping_bin").hasRole("CUSTOMER").requestMatchers("/orders/**")
 				.hasAnyRole("SHOP_ASSISTANT")
+				.requestMatchers("/ADMIN/**").hasRole("ADMIN")	
 				.requestMatchers("/catalog", "/catalog/{isbn}", "/personal/login", "/css/**", "/js/**", "/images/**",
 						"/personal/reg", "/shops")
-				.permitAll().anyRequest().authenticated())
+				.permitAll().anyRequest().authenticated()) 
 				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
 						.failureUrl("/personal/login?error").permitAll())
 				.logout((logout) -> logout.permitAll()).exceptionHandling((ex) -> ex.accessDeniedPage("/forbidden"));

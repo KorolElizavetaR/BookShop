@@ -67,12 +67,11 @@ public class AuthController {
 	public String changeInfo(@ModelAttribute("personInfo") @Valid PersonDTOInfo person, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
-			// If there are errors, add the person object and errors to the model
-			model.addAttribute("passwords", new PersonDTOPasswords()); // Ensure passwords is in model for password form
-			return "/personal/page_edit"; // return the same view with validation errors
+			model.addAttribute("passwords", new PersonDTOPasswords()); 
+			return "/personal/page_edit"; 
 		}
 		personDetailsService.changeInfo(person);
-		return "redirect:/personal/edit"; // Redirect to prevent resubmission
+		return "redirect:/personal/edit"; 
 	}
 
 	@PatchMapping("/edit/change-password")

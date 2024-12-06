@@ -20,6 +20,7 @@ import com.bookshop.oz.model.Person;
 import com.bookshop.oz.model.Stock;
 import com.bookshop.oz.model.enumeration.OrderStatus;
 import com.bookshop.oz.repository.BookProductRepository;
+import com.bookshop.oz.repository.LocationPointRepository;
 import com.bookshop.oz.repository.OrderRepository;
 import com.bookshop.oz.repository.StockRepository;
 
@@ -35,6 +36,7 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 	private final BookProductRepository bookProductRepository;
 	private final StockRepository stockRepository;
+	private final LocationPointRepository locationPointRepository;
 
 	private final OrderMapper orderMapper;
 
@@ -110,27 +112,37 @@ public class OrderService {
 		return ordersDTO;
 	}
 
+	public Optional<Order> getOrderByIdAndLocation(LocationPoint location, Long orderId) {
+		Optional<Order> order = orderRepository.findByLocationAndOrderId(location, orderId);
+		return order;
+	}
+
 	@Transactional(readOnly = false)
 	public void approveArrival(Long orderId) {
 		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
 		order.setStatus(OrderStatus.ARRIVED).setArrivedAt(LocalDateTime.now());
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void closeOrder(Long orderId) {
 		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
 		order.setStatus(OrderStatus.CLOSED).setClosedAt(LocalDateTime.now());
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void cancelOrder(LocationPoint location, Long orderId) {
 		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
 		order.setStatus(OrderStatus.CANCELED).setClosedAt(LocalDateTime.now());
-		Optional<Stock> stock = stockRepository.findByLocationIdAndIsbn(location.getLocationId(), order.getBookProduct().getIsbn());
+
+		LocationPoint existingLocation = locationPointRepository.findById(location.getLocationId())
+				.orElseThrow(() -> new RuntimeException("Location not found"));
+
+		Optional<Stock> stock = stockRepository.findByLocationIdAndIsbn(location.getLocationId(),
+				order.getBookProduct().getIsbn());
 		if (stock.isPresent()) {
-			stock.get().setQuantity((short) (stock.get().getQuantity()+order.getQuantity()));
+			stock.get().setQuantity((short) (stock.get().getQuantity() + order.getQuantity()));
 		} else {
-			Stock newStock = new Stock (location, order.getBookProduct(), order.getQuantity());
+			Stock newStock = new Stock(existingLocation, order.getBookProduct(), order.getQuantity());
 			stockRepository.save(newStock);
 		}
 	}

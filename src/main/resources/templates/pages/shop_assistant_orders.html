@@ -26,14 +26,126 @@
         <section class="orders-section">
             <h1 class="orders-section__title">Заказы</h1>
 
-            <!-- Search Bar -->
-            <form class="orders-search" th:action="@{/orders}" method="get">
+            <!-- <form class="orders-search" th:action="@{/orders}" method="get">
                 <input class="orders-search__input" type="text" name="id" placeholder="Найти заказ по номеру" />
                 <button class="orders-search__button" type="submit">Поиск</button>
+            </form> -->
+
+            <form class="orders-search" th:action="@{/orders}" method="get">
+                <input class="orders-search__input" type="text" name="order" placeholder="Найти заказ по номеру"
+                    th:value="${order}" />
+
+                <!-- Search button -->
+                <button class="orders-search__button" type="submit">Поиск</button>
+
+                <!-- Clear button -->
+                <a class="orders-clear__button" th:href="@{/orders}">Очистить</a>
             </form>
 
-            <!-- Orders Ready for Pickup -->
+            <section class="orders-section__category" th:if="${searched_order != null}">
+                <table class="orders-table" th:if="${searched_order instanceof T(java.lang.String)}">
+                    <tbody>
+                        <tr>
+                            <td class="orders-table__cell" colspan="4" th:text="${searched_order}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="orders-table" th:unless="${searched_order instanceof T(java.lang.String)}">
+                    <thead class="orders-table__header">
+                        <tr>
+                            <th class="orders-table__cell">Номер заказа</th>
+                            <th class="orders-table__cell">Дата заказа</th>
+                            <th class="orders-table__cell">Общая стоимость</th>
+                            <th class="orders-table__cell">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody class="orders-table__body">
+                        <tr class="orders-table__row">
+                            <td class="orders-table__cell" th:text="'Заказ № ' + ${searched_order.orderId}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${#temporals.format(searched_order.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${searched_order.bookProduct.price * searched_order.quantity} + ' $'"></td>
+                            <td class="orders-table__cell">
+                                <div th:if="${isArrived}">
+                                    <form th:action="@{/orders/{id}-closed(id=${searched_order.orderId})}"
+                                        th:method="PATCH">
+                                        <button type="submit" class="orders-table__button">Подтвердить</button>
+                                    </form>
+                                    <form th:action="@{/orders/{id}-cancel(id=${searched_order.orderId})}"
+                                        th:method="PATCH">
+                                        <button type="submit"
+                                            class="orders-table__button orders-table__button--danger">Отменить</button>
+                                    </form>
+                                </div>
+                                <div th:unless="${isArrived}">
+                                    <form th:action="@{/orders/{id}-arrived(id=${searched_order.orderId})}"
+                                        th:method="PATCH">
+                                        <button type="submit" class="orders-table__button">На пункте выдачи</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+
+            <!-- <section class="orders-section__category">
+                <h2 class="orders-section__subtitle">Заказы на пункте выдачи</h2>
+                <table class="orders-table">
+                    <thead class="orders-table__header">
+                        <tr>
+                            <th class="orders-table__cell">Номер заказа</th>
+                            <th class="orders-table__cell">Дата заказа</th>
+                            <th class="orders-table__cell">Общая стоимость</th>
+                            <th class="orders-table__cell">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody class="orders-table__body" th:each="order : ${arrivedOrders}">
+                        <tr class="orders-table__row">
+                            <td class="orders-table__cell" th:text="'Заказ № ' + ${order.orderId}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${#temporals.format(order.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                            <td class="orders-table__cell" th:text="${order.bookProduct.price * order.quantity} + ' $'">
+                            </td>
+                            <td class="orders-table__cell">
+                                <form th:action="@{/orders/{id}-closed(id=${order.orderId})}" th:method="PATCH">
+                                    <button type="submit" class="orders-table__button">Подтвердить</button>
+                                </form>
+                                <form th:action="@{/orders/{id}-cancel(id=${order.orderId})}" th:method="PATCH">
+                                    <button type="submit"
+                                        class="orders-table__button orders-table__button--danger">Отменить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
             <section class="orders-section__category">
+                <h2 class="orders-section__subtitle">Подтвердить прибытие на пункт выдачи</h2>
+                <table class="orders-table">
+                    <tbody class="orders-table__body" th:each="order : ${pendingArrivalOrders}">
+                        <tr class="orders-table__row">
+                            <td class="orders-table__cell" th:text="'Заказ № ' + ${order.orderId}"></td>
+                            <td class="orders-table__cell"
+                                th:text="${#temporals.format(order.orderedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                            <td class="orders-table__cell" th:text="${order.bookProduct.price * order.quantity} + ' $'">
+                            </td>
+                            <td class="orders-table__cell">
+                                <form th:action="@{/orders/{id}-arrived(id=${order.orderId})}" th:method="PATCH">
+                                    <button type="submit" class="orders-table__button">На пункте выдачи</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section> -->
+            <!-- Orders Ready for Pickup -->
+            <section class="orders-section__category"
+                th:if="${arrivedOrders != null and !#lists.isEmpty(arrivedOrders)}">
                 <h2 class="orders-section__subtitle">Заказы на пункте выдачи</h2>
                 <table class="orders-table">
                     <thead class="orders-table__header">
@@ -66,7 +178,8 @@
             </section>
 
             <!-- Confirm Arrival Orders -->
-            <section class="orders-section__category">
+            <section class="orders-section__category"
+                th:if="${pendingArrivalOrders != null and !#lists.isEmpty(pendingArrivalOrders)}">
                 <h2 class="orders-section__subtitle">Подтвердить прибытие на пункт выдачи</h2>
                 <table class="orders-table">
                     <tbody class="orders-table__body" th:each="order : ${pendingArrivalOrders}">
@@ -85,7 +198,7 @@
                     </tbody>
                 </table>
             </section>
-        </section>
+
     </main>
 
     <footer></footer>

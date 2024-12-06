@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои заказы</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/order.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar-vertical.css}" rel="stylesheet" />
+    <link th:href="@{/css/admin-books.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+    <header>
+        <div class="side-bar">
+            <ul class="nav-links">
+                <li><a href="/catalog" class="">В КАТАЛОГ</a></li>
+                <li><a href="/personal" class="">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                <li><a href="/ADMIN/books" class="">КНИГИ</a></li>
+                <li><a href="/ADMIN/users" class="">ПОЛЬЗОВАТЕЛИ</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="paddings left-space">
+        <form class="orders-search" th:action="@{/ADMIN/books}" method="get">
+            <input type="text" name="like" th:value="${like}" />
+			<button type="submit" value="Искать книгу">Найти книгу</button>
+			<a th:href="@{/ADMIN/books}" class="clear-button">Очистить</a>
+        </form>
+        <div class="book-grid">
+            <div th:each="item : ${stock}" class="book-item">
+                <a th:href="@{/catalog/{id}(id=${item.book.isbn})}" class="book-item__link">
+                    <img th:src="${item.book.coverUrl}" alt="Book Cover" class="book-item__image" />
+                </a>
+                <div class="book-item__details">
+                    <h2 class="book-item__title" th:text="${item.book.title}">Book Title</h2>
+                    <p class="book-item__author">
+                        <strong>Автор:</strong>
+                        <span th:text="${item.book.author}">Author Name</span>
+                    </p>
+                    <p class="book-item__price">
+                        <strong>Цена:</strong>
+                        <span th:text="${#numbers.formatCurrency(item.price)}">Price</span>
+                    </p>
+                    <div class="book-item__buttons">
+                        <button class="book-item__button book-item__button--edit">Редактировать</button>
+                        <button class="book-item__button book-item__button--delete">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

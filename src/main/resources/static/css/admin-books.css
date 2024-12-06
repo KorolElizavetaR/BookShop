@@ -1,0 +1,45 @@
+.book-grid {
+    display: flex;
+    flex-direction: column; /* Arrange items in a column */
+    gap: 1rem; /* Add space between items */
+}
+
+.book-item {
+    display: flex;
+    flex-direction: row; /* Layout with image and details side by side */
+    align-items: flex-start;
+    gap: 1rem; /* Space between image and details */
+    border: 1px solid #ddd; /* Add a subtle border */
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.book-item__image {
+    flex-shrink: 0;
+    width: 100px;
+    height: auto;
+}
+
+.book-item__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Space between detail lines */
+}
+
+.book-item__title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.book-item__author,
+.book-item__price {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.book-item__author strong,
+.book-item__price strong {
+    font-weight: bold;
+}

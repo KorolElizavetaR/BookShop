@@ -14,7 +14,6 @@ import com.bookshop.oz.dto.PersonDTOInfo;
 import com.bookshop.oz.dto.PersonDTOPasswords;
 import com.bookshop.oz.dto.PersonDTORegister;
 import com.bookshop.oz.exception.LocationNotFoundException;
-import com.bookshop.oz.exception.PersonNotFoundException;
 import com.bookshop.oz.mapper.PersonMapper;
 import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.model.Person;
@@ -50,7 +49,7 @@ public class PersonService implements UserDetailsService {
 	public Optional<Person> findUserByUsername(String username) {
 		return peopleRepository.findByEmail(username);
 	}
-	
+
 	public Optional<Person> findUserByPhone(String username) {
 		return peopleRepository.findByPhone(username);
 	}
@@ -85,6 +84,9 @@ public class PersonService implements UserDetailsService {
 	@Transactional(readOnly = false)
 	public void changeInfo(PersonDTOInfo personDTO) {
 		Person person = authUtil.getPersonFromAuth();
+		System.out.println(personDTO.getPhone());
+		if (personDTO.getPhone() != null && personDTO.getPhone().isBlank())
+			personDTO.setPhone(null);
 		person.setFirstName(personDTO.getFirstName()).setLastName(personDTO.getLastName())
 				.setPhone(personDTO.getPhone());
 		peopleRepository.save(person);
