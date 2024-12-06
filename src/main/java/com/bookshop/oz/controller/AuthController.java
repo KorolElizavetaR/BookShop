@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookshop.oz.dto.PersonDTO;
 import com.bookshop.oz.dto.PersonDTOInfo;
@@ -36,6 +37,11 @@ public class AuthController {
 	private final AuthUtil authUtil;
 
 	private final PersonMapper personMapper;
+
+//	@GetMapping("/login")
+//	public String loginPage() {
+//		return "personal/login";
+//	}
 
 	@GetMapping("/login")
 	public String loginPage() {
@@ -67,11 +73,11 @@ public class AuthController {
 	public String changeInfo(@ModelAttribute("personInfo") @Valid PersonDTOInfo person, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("passwords", new PersonDTOPasswords()); 
-			return "/personal/page_edit"; 
+			model.addAttribute("passwords", new PersonDTOPasswords());
+			return "/personal/page_edit";
 		}
 		personDetailsService.changeInfo(person);
-		return "redirect:/personal/edit"; 
+		return "redirect:/personal/edit";
 	}
 
 	@PatchMapping("/edit/change-password")

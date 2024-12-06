@@ -1,6 +1,7 @@
 package com.bookshop.oz.service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PersonService implements UserDetailsService {
-	private final PersonRepository peopleRepository;
+	private final PersonRepository personRepository;
 	private final LocationPointRepository locationPointRepository;
 
 	private final PasswordEncoder passwordEncoder;
@@ -40,18 +41,16 @@ public class PersonService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Person> person = peopleRepository.findByEmail(username);
-		if (person.isEmpty())
-			throw new UsernameNotFoundException("User with email " + username + " is not found");
-		return new PersonDetailsSecurity(person.get());
+		Person person = personRepository.findByEmail(username).orElseThrow(()->new UsernameNotFoundException("Неверно введенные учетные данные."));
+		return new PersonDetailsSecurity(person);
 	}
 
 	public Optional<Person> findUserByUsername(String username) {
-		return peopleRepository.findByEmail(username);
+		return personRepository.findByEmail(username);
 	}
 
 	public Optional<Person> findUserByPhone(String username) {
-		return peopleRepository.findByPhone(username);
+		return personRepository.findByPhone(username);
 	}
 
 	@Transactional(readOnly = false)
@@ -62,7 +61,7 @@ public class PersonService implements UserDetailsService {
 		if (person.getPhone().isBlank()) {
 			person.setPhone(null);
 		}
-		peopleRepository.save(person);
+		personRepository.save(person);
 	}
 
 	@Transactional(readOnly = false)
@@ -71,14 +70,14 @@ public class PersonService implements UserDetailsService {
 		LocationPoint locationPoint = locationPointRepository.findById(locationPointID)
 				.orElseThrow(() -> new LocationNotFoundException());
 		person.setLocationPoint(locationPoint);
-		peopleRepository.save(person);
+		personRepository.save(person);
 	}
 
 	@Transactional(readOnly = false)
 	public void changePassword(PersonDTOPasswords personDTO) {
 		Person person = authUtil.getPersonFromAuth();
 		person.setBpassword(passwordEncoder.encode(personDTO.getPassword()));
-		peopleRepository.save(person);
+		personRepository.save(person);
 	}
 
 	@Transactional(readOnly = false)
@@ -89,6 +88,38 @@ public class PersonService implements UserDetailsService {
 			personDTO.setPhone(null);
 		person.setFirstName(personDTO.getFirstName()).setLastName(personDTO.getLastName())
 				.setPhone(personDTO.getPhone());
-		peopleRepository.save(person);
+		personRepository.save(person);
+	}
+
+	public List<Person> getAllUsersExceptAdmin() {
+		return personRepository.findAllWithoutAuthority(Authority.ROLE_ADMIN);
+	}
+
+	@Transactional(readOnly = false)
+	public void toggleUserRole(Integer personId) {
+		Person person = personRepository.findById(personId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+
+		if (person.getAutorities().stream().anyMatch(auth -> auth.equals(Authority.ROLE_ADMIN))) {
+			throw new IllegalStateException("Cannot toggle role for admins.");
+		}
+
+		if (person.getAutorities().contains(Authority.ROLE_CUSTOMER)) {
+			person.getAutorities().clear();
+			person.getAutorities().add(Authority.ROLE_SHOP_ASSISTANT);
+		} else {
+			person.getAutorities().clear();
+			person.getAutorities().add(Authority.ROLE_CUSTOMER);
+		}
+
+		personRepository.save(person);
+	}
+
+	@Transactional(readOnly = false)
+	public void toggleUserStatus(Integer personId) {
+		Person person = personRepository.findById(personId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+		person.setDeactivated(!person.isDeactivated());
+		personRepository.save(person);
 	}
 }

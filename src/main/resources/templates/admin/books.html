@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои заказы</title>
+    <title>Управление товарами</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
     <link th:href="@{/css/order.css}" rel="stylesheet" />
@@ -22,6 +22,7 @@
                 <li><a href="/personal" class="">ЛИЧНЫЙ КАБИНЕТ</a></li>
                 <li><a href="/ADMIN/books" class="">КНИГИ</a></li>
                 <li><a href="/ADMIN/users" class="">ПОЛЬЗОВАТЕЛИ</a></li>
+                <li><a href="/ADMIN/stock" class="">ТОВАРНЫЕ ТОЧКИ</a></li>
             </ul>
         </div>
     </header>
@@ -32,6 +33,11 @@
 			<button type="submit" value="Искать книгу">Найти книгу</button>
 			<a th:href="@{/ADMIN/books}" class="clear-button">Очистить</a>
         </form>
+
+        <div class="add-book">
+            <a th:href="@{/ADMIN/books/add}" class="add-book__button">Добавить книгу</a>
+        </div>
+
         <div class="book-grid">
             <div th:each="item : ${stock}" class="book-item">
                 <a th:href="@{/catalog/{id}(id=${item.book.isbn})}" class="book-item__link">
@@ -47,6 +53,10 @@
                         <strong>Цена:</strong>
                         <span th:text="${#numbers.formatCurrency(item.price)}">Price</span>
                     </p>
+                    <p class="book-item__price">
+                        <strong>ISBN:</strong>
+                        <span th:text="${item.book.isbn}">Price</span>
+                    </p>    
                     <div class="book-item__buttons">
                         <button class="book-item__button book-item__button--edit">Редактировать</button>
                         <button class="book-item__button book-item__button--delete">Удалить</button>

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 
 import com.bookshop.oz.model.pk.StockId;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -34,13 +36,13 @@ public class Stock {
     private LocationPoint location;
 
     @Id
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "isbn", referencedColumnName = "isbn", nullable = false)
     @NotNull(message = "ISBN cannot be null")
     private BookProduct bookProduct;
 
     @NotNull(message = "Quantity cannot be null")
-    @Positive
+    @PositiveOrZero
     @Column(name = "quantity", nullable = false)
     private Short quantity;
 }

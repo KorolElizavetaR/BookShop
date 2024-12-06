@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои заказы</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/order.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar-vertical.css}" rel="stylesheet" />
+    <link th:href="@{/css/admin-books.css}" rel="stylesheet" />
+    <link th:href="@{/css/loc.css}" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <div class="side-bar">
+            <ul class="nav-links">
+                <li><a href="/catalog" class="">В КАТАЛОГ</a></li>
+                <li><a href="/personal" class="">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                <li><a href="/ADMIN/books" class="">КНИГИ</a></li>
+                <li><a href="/ADMIN/users" class="">ПОЛЬЗОВАТЕЛИ</a></li>
+                <li><a href="/ADMIN/stock" class="">ТОВАРНЫЕ ТОЧКИ</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="paddings left-space">
+        <h1>Location</h1>
+
+        <!-- Search Bar with Add Button -->
+        <form th:action="@{/ADMIN/{locationId}/add(locationId=${locationId})}" method="post" th:object="${stock}">
+            <label for="isbn">Add Book by ISBN:</label>
+            <input type="text" id="isbn" name="isbn" placeholder="Enter ISBN" required>
+            <input type="hidden" name="locationId" th:value="${locationId}">
+            <button type="submit">Add</button>
+        </form>
+    
+        <!-- Display Error or Success Message -->
+        <div>
+            <p th:if="${errorMessage}">Error occurred!</p>
+            <p th:if="${successMessage}">Operation successful!</p>
+        </div>
+        
+        <div>
+            <p th:if="${errorMessage}" th:text="${errorMessage}" class="error"></p>
+            <p th:if="${successMessage}" th:text="${successMessage}" class="success"></p>
+        </div>
+    
+        <!-- Book Stock Table -->
+        <table>
+            <tbody>
+            <tr th:each="item : ${stock}">
+                <td th:text="${item.bookProduct.isbn}"></td>
+                <td th:text="${item.bookProduct.book.title + ' : ' + item.bookProduct.book.author}"></td>
+                <td th:text="${item.bookProduct.price}"></td>
+                <td>
+                    <form th:action="@{/ADMIN/{locationId}/updateQuantity(locationId=${locationId})}" method="post">
+                        <input type="hidden" name="isbn" th:value="${item.bookProduct.isbn}">
+                        <input type="number" name="quantity" th:value="${item.quantity}" min="0" required>
+                        <button type="submit">Сохранить</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

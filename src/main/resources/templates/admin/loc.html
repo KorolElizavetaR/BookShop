@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление складами</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/order.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar-vertical.css}" rel="stylesheet" />
+    <link th:href="@{/css/admin-books.css}" rel="stylesheet" />
+    <link th:href="@{/css/loc.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+    <header>
+        <div class="side-bar">
+            <ul class="nav-links">
+                <li><a href="/catalog" class="">В КАТАЛОГ</a></li>
+                <li><a href="/personal" class="">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                <li><a href="/ADMIN/books" class="">КНИГИ</a></li>
+                <li><a href="/ADMIN/users" class="">ПОЛЬЗОВАТЕЛИ</a></li>
+                <li><a href="/ADMIN/stock" class="">ТОВАРНЫЕ ТОЧКИ</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="paddings left-space locations">
+        <h1 class="locations__title">Locations</h1>
+        <ul class="locations__list">
+            <li th:each="loc : ${locations}" class="locations__item">
+                <a th:href="@{'/ADMIN/stock/' + ${loc.locationId}}" class="locations__link">
+                    <span class="locations__city" th:text="${loc.city}"></span> -
+                    <span class="locations__address" th:text="${loc.address}"></span>
+                </a>
+                <span th:if="${loc.isStorage}" class="locations__tag locations__tag--storage">
+                    (Склад)
+                </span>
+            </li>
+        </ul>
+    </main>
+</body>
+
+</html>

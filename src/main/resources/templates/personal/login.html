@@ -8,21 +8,41 @@
 </head>
 
 <body>
+
+    <!-- Error Messages -->
     <div th:if="${param.error}">
-        Invalid username and password.
+        <p style="color: red;">Неверно введенные учетные данные.</p>
     </div>
     <div th:if="${param.logout}">
-        You have been logged out.
+        <p style="color: green;">Вы вышли из аккаунта.</p>
     </div>
+    <div th:if="${param.deactivated}">
+        <p style="color: red;">Аккаунт деактивирован.</p>
+    </div>
+
+    <!-- Login Form -->
+    <h1>Вход в аккаунт</h1>
     <form th:action="@{/personal/login}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <div><label> User Name : <input type="text" name="username" /> </label></div>
-        <div><label> Password: <input type="password" name="password" /> </label></div>
-        <div><input type="submit" value="Sign In" /></div>
+
+        <div>
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="username" placeholder="Введите ваш email" required />
+        </div>
+
+        <div>
+            <label for="password">Пароль:</label><br>
+            <input type="password" id="password" name="password" placeholder="Введите ваш пароль" required />
+        </div>
+
+        <div>
+            <button type="submit">Войти</button>
+        </div>
     </form>
+
+    <!-- Registration link -->
     <div>
-        <a href="/personal/reg"
-            style="text-decoration: none; padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; display: inline-block;">Register</a>
+        <p>Нет аккаунта? <a th:href="@{/personal/reg}">Зарегистрируйтесь</a></p>
     </div>
 </body>
 

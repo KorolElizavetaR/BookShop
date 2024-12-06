@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bookshop.oz.dao.BookProductDao;
 import com.bookshop.oz.dto.BookProductDTO;
 import com.bookshop.oz.dto.BookProductDTOItem;
+import com.bookshop.oz.exception.BookNotFoundException;
 import com.bookshop.oz.mapper.BookProductMapper;
 import com.bookshop.oz.model.BookProduct;
 import com.bookshop.oz.repository.BookProductRepository;
@@ -45,6 +46,11 @@ public class BookProductService {
 		BookProduct bookProduct = bookProductRepository.findById(isbn).orElse(null);
 		return bookProductMapper.getBookProductDTO(bookProduct);
 	}
+	
+	public BookProduct getBookProduct(String isbn) {
+		BookProduct bookProduct = bookProductRepository.findById(isbn).orElseThrow(()->new BookNotFoundException());
+		return bookProduct;
+	}
 
 	public List<BookProductDTOItem> findBookLike(String str) {
 		List<BookProduct> books = bookProductRepository.findByBookNameContainingIgnoreCase(str);
@@ -52,4 +58,11 @@ public class BookProductService {
 				.map(bookProductMapper::getBookProductDTOItem).collect(Collectors.toList());
 		return booksDTO;
 	}
+	
+	public BookProduct createBook(BookProduct book) {
+		book.getBook().setIsbn(book.getIsbn());;
+		return bookProductRepository.save(book);
+	}
+	
+	
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление пользователями</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/order.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar-vertical.css}" rel="stylesheet" />
+    <link th:href="@{/css/admin-books.css}" rel="stylesheet" />
+    <link th:href="@{/css/loc.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+    <header>
+        <div class="side-bar">
+            <ul class="nav-links">
+                <li><a href="/catalog" class="">В КАТАЛОГ</a></li>
+                <li><a href="/personal" class="">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                <li><a href="/ADMIN/books" class="">КНИГИ</a></li>
+                <li><a href="/ADMIN/users" class="">ПОЛЬЗОВАТЕЛИ</a></li>
+                <li><a href="/ADMIN/stock" class="">ТОВАРНЫЕ ТОЧКИ</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="paddings left-space">
+        <tbody>
+            <tr th:each="person : ${people}">
+                <td th:text="${person.personId}"></td>
+                <td th:text="${person.email}"></td>
+                <td>
+                    <div class="actions">
+                        <select multiple>
+                            <option th:each="authority : ${person.autorities}" th:text="${authority.role}"
+                                th:value="${authority.role}">
+                            </option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <!-- Toggle Role Button -->
+                    <form th:action="@{/ADMIN/users/toggleRole}" method="post" style="display: inline;">
+                        <input type="hidden" th:value="${person.personId}" name="personId">
+                        <button type="submit"
+                            th:text="'Toggle Role to ' + (${person.autorities[0]?.role} == 'ROLE_CUSTOMER' ? 'SHOP_ASSISTANT' : 'CUSTOMER')">
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/ADMIN/users/toggleStatus}" method="post">
+                        <input type="hidden" th:value="${person.personId}" name="personId">
+                        <button type="submit" th:text="${person.isDeactivated ? 'Activate' : 'Deactivate'}">
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </main>
+</body>
+
+</html>

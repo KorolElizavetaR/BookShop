@@ -37,4 +37,9 @@ public class PersonDetailsSecurity implements UserDetails {
 	public String getUsername() {
 		return this.person.getEmail();
 	}
+	
+	@Override
+	public boolean isEnabled() {
+		return !this.person.isDeactivated();
+	}
 }

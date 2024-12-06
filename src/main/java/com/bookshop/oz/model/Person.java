@@ -78,4 +78,7 @@ public class Person {
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "user_authority")
 	private List<Authority> autorities;
+	
+	@Column(name="is_deactivated")
+	private boolean isDeactivated;
 }
