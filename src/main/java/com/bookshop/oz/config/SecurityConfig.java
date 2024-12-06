@@ -43,17 +43,23 @@ public class SecurityConfig {
 						"/personal/reg", "/shops")
 				.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
-						.failureUrl("/personal/login?error").permitAll())
+						.failureUrl("/personal/login?error").failureHandler(authenticationFailureHandler()).permitAll())
 				.logout((logout) -> logout.permitAll()).exceptionHandling((ex) -> ex.accessDeniedPage("/forbidden"));
 		return http.build();
 	}
 
-//	@Bean
-//	public AuthenticationFailureHandler authenticationFailureHandler() {
-//	    return (request, response, exception) -> {
-//	        request.setAttribute("error", exception.getMessage());
-//	        request.getRequestDispatcher("/login").forward(request, response);
-//	    };
-//	}
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+	    return (request, response, exception) -> {
+	    	String username = request.getParameter("username");
+
+	        // Add error and username as request attributes
+	        request.setAttribute("error", "Invalid username or password!");
+	        request.setAttribute("username", username);
+
+	        // Forward the request to the login page (not a redirect, so no query parameters in the URL)
+	        request.getRequestDispatcher("/personal/login").forward(request, response);
+	    };
+	}
 
 }

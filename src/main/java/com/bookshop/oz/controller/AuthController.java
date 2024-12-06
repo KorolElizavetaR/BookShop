@@ -1,5 +1,7 @@
 package com.bookshop.oz.controller;
 
+import java.util.Optional;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import com.bookshop.oz.util.AuthUtil;
 import com.bookshop.oz.util.PersonDetailsSecurity;
 import com.bookshop.oz.validator.UniqueEmailValidator;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.ui.Model;
@@ -43,8 +46,15 @@ public class AuthController {
 //		return "personal/login";
 //	}
 
-	@GetMapping("/login")
-	public String loginPage() {
+	@GetMapping("/personal/login")
+	public String loginPage(HttpServletRequest request, Model model) {
+		// Retrieve the error and username attributes
+		String error = (String) request.getAttribute("error");
+		String username = (String) request.getAttribute("username");
+		//Optional<Person> person = personDetailsService.findUserByUsername(username);
+		model.addAttribute("loginError", error != null);
+		model.addAttribute("username", username);
+
 		return "personal/login";
 	}
 
