@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookshop.oz.dto.BookProductDTO;
 import com.bookshop.oz.dto.BookProductDTOItem;
-import com.bookshop.oz.dto.LocationPointDTO;
-import com.bookshop.oz.dto.StockDTO;
-import com.bookshop.oz.model.BookProduct;
-import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.service.BookProductService;
 import com.bookshop.oz.service.OrderService;
@@ -38,16 +34,6 @@ public class CatalogController {
 	private final OrderService orderService;
 
 	private final BookAvailabibltyChecker bookAvailabibltyChecker;
-
-//	@GetMapping()
-//	public String catalogPage(Model model, @RequestParam(value = "like", required = false) String like, ) {
-//		if (like == null || like.isBlank()) {
-//			model.addAttribute("stock", bookProductService.getAllItemsForMainPage());
-//		} else {
-//			model.addAttribute("stock", bookProductService.findBookLike(like));
-//		}
-//		return "catalog/main";
-//	}
 
 	@GetMapping()
 	public String catalogPage(Model model, @RequestParam(value = "like", required = false) String like,

@@ -1,18 +1,14 @@
 package com.bookshop.oz.controller;
 
-import java.util.Optional;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bookshop.oz.dto.PersonDTO;
 import com.bookshop.oz.dto.PersonDTOInfo;
 import com.bookshop.oz.dto.PersonDTOPasswords;
 import com.bookshop.oz.dto.PersonDTORegister;
@@ -20,15 +16,8 @@ import com.bookshop.oz.mapper.PersonMapper;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.service.PersonService;
 import com.bookshop.oz.util.AuthUtil;
-import com.bookshop.oz.util.PersonDetailsSecurity;
-import com.bookshop.oz.validator.UniqueEmailValidator;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -106,6 +95,5 @@ public class AuthController {
 		personDetailsService.register(person);
 		return "redirect:/personal/login";
 	}
-	
-	
+
 }

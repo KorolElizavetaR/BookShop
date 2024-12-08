@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.bookshop.oz.dto.LocationPointDTO;
 import com.bookshop.oz.dto.LocationPointDTOShops;
-import com.bookshop.oz.dto.LocationStockDTO;
 import com.bookshop.oz.mapper.LocationMapper;
 import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.repository.LocationPointRepository;
