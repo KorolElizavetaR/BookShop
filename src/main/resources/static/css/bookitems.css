@@ -36,3 +36,45 @@
     font-size: 1rem;
     color: #333;
 }
+
+/* Block: sort-form */
+.sort-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust spacing between elements if needed */
+    margin: 0;
+    padding: 0;
+}
+
+/* Element: input */
+.sort-form__input {
+    display: none; /* Hide input if not directly visible */
+}
+
+/* Element: select */
+.sort-form__select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.sort-form__select:focus {
+    outline: none;
+    border-color: #0078d7; /* Highlight border on focus */
+}
+
+/* Element: option */
+.sort-form__option {
+    font-size: 14px;
+    padding: 8px;
+}
+
+/* Modifier: selected for option */
+.sort-form__option--selected {
+    font-weight: bold;
+}
+

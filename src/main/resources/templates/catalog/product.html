@@ -8,68 +8,57 @@
     <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
     <link th:href="@{/css/buttons__to-shopping-bin.css}" rel="stylesheet" />
-    <style>
-        /*ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ ФАЙЛ*/
-        .book-details {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            /* Adjust spacing as needed */
-            margin-bottom: 20px;
-        }
-
-        .book-image {
-            width: 150px;
-            /* Adjust image size as needed */
-        }
-
-        .book-info {
-            flex-grow: 1;
-            /* Takes up remaining space */
-        }
-
-        .locations ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-    </style>
+    <link th:href="@{/css/book_details.css}" rel="stylesheet" />
 </head>
 
 <body>
-    <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
-    <main>
-        <h1>Book Details</h1>
-        <img th:src="${bookProduct.book.coverUrl}" alt="Book Cover" class="book-image" />
-        <div class="book-info">
-            <h2><span th:text="${bookProduct.book.title}"></span></h2>
-            <p>By <span th:text="${bookProduct.book.author}"></span></p>
-            <p>Price: <span th:text="${bookProduct.price}"></span></p>
-
-            <div class="form-container">
-                <!-- Form for available state -->
-                <form th:action="@{'/catalog/' + ${id} + '/shoppingBin'}" method="post" th:if="${isAvailableForBuying}">
-                    <button type="submit" class="button-enabled">Положить в корзину</button>
-                </form>
-            
-                <!-- Disabled button and message for unavailable state -->
-                <div th:unless="${isAvailableForBuying}">
-                    <button type="button" class="button-disabled" disabled>Положить в корзину</button>
-                    <p class="availability-message" th:text="${availabilityMessage}"></p>
+    <header>
+        <script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+    </header>
+    <main class="page paddings">
+        <div class="page__content">
+            <h1 class="page__title"></h1>
+    
+            <div class="book">
+                <div class="book__image-container">
+                    <img th:src="${bookProduct.book.coverUrl}" alt="Book Cover" class="book__image" />
+    
+                    <div class="form">
+                        <form th:action="@{'/catalog/' + ${id} + '/shoppingBin'}" method="post" th:if="${isAvailableForBuying}">
+                            <button type="submit" class="form__button form__button--enabled">Положить в корзину</button>
+                        </form>
+    
+                        <div th:unless="${isAvailableForBuying}">
+                            <button type="button" class="form__button form__button--disabled" disabled>Положить в корзину</button>
+                            <p class="form__availability-message" th:text="${availabilityMessage}"></p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!--  Add your cart logic here -->
-
-            <div class="locations">
-                <h3>Available Locations:</h3>
-                <ul>
-                    <li th:each="stock : ${bookProduct.stock}" th:if="${bookProduct.stock.size() > 0}">
-                        <span th:text="${stock.location.city}"></span>
-                        <span th:text="${stock.location.address}"></span> 
-                    </li>
-                </ul>
+    
+                <div class="book__details">
+                    <h2 class="book__title"><span th:text="${bookProduct.book.title}"></span></h2>
+                    <p class="book__author">By <span th:text="${bookProduct.book.author}"></span></p>
+                    <p class="book__price">Price: <span th:text="${bookProduct.price}"></span></p>
+                    <p class="book__description" th:text="${bookProduct.book.description}"></p>
+    
+                    <div class="locations">
+                        <h3 class="locations__title">Available Locations:</h3>
+                        <ul class="locations__list">
+                            <li class="locations__item" th:each="stock : ${bookProduct.stock}"
+                                th:if="${bookProduct.stock.size() > 0}">
+                                <span class="locations__city" th:text="${stock.location.city}"></span>
+                                <span class="locations__address" th:text="${stock.location.address}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
+    
+
+
+
     <footer></footer>
 </body>
 

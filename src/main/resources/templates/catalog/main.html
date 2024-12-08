@@ -26,13 +26,14 @@
 		</form>
 
 		<form th:action="@{/catalog}" method="get" class="sort-form">
-			<input type="hidden" name="like" th:value="${like}" />
-			<select name="sort" onchange="this.form.submit()">
-				<option value="" th:selected="${#strings.isEmpty(sort)}">По умолчанию</option>
-				<option value="asc" th:selected="${sort == 'asc'}">По возрастанию (цена)</option>
-				<option value="desc" th:selected="${sort == 'desc'}">По убыванию (цена)</option>
+			<input type="hidden" name="like" th:value="${like}" class="sort-form__input" />
+			<select name="sort" onchange="this.form.submit()" class="sort-form__select">
+				<option value="" class="sort-form__option" th:selected="${#strings.isEmpty(sort)}">По умолчанию</option>
+				<option value="asc" class="sort-form__option" th:selected="${sort == 'asc'}">По возрастанию (цена)</option>
+				<option value="desc" class="sort-form__option" th:selected="${sort == 'desc'}">По убыванию (цена)</option>
 			</select>
 		</form>
+		
 		
 
 		<div class="book-grid">
