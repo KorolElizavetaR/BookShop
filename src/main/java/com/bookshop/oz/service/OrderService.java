@@ -2,12 +2,14 @@ package com.bookshop.oz.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bookshop.oz.dto.LocationReport;
 import com.bookshop.oz.dto.OrderDTO;
 import com.bookshop.oz.exception.BookNotFoundException;
 import com.bookshop.oz.exception.OrderNotFoundException;
@@ -124,9 +126,9 @@ public class OrderService {
 	}
 
 	@Transactional(readOnly = false)
-	public void closeOrder(Long orderId) {
+	public void closeOrder(Long orderId, Integer shopAssistantId) {
 		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
-		order.setStatus(OrderStatus.CLOSED).setClosedAt(LocalDateTime.now());
+		order.setStatus(OrderStatus.CLOSED).setClosedAt(LocalDateTime.now()).setShopAssistantId(shopAssistantId);
 	}
 
 	@Transactional(readOnly = false)
@@ -145,5 +147,21 @@ public class OrderService {
 			Stock newStock = new Stock(existingLocation, order.getBookProduct(), order.getQuantity());
 			stockRepository.save(newStock);
 		}
+	}
+
+	public List<LocationReport> getLocationReports() {
+		List<Order> closedOrders = orderRepository.findByStatusAndLocationIsStorageFalse(OrderStatus.CLOSED);
+
+		Map<LocationPoint, List<Order>> ordersGroupedByLocation = closedOrders.stream()
+				.collect(Collectors.groupingBy(Order::getLocation));
+
+		List<LocationReport> reports = ordersGroupedByLocation.entrySet().stream()
+				.map(entry -> new LocationReport(entry.getKey(), entry.getValue(),
+						entry.getValue().stream()
+								.mapToDouble(
+										order -> order.getBookProduct().getPrice().doubleValue() * order.getQuantity())
+								.sum()))
+				.toList();
+		return reports;
 	}
 }

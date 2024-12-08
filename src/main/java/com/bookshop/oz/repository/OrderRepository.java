@@ -24,5 +24,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 	List<Order> findOrdersByLocationAndStatus(@Param("locationPoint") LocationPoint locationPoint,
 			@Param("status") OrderStatus status);
 
+	@Query("SELECT o FROM Order o JOIN FETCH o.location l WHERE o.status = :status AND l.isStorage = false ORDER BY o.orderId ASC")
+	List<Order> findByStatusAndLocationIsStorageFalse(@Param("status") OrderStatus status);
+
 	Optional<Order> findByLocationAndOrderId(LocationPoint location, Long orderId);
 }

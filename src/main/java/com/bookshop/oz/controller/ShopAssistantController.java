@@ -71,7 +71,7 @@ public class ShopAssistantController {
 
 	@PatchMapping("/{id}-closed")
 	public String closeOrder(@PathVariable("id") Long id) {
-		orderService.closeOrder(id);
+		orderService.closeOrder(id, authUtil.getPersonFromAuth().getPersonId());
 		return "redirect:/orders";
 	}
 

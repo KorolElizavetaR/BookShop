@@ -90,7 +90,6 @@ public class AuthController {
 			return "/personal/page_edit";
 		}
 
-		// Proceed with changing the password if no errors
 		personDetailsService.changePassword(passwords);
 		return "redirect:/personal/edit"; // Redirect to prevent resubmission
 	}
@@ -109,4 +108,6 @@ public class AuthController {
 		personDetailsService.register(person);
 		return "redirect:/personal/login";
 	}
+	
+	
 }

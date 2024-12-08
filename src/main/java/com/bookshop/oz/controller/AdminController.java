@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookshop.oz.config.PdfGenerator;
 import com.bookshop.oz.dto.BookProductDTOItem;
 import com.bookshop.oz.dto.LocationPointDTO;
+import com.bookshop.oz.dto.LocationReport;
 import com.bookshop.oz.dto.LocationStockDTO;
 import com.bookshop.oz.dto.PersonDTOInfo;
 import com.bookshop.oz.dto.PersonDTOPasswords;
@@ -26,8 +32,11 @@ import com.bookshop.oz.model.Person;
 import com.bookshop.oz.model.Stock;
 import com.bookshop.oz.service.BookProductService;
 import com.bookshop.oz.service.LocationPointService;
+import com.bookshop.oz.service.OrderService;
 import com.bookshop.oz.service.PersonService;
 import com.bookshop.oz.service.StockService;
+
+import org.springframework.http.MediaType;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +49,9 @@ public class AdminController {
 	private final LocationPointService locationPointService;
 	private final StockService stockService;
 	private final PersonService personService;
+	private final OrderService orderService;
+
+	private final PdfGenerator pdfGenerator;
 
 	/**
 	 * Тут можно удалить книгу, создать книгу, назначив ей локации, изменить
@@ -78,18 +90,19 @@ public class AdminController {
 		model.addAttribute("people", getPeople);
 		return "ADMIN/users";
 	}
-	
+
 	@PostMapping("/users/toggleRole")
 	public String toggleRole(@RequestParam Integer personId) {
-	    personService.toggleUserRole(personId);
-	    return "redirect:/ADMIN/users";
+		personService.toggleUserRole(personId);
+		return "redirect:/ADMIN/users";
 	}
 
 	@PostMapping("/users/toggleStatus")
 	public String toggleStatus(@RequestParam Integer personId) {
-	    personService.toggleUserStatus(personId);
-	    return "redirect:/ADMIN/users";
+		personService.toggleUserStatus(personId);
+		return "redirect:/ADMIN/users";
 	}
+
 	/**
 	 * Передаем сюда локации. Перейдя по клику, попадаем на список товаров и их
 	 * количество. Можем добавить книгу или изменить колво у уже имеющихся книг.
@@ -132,6 +145,19 @@ public class AdminController {
 			model.addAttribute("errorMessage", e.getMessage());
 		}
 		return "redirect:/ADMIN/stock/" + locId;
+	}
+
+	@ResponseBody
+	@GetMapping(produces = MediaType.APPLICATION_PDF_VALUE, path = "/stats")
+	public ResponseEntity<byte[]> generateStats() {
+		List<LocationReport> reports = orderService.getLocationReports();
+		byte[] pdfContent = pdfGenerator.generatePdf(reports);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_PDF);
+		headers.setContentDisposition(ContentDisposition.inline().filename("location_stats.pdf").build());
+
+		return ResponseEntity.ok().headers(headers).body(pdfContent);
 	}
 
 }

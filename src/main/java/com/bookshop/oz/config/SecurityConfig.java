@@ -48,12 +48,4 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-//	@Bean
-//	public AuthenticationFailureHandler authenticationFailureHandler() {
-//	    return (request, response, exception) -> {
-//	        request.setAttribute("error", exception.getMessage());
-//	        request.getRequestDispatcher("/login").forward(request, response);
-//	    };
-//	}
-
 }
