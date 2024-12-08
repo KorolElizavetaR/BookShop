@@ -33,7 +33,7 @@ public class SecurityConfig {
 						"/personal/reg", "/shops")
 				.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/personal/login").defaultSuccessUrl("/catalog", true)
-						.failureUrl("/personal/login?error"))
+						.failureUrl("/personal/login?error").permitAll())
 				.logout((logout) -> logout.permitAll()).exceptionHandling((ex) -> ex.accessDeniedPage("/forbidden"));
 		return http.build();
 	}

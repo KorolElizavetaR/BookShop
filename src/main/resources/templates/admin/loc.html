@@ -31,7 +31,7 @@
 
 
     <main class="paddings left-space locations">
-        <h1 class="locations__title">Locations</h1>
+        <h1 class="locations__title">Товарные точки</h1>
         <ul class="locations__list">
             <li th:each="loc : ${locations}" class="locations__item">
                 <a th:href="@{'/ADMIN/stock/' + ${loc.locationId}}" class="locations__link">

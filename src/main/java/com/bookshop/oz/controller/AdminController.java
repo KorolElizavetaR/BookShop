@@ -70,16 +70,17 @@ public class AdminController {
 		model.addAttribute("book", book);
 		return "/ADMIN/book_add";
 	}
-	
+
 	@GetMapping("/books/edit-{isbn}")
 	public String editBook(@PathVariable("isbn") String isbn, Model model) {
 		BookProduct book = bookProductService.getBookProduct(isbn);
 		model.addAttribute("book", book);
 		return "/ADMIN/editbook";
 	}
-	
+
 	@PostMapping("/books/edit-{isbn}")
-	public String editBookSubmit(@ModelAttribute("book") @Valid BookProduct book, @PathVariable("isbn") String isbn, Model model) {
+	public String editBookSubmit(@ModelAttribute("book") @Valid BookProduct book, @PathVariable("isbn") String isbn,
+			Model model) {
 		bookProductService.editBook(book);
 		return "redirect:/ADMIN/books";
 	}
@@ -137,8 +138,8 @@ public class AdminController {
 	@PostMapping("/{locationId}/add")
 	public String addBookToStock(@PathVariable("locationId") String locationId, @RequestParam("isbn") String isbn,
 			Model model) {
-		BookProduct book = bookProductService.getBookProduct(isbn);
 		try {
+			BookProduct book = bookProductService.getBookProduct(isbn);
 			stockService.saveStock((short) 0, locationId, book);
 			model.addAttribute("successMessage", "Book added successfully!");
 		} catch (Exception ex) {

@@ -38,13 +38,8 @@
             <input type="text" id="isbn" name="isbn" placeholder="Enter ISBN" required>
             <input type="hidden" name="locationId" th:value="${locationId}">
             <button type="submit">Add</button>
-        </form>
-    
+        </form> 
         <!-- Display Error or Success Message -->
-        <div>
-            <p th:if="${errorMessage}">Error occurred!</p>
-            <p th:if="${successMessage}">Operation successful!</p>
-        </div>
         
         <div>
             <p th:if="${errorMessage}" th:text="${errorMessage}" class="error"></p>

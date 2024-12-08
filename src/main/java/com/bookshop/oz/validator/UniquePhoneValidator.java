@@ -1,5 +1,7 @@
 package com.bookshop.oz.validator;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.bookshop.oz.dto.PersonDTORegister;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.service.PersonService;
+import com.bookshop.oz.util.AuthUtil;
 import com.bookshop.oz.validator.annotation.UniqueEmail;
 import com.bookshop.oz.validator.annotation.UniquePhone;
 
@@ -22,9 +25,12 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class UniquePhoneValidator implements ConstraintValidator<UniquePhone, String> {
 	private final PersonService peopleService;
+	private final AuthUtil authUtil;
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return peopleService.findUserByPhone(value).isEmpty();
+		Integer personId = authUtil.getPersonFromAuth().getPersonId();
+		Optional<Person> person = peopleService.findUserByPhone(value);
+		return person.isEmpty() || person.get().getPersonId() == personId;
 	}
 }

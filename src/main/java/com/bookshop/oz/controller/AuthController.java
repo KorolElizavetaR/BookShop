@@ -41,20 +41,8 @@ public class AuthController {
 
 	private final PersonMapper personMapper;
 
-//	@GetMapping("/login")
-//	public String loginPage() {
-//		return "personal/login";
-//	}
-
-	@GetMapping("/personal/login")
-	public String loginPage(HttpServletRequest request, Model model) {
-		// Retrieve the error and username attributes
-		String error = (String) request.getAttribute("error");
-		String username = (String) request.getAttribute("username");
-		//Optional<Person> person = personDetailsService.findUserByUsername(username);
-		model.addAttribute("loginError", error != null);
-		model.addAttribute("username", username);
-
+	@GetMapping("/login")
+	public String loginPage() {
 		return "personal/login";
 	}
 
