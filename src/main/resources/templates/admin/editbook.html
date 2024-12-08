@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Добавить книгу</title>
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link th:href="@{/css/navbar-vertical.css}" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -20,15 +21,10 @@
 
     
     <main class="paddings left-space">
-        <h1>Добавить книгу</h1>
-
-        <form th:action="@{/ADMIN/books/add}" th:object="${book}" method="post">
-            <div>
-                <label for="isbn">ISBN:</label>
-                <input type="text" id="isbn" name="isbn" th:field="*{isbn}" placeholder="Введите 13-значный ISBN" />
-                <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
-            </div>
-
+        <h1>Изменить книгу</h1>
+    
+        <form th:action="@{/ADMIN/books/edit-{isbn}(isbn=${book.isbn})}" th:object="${book}" method="post">
+    
             <div>
                 <label for="title">Название:</label>
                 <input type="text" id="title" name="title" th:field="*{book.title}" placeholder="Введите название книги" />
@@ -62,12 +58,12 @@
                 <input type="text" id="price" name="price" th:field="*{price}" placeholder="Введите цену" />
                 <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             </div>
+    
             <div>
-                <button type="submit">Добавить книгу</button>
+                <button type="submit">Сохранить изменения</button>
                 <a href="/ADMIN/books" class="button cancel">Отменить</a>
             </div>
         </form>
-        
     </main>
 </body>
 </html>

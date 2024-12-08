@@ -31,8 +31,8 @@
     <main class="paddings left-space">
         <form class="orders-search" th:action="@{/ADMIN/books}" method="get">
             <input type="text" name="like" th:value="${like}" />
-			<button type="submit" value="Искать книгу">Найти книгу</button>
-			<a th:href="@{/ADMIN/books}" class="clear-button">Очистить</a>
+            <button type="submit" value="Искать книгу">Найти книгу</button>
+            <a th:href="@{/ADMIN/books}" class="clear-button">Очистить</a>
         </form>
 
         <div class="add-book">
@@ -57,10 +57,17 @@
                     <p class="book-item__price">
                         <strong>ISBN:</strong>
                         <span th:text="${item.book.isbn}">Price</span>
-                    </p>    
+                    </p>
                     <div class="book-item__buttons">
-                        <button class="book-item__button book-item__button--edit">Редактировать</button>
-                        <button class="book-item__button book-item__button--delete">Удалить</button>
+                        <div class="add-book">
+                            <a th:href="@{/ADMIN/books/edit-{isbn}(isbn=${item.book.isbn})}"
+                                class="book-item__button book-item__button--edit">Редактировать</a>
+                        </div>
+                        <!-- <button class="book-item__button book-item__button--edit">Редактировать</button> -->
+                        <div class="add-book">
+                            <a th:href="@{/ADMIN/books/{isbn}-remove(isbn=${item.book.isbn})}"
+                                class="book-item__button book-item__button--delete">Удалить</a>
+                        </div>
                     </div>
                 </div>
             </div>

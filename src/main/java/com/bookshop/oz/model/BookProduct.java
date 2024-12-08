@@ -2,6 +2,7 @@ package com.bookshop.oz.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import lombok.AllArgsConstructor;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMax;
@@ -31,6 +32,7 @@ import org.hibernate.annotations.FetchMode;
 @AllArgsConstructor
 @Entity
 @Table(name = "book_product")
+@Accessors(chain = true)
 @NamedEntityGraph(name = "BookProduct.withBookOnly", attributeNodes = @NamedAttributeNode("book"))
 public class BookProduct {
 	@Id

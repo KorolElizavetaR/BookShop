@@ -70,6 +70,19 @@ public class AdminController {
 		model.addAttribute("book", book);
 		return "/ADMIN/book_add";
 	}
+	
+	@GetMapping("/books/edit-{isbn}")
+	public String editBook(@PathVariable("isbn") String isbn, Model model) {
+		BookProduct book = bookProductService.getBookProduct(isbn);
+		model.addAttribute("book", book);
+		return "/ADMIN/editbook";
+	}
+	
+	@PostMapping("/books/edit-{isbn}")
+	public String editBookSubmit(@ModelAttribute("book") @Valid BookProduct book, @PathVariable("isbn") String isbn, Model model) {
+		bookProductService.editBook(book);
+		return "redirect:/ADMIN/books";
+	}
 
 	@PostMapping("/books/add")
 	public String addBook(@ModelAttribute("book") @Valid BookProduct book, BindingResult bindingResult, Model model) {

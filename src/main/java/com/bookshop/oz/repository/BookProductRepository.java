@@ -1,6 +1,7 @@
 package com.bookshop.oz.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,5 +19,7 @@ public interface BookProductRepository extends JpaRepository<BookProduct, String
 	long count();
 	@Query("SELECT bp FROM BookProduct bp LEFT JOIN FETCH bp.book b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :str, '%'))")
 	List <BookProduct> findByBookNameContainingIgnoreCase(@Param("str") String str);
-
+	
+	@Query("FROM BookProduct JOIN FETCH book WHERE book.isbn = :isbn")
+	Optional<BookProduct> getBookByIsbn(@Param("isbn") String isbn);
 }

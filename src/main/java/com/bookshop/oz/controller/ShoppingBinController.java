@@ -38,8 +38,7 @@ public class ShoppingBinController {
 		model.addAttribute("isLoggedIntoSystem", isLoggedIntoSystem);
 		if (authUtil.isLoggedIntoSystem()) {
 			Person person = authUtil.getPersonFromAuth();
-			List<OrderDTO> shoppingBin = orderService.getOrders(person,
-					OrderStatus.SHOPPING_BIN);
+			List<OrderDTO> shoppingBin = orderService.getOrders(person, OrderStatus.SHOPPING_BIN);
 			model.addAttribute("shoppingBin", shoppingBin);
 		}
 		return "pages/shopping_bin";
@@ -49,9 +48,8 @@ public class ShoppingBinController {
 	 * Отвечает за удаление товара из корзины.
 	 */
 	@DeleteMapping("/{id}")
-	public String removeFromShoppingBin() {
-		System.out.println("removeFromShoppingBin");
-
+	public String removeFromShoppingBin(@PathVariable("id") Long id) {
+		orderService.removeItemFromShoppingBin(id);
 		return "redirect:/shopping_bin";
 	}
 
