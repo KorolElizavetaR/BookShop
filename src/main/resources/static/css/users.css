@@ -1,0 +1,43 @@
+
+.user-management__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-management__row {
+    border-bottom: 1px solid #ddd;
+}
+
+.user-management__id,
+.user-management__email,
+.user-management__role,
+.user-management__status {
+    padding: 10px;
+    text-align: left;
+}
+
+.user-management__button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.user-management__button--role-toggle {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.user-management__button--role-toggle:hover {
+    background-color: #0056b3;
+}
+
+.user-management__button--status-toggle {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.user-management__button--status-toggle:hover {
+    background-color: #218838;
+}

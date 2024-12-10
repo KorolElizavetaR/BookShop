@@ -19,6 +19,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -29,7 +30,11 @@ public class UniquePhoneValidator implements ConstraintValidator<UniquePhone, St
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		Integer personId = authUtil.getPersonFromAuth().getPersonId();
+		Integer personId = null;
+		if (authUtil.isLoggedIntoSystem()) {
+			personId = authUtil.getPersonFromAuth().getPersonId();
+			System.out.println(personId);
+		}
 		Optional<Person> person = peopleService.findUserByPhone(value);
 		return person.isEmpty() || person.get().getPersonId() == personId;
 	}

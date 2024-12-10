@@ -3,12 +3,16 @@
 
 <head>
     <title>Access Denied</title>
+    <link rel="stylesheet" href="../../static/css/forbidden.css" th:href="@{/css/forbidden.css}">
 </head>
 
-<body>
-    <h1>Forbidden</h1>
-    <p>You are not allowed to access this page.</p>
-    <a href="/catalog">Go Back to Home</a>
+<body class="page">
+    <div class="page__container">
+        <img src="../../static/images/owl.png" th:src="@{/images/owl.png}" alt="Owl Illustration" class="page__image">
+        <h1 class="page__title">403 - Forbidden</h1>
+        <p class="page__description">Сова думает, что вам сюда нельзя.</p>
+        <a href="/catalog" class="page__button">Вернуться на главную</a>
+    </div>
 </body>
 
 </html>

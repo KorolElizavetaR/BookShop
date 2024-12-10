@@ -4,6 +4,7 @@
     <title>Добавить книгу</title>
     <link th:href="@{/css/navbar-vertical.css}" rel="stylesheet" />
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/editbook.css}" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -20,50 +21,51 @@
     </header>
 
     
-    <main class="paddings left-space">
-        <h1>Изменить книгу</h1>
-    
-        <form th:action="@{/ADMIN/books/edit-{isbn}(isbn=${book.isbn})}" th:object="${book}" method="post">
-    
-            <div>
-                <label for="title">Название:</label>
-                <input type="text" id="title" name="title" th:field="*{book.title}" placeholder="Введите название книги" />
-                <div th:if="${#fields.hasErrors('book.title')}" th:errors="*{book.title}"></div>
-            </div>
-
-            <div>
-                <label for="author">Автор:</label>
-                <input type="text" id="author" name="author" th:field="*{book.author}" placeholder="Введите имя автора" />
-                <div th:if="${#fields.hasErrors('book.author')}" th:errors="*{book.author}"></div>
-            </div>
-
-            <div>
-                <label for="publisher">Издатель:</label>
-                <input type="text" id="publisher" name="publisher" th:field="*{book.publisher}" placeholder="Введите издателя" />
-                <div th:if="${#fields.hasErrors('book.publisher')}" th:errors="*{book.publisher}"></div>
-            </div>
-
-            <div>
-                <label for="description">Описание:</label>
-                <textarea id="description" name="description" th:field="*{book.description}" placeholder="Введите описание"></textarea>
-            </div>
-
-            <div>
-                <label for="coverUrl">Обложка URL:</label>
-                <input type="url" id="coverUrl" name="coverUrl" th:field="*{book.coverUrl}" placeholder="Введите ссылку на обложку" />
-            </div>
-
-            <div>
-                <label for="price">Цена:</label>
-                <input type="text" id="price" name="price" th:field="*{price}" placeholder="Введите цену" />
-                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    <main class="edit-book paddings">
+        <h1 class="edit-book__heading">Изменить книгу</h1>
+        
+        <form class="edit-book__form" th:action="@{/ADMIN/books/edit-{isbn}(isbn=${book.isbn})}" th:object="${book}" method="post">
+        
+            <div class="edit-book__group">
+                <label class="edit-book__label" for="title">Название:</label>
+                <input class="edit-book__input" type="text" id="title" name="title" th:field="*{book.title}" placeholder="Введите название книги" />
+                <div class="edit-book__error" th:if="${#fields.hasErrors('book.title')}" th:errors="*{book.title}"></div>
             </div>
     
-            <div>
-                <button type="submit">Сохранить изменения</button>
-                <a href="/ADMIN/books" class="button cancel">Отменить</a>
+            <div class="edit-book__group">
+                <label class="edit-book__label" for="author">Автор:</label>
+                <input class="edit-book__input" type="text" id="author" name="author" th:field="*{book.author}" placeholder="Введите имя автора" />
+                <div class="edit-book__error" th:if="${#fields.hasErrors('book.author')}" th:errors="*{book.author}"></div>
+            </div>
+    
+            <div class="edit-book__group">
+                <label class="edit-book__label" for="publisher">Издатель:</label>
+                <input class="edit-book__input" type="text" id="publisher" name="publisher" th:field="*{book.publisher}" placeholder="Введите издателя" />
+                <div class="edit-book__error" th:if="${#fields.hasErrors('book.publisher')}" th:errors="*{book.publisher}"></div>
+            </div>
+    
+            <div class="edit-book__group">
+                <label class="edit-book__label" for="description">Описание:</label>
+                <textarea class="edit-book__textarea" id="description" name="description" th:field="*{book.description}" placeholder="Введите описание"></textarea>
+            </div>
+    
+            <div class="edit-book__group">
+                <label class="edit-book__label" for="coverUrl">Обложка URL:</label>
+                <input class="edit-book__input" type="url" id="coverUrl" name="coverUrl" th:field="*{book.coverUrl}" placeholder="Введите ссылку на обложку" />
+            </div>
+    
+            <div class="edit-book__group">
+                <label class="edit-book__label" for="price">Цена:</label>
+                <input class="edit-book__input" type="text" id="price" name="price" th:field="*{price}" placeholder="Введите цену" />
+                <div class="edit-book__error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+            </div>
+        
+            <div class="edit-book__actions">
+                <button type="submit" class="edit-book__button edit-book__button--submit">Сохранить изменения</button>
+                <a href="/ADMIN/books" class="edit-book__button edit-book__button--cancel">Отменить</a>
             </div>
         </form>
     </main>
+    
 </body>
 </html>

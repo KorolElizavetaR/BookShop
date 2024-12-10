@@ -36,4 +36,7 @@ public class LocationPointService {
 		return locations;
 	}
 	
+	public LocationPoint getLocById(String locId) {
+		return locationPointRepository.findById(locId).orElseThrow();
+	}
 }

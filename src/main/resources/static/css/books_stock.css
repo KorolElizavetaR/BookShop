@@ -1,0 +1,120 @@
+/* General paddings for the page */
+.page__paddings {
+    padding: 20px;
+}
+
+/* Location title */
+.page__location-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Form styles */
+.form {
+    margin-bottom: 20px;
+}
+
+.form__label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form__input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 16px);
+}
+
+.form__button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form__button:hover {
+    background-color: #0056b3;
+}
+
+.form__button--submit {
+    background-color: #28a745;
+}
+
+.form__button--submit:hover {
+    background-color: #218838;
+}
+
+.form__button--save {
+    background-color: #ffc107;
+}
+
+.form__button--save:hover {
+    background-color: #e0a800;
+}
+
+/* Messages */
+.messages {
+    margin-bottom: 20px;
+}
+
+.messages__error {
+    color: red;
+    font-weight: bold;
+}
+
+.messages__success {
+    color: green;
+    font-weight: bold;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table__body {
+    background-color: #f9f9f9;
+}
+
+.table__row {
+    border-bottom: 1px solid #ddd;
+}
+
+.table__cell {
+    padding: 8px;
+    text-align: left;
+}
+
+.table__cell:last-child {
+    text-align: right;
+}
+
+/* Adjust quantity input size */
+.form__input--quantity {
+    width: 60px; /* Set a smaller width */
+    padding: 4px 4px; /* Reduce padding */
+    margin-right: 5px; 
+    text-align: center; /* Center-align text for a better appearance */
+}
+
+/* Button styles */
+.form__button--save {
+    padding: 4px 10px; /* Reduce padding for a smaller button size */
+    font-size: 14px; /* Adjust font size to match the smaller input */
+    background-color: #ffc107;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form__button--save:hover {
+    background-color: #e0a800;
+}

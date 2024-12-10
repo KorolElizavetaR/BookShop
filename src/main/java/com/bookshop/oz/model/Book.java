@@ -2,6 +2,7 @@ package com.bookshop.oz.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import lombok.AllArgsConstructor;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -18,6 +19,7 @@ import jakarta.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "book")
+@Accessors(chain = true)
 public class Book {
 	@Id
 	@Column(name = "isbn", length = 13, nullable = false)

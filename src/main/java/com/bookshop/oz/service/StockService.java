@@ -26,7 +26,7 @@ public class StockService {
 	private final StockRepository stockRepository;
 	private final LocationPointRepository locationPointRepository;
 	
-	private StockMapper stockMapper;
+	private final StockMapper stockMapper;
 
 	public List<StockDTO> getBooks() {
 		List<Stock> stock = stockRepository.findAll();

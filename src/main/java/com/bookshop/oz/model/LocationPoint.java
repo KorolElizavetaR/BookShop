@@ -10,12 +10,14 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "location_points")
+@Accessors(chain = true)
 public class LocationPoint {
 	@Id
     @Column(name = "location_id", length = 5)

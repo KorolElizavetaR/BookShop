@@ -3,7 +3,6 @@ package com.bookshop.oz.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,18 +72,12 @@ public class BookProductService {
 		Book existingBook = existingBookProduct.getBook();
 		Book newBookData = newBook.getBook();
 
-		existingBook.setTitle(newBookData.getTitle()); // Example: Update fields
-		existingBook.setAuthor(newBookData.getAuthor());
-		// Add other field updates as needed
+		existingBook.setTitle(newBookData.getTitle()).setAuthor(newBookData.getAuthor()).setDescription(newBookData.getDescription());
 
-		// Save the updated Book entity
 		bookRepository.save(existingBook);
 
-		// Update the BookProduct fields
 		existingBookProduct.setPrice(newBook.getPrice());
-		// Add other field updates as needed
 
-		// Save and return the updated BookProduct
 		return bookProductRepository.save(existingBookProduct);
 	}
 }

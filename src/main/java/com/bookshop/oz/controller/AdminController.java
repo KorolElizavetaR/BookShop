@@ -22,6 +22,7 @@ import com.bookshop.oz.dto.BookProductDTOItem;
 import com.bookshop.oz.dto.LocationPointDTO;
 import com.bookshop.oz.dto.LocationReport;
 import com.bookshop.oz.model.BookProduct;
+import com.bookshop.oz.model.LocationPoint;
 import com.bookshop.oz.model.Person;
 import com.bookshop.oz.model.Stock;
 import com.bookshop.oz.service.BookProductService;
@@ -124,6 +125,8 @@ public class AdminController {
 	public String stockItem(@PathVariable("locationId") String locId, Model model) {
 		List<Stock> stock = stockService.getStockByLocation(locId);
 		model.addAttribute("stock", stock);
+		LocationPoint loc = locationPointService.getLocById(locId);
+		model.addAttribute("loc", loc);
 		return "/ADMIN/stock";
 	}
 

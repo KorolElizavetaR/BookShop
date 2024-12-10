@@ -1,0 +1,83 @@
+/* .edit-book {
+    padding: 20px;
+    margin-left: 20px;
+} */
+
+.edit-book__heading {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.edit-book__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.edit-book__group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.edit-book__label {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.edit-book__input,
+.edit-book__textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.edit-book__textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.edit-book__error {
+    color: #d9534f;
+    font-size: 0.9rem;
+}
+
+.edit-book__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.edit-book__button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-book__button--submit {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.edit-book__button--submit:hover {
+    background-color: #218838;
+}
+
+.edit-book__button--cancel {
+    background-color: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.edit-book__button--cancel:hover {
+    background-color: #5a6268;
+}

@@ -1,0 +1,119 @@
+
+
+.main__auth-message {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.main__shopping-bin {
+    margin-top: 20px;
+}
+
+.main__shopping-bin--empty {
+    font-size: 1.2rem;
+    color: #666;
+    text-align: center;
+}
+
+/* Table styles */
+.main__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.main__table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.main__table-cell {
+    padding: 15px;
+    text-align: left;
+}
+
+.main__table-cell img {
+    border-radius: 5px;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.main__table-cell--actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Quantity controls */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-control__button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.quantity-control__button:disabled {
+    background-color: #eaeaea;
+    cursor: not-allowed;
+}
+
+.quantity-control__button:hover:not(:disabled) {
+    background-color: #ddd;
+}
+
+.quantity-control__value {
+    font-size: 1rem;
+    padding: 0 5px;
+}
+
+/* Form buttons */
+.form-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.form-button:hover {
+    background-color: #0056b3;
+}
+
+.form-button--delete {
+    background-color: #dc3545;
+}
+
+.form-button--delete:hover {
+    background-color: #a71d2a;
+}
+
+/* .form-button--disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+} */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main__table-cell {
+        display: block;
+        width: 100%;
+    }
+
+    .main__table-cell img {
+        margin: 0 auto;
+    }
+
+    .quantity-control {
+        justify-content: center;
+    }
+}

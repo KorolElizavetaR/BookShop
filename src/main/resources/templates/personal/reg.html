@@ -3,47 +3,49 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Registration Page</title>
+    <title>Регистрация</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/reg.css}" rel="stylesheet" />
 </head>
 <body>
-    <form th:method="POST" th:action="@{/personal/reg}" th:object="${person}">
+    <form class="registration-form" th:method="POST" th:action="@{/personal/reg}" th:object="${person}">
         <!-- First Name -->
-        <label for="firstName">First Name:</label>
-        <input type="text" th:field="*{firstName}" id="firstName" required />
-        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</div>
+        <label class="registration-form__label" for="firstName">Имя: </label>
+        <input class="registration-form__input registration-form__input--required" type="text" th:field="*{firstName}" id="firstName" required />
+        <div class="registration-form__error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</div>
         <br/>
 
         <!-- Last Name -->
-        <label for="lastName">Last Name:</label>
-        <input type="text" th:field="*{lastName}" id="lastName"/>
-        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</div>
+        <label class="registration-form__label" for="lastName">Фамилия:</label>
+        <input class="registration-form__input" type="text" th:field="*{lastName}" id="lastName"/>
+        <div class="registration-form__error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</div>
         <br/>
 
         <!-- Email -->
-        <label for="email">Email:</label>
-        <input type="email" th:field="*{email}" id="email" required />
-        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+        <label class="registration-form__label" for="email">Email:</label>
+        <input class="registration-form__input registration-form__input--required" type="email" th:field="*{email}" id="email" required />
+        <div class="registration-form__error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
         <br/>
 
         <!-- Phone -->
-        <label for="phone">Phone:</label>
-        <input type="tel" th:field="*{phone}" id="phone" />
-        <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone error</div>
+        <label class="registration-form__label" for="phone">Номер телефона(мобильный):</label>
+        <input class="registration-form__input" type="tel" th:field="*{phone}" id="phone" />
+        <div class="registration-form__error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone error</div>
         <br/>
 
         <!-- Password -->
-        <label for="password">Password:</label>
-        <input type="password" th:field="*{password}" id="password" required />
-        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+        <label class="registration-form__label" for="password">Пароль:</label>
+        <input class="registration-form__input registration-form__input--required" type="password" th:field="*{password}" id="password" required />
+        <div class="registration-form__error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
         <br/>
 
         <!-- Confirm Password -->
-        <label for="confurmPassword">Confirm Password:</label>
-        <input type="password" th:field="*{confirmPassword}" id="confurmPassword" required />
-        <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confurmPassword}">Password confirmation error</div>
+        <label class="registration-form__label" for="confurmPassword">Подтвердить пароль:</label>
+        <input class="registration-form__input registration-form__input--required" type="password" th:field="*{confirmPassword}" id="confurmPassword" required />
+        <div class="registration-form__error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confurmPassword}">Password confirmation error</div>
         <br/>
 
-        <input type="submit" value="Register" />
+        <input class="registration-form__submit" type="submit" value="Register" />
     </form>
 </body>
 </html>

@@ -8,6 +8,7 @@
     <title>Корзина товаров</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/orders.css}" rel="stylesheet" />
     <script src="/js/quantityModifier.js" th:href="@{/js/quantityModifier.js}" defer></script>
 </head>
 
@@ -17,55 +18,52 @@
     </header>
 
     <main class="paddings">
-        <div>
-            <div th:if="${!isLoggedIntoSystem}">
+        <div class="main__container">
+            <div th:if="${!isLoggedIntoSystem}" class="main__auth-message">
                 <p>Авторизируйтесь для просмотра заказов</p>
             </div>
-
-            <div th:if="${isLoggedIntoSystem}">
-                <div th:if="${shoppingBin == null || shoppingBin.isEmpty()}">
+    
+            <div th:if="${isLoggedIntoSystem}" class="main__shopping-bin">
+                <div th:if="${shoppingBin == null || shoppingBin.isEmpty()}" class="main__shopping-bin--empty">
                     <p>В корзине нет товаров</p>
                 </div>
-
-                <div th:if="${shoppingBin != null && !shoppingBin.isEmpty()}">
-                    <table>
+    
+                <div th:if="${shoppingBin != null && !shoppingBin.isEmpty()}" class="main__shopping-bin--filled">
+                    <table class="main__table">
                         <tbody>
-                            <tr th:each="item : ${shoppingBin}">
-                                <td th:text="'Заказ № ' + ${item.orderId}"></td>
-                                <td><img th:src="${item.bookProduct.book.coverUrl}" alt="Book Image" width="100" />
+                            <tr th:each="item : ${shoppingBin}" class="main__table-row">
+                                <td th:text="'Заказ № ' + ${item.orderId}" class="main__table-cell"></td>
+                                <td class="main__table-cell">
+                                    <img th:src="${item.bookProduct.book.coverUrl}" alt="Book Image" class="main__image" width="100" />
                                 </td>
-                                <td th:text="${item.bookProduct.book.title}"></td>
-                                <td th:text="${item.bookProduct.book.author}"></td>
-                                <td th:text="'Доставка в ' + ${item.location.city} + ',' + ${item.location.address} "></td>
-                                <td th:text="${item.bookProduct.price * item.quantity} + ' $'"></td>
-                                <td>
-                                    <div>
-                                        <button type="button" th:id="'decrement-' + ${item.orderId}"
-                                            th:onclick="|updateQuantity(${item.orderId}, -1)|"
-                                            th:disabled="${item.quantity <= 1}">-</button>
-
-                                        <span th:id="'quantity-' + ${item.orderId}" th:text="${item.quantity}"></span>
-                                        <button type="button"
-                                            th:onclick="|updateQuantity(${item.orderId}, 1)|">+</button>
+                                <td th:text="${item.bookProduct.book.title}" class="main__table-cell"></td>
+                                <td th:text="${item.bookProduct.book.author}" class="main__table-cell"></td>
+                                <td th:text="'Доставка в ' + ${item.location.city} + ',' + ${item.location.address}" class="main__table-cell"></td>
+                                <td th:text="${item.bookProduct.price * item.quantity} + '$'" class="main__table-cell"></td>
+                                <td class="main__table-cell main__table-cell--quantity">
+                                    <div class="quantity-control">
+                                        <button type="button" th:id="'decrement-' + ${item.orderId}" class="quantity-control__button"
+                                            th:onclick="|updateQuantity(${item.orderId}, -1)|" th:disabled="${item.quantity <= 1}">-</button>
+    
+                                        <span th:id="'quantity-' + ${item.orderId}" th:text="${item.quantity}" class="quantity-control__value"></span>
+                                        <button type="button" th:onclick="|updateQuantity(${item.orderId}, 1)|" class="quantity-control__button">+</button>
                                     </div>
                                 </td>
-                                <td>
-                                    <form th:action="@{/shopping_bin/{id}/change_quantity(id=${item.orderId})}"
-                                        th:method="patch">
+                                <td class="main__table-cell main__table-cell--actions">
+                                    <form th:action="@{/shopping_bin/{id}/change_quantity(id=${item.orderId})}" th:method="patch">
                                         <input type="hidden" th:id="'quantity-input-' + ${item.orderId}" name="quantity"
                                             th:value="${item.quantity}" />
-                                        <button type="submit" th:id="'save-' + ${item.orderId}"
+                                        <button type="submit" th:id="'save-' + ${item.orderId}" class="form-button form-button--disabled"
                                             disabled>Сохранить</button>
                                     </form>
-
+    
                                     <form th:action="@{/shopping_bin/{id}(id=${item.orderId})}" th:method="delete">
-                                        <button type="submit">Удалить</button>
+                                        <button type="submit" class="form-button form-button--delete">Удалить</button>
                                     </form>
-
+    
                                     <form th:action="@{/shopping_bin/{id}(id=${item.orderId})}" th:method="PATCH">
-                                        <button type="submit">Заказать</button>
+                                        <button type="submit" class="form-button">Заказать</button>
                                     </form>
-
                                 </td>
                             </tr>
                         </tbody>
@@ -74,6 +72,7 @@
             </div>
         </div>
     </main>
+    
 
 </body>
 

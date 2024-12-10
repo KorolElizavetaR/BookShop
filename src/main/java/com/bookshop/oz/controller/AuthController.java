@@ -90,9 +90,14 @@ public class AuthController {
 
 	@PostMapping("/reg")
 	public String performReg(@ModelAttribute("person") @Valid PersonDTORegister person, BindingResult bindingResult) {
-		if (bindingResult.hasErrors())
+		System.out.println("1");
+		if (bindingResult.hasErrors()) {
+			System.out.println("2");
 			return "/personal/reg";
+		}
+		System.out.println("3");
 		personDetailsService.register(person);
+		System.out.println("4");
 		return "redirect:/personal/login";
 	}
 
